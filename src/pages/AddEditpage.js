@@ -170,7 +170,7 @@ const AddEditpage = () => {
   };
 
   return (
-    <>
+    <div className="Webcontainer">
       <MDBValidation
         // className="row g-3"
         style={{ marginTop: "100px" }}
@@ -254,7 +254,7 @@ const AddEditpage = () => {
           Cancel
         </MDBBtn>
       </MDBValidation>
-    </>
+    </div>
   );
 };
 

@@ -1,32 +1,52 @@
 import React, { useState } from "react";
-import { Form, Input, Upload, Button, Select, Row, Col } from "antd";
+import { Form, Input, Upload, Button, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import CreateNewBlog, { createNewBlog } from "../redux/CreateBlog";
 
 const layout = {
   labelCol: {
     span: 8,
   },
   wrapperCol: {
-    span: 16,
+    span: 18,
   },
 };
 /* eslint-disable no-template-curly-in-string */
 
 const { Option } = Select;
 const options = [
-  "National News",
-  "International News",
-  "Business News",
-  "Multimedia News",
-  "Sports News",
+  "National",
+  "International",
+  "Business",
+  "Multimedia",
+  "Sports",
 ];
 
 const normFile = (e) => {
-  console.log("Upload event:", e);
+  // console.log("Upload event1:", e.file);
   if (Array.isArray(e)) {
     return e;
   }
-  return e && e.fileList;
+  const formData = new FormData();
+  formData.append("file", e.file);
+  formData.append("upload_preset", "s8l9wkk3");
+
+  fetch("  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
+    method: "post",
+    body: formData,
+  })
+    .then((resp) => {
+      toast.info("Image Uploaded successfully!");
+      // console.log(resp);
+    })
+    .catch((error) => {
+      toast.error("Something went wrong");
+    });
+  return e.fileList;
 };
 
 const validateMessages = {
@@ -42,83 +62,107 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 const About = () => {
-  const onFinish = (values) => {
-    console.log(values);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onFinish = async (values) => {
+    // console.log(values);
+    // temporary post on json server
+
+    const nowDate = getDate();
+    const blog = { ...values, date: nowDate };
+    const response = await axios.post("http://localhost:5000/blogs", blog);
+    console.log(response.data);
+    dispatch(createNewBlog(response.data));
+
+    if ((response.status = 201)) {
+      toast.success("Blog created successfully");
+      navigate("/");
+    } else {
+      toast.error("Something went wrong");
+    }
   };
 
+  const getDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0");
+    let yyyy = today.getFullYear();
+    today = yyyy + "/" + mm + "/" + dd;
+    // console.log(today);
+
+    return today;
+  };
   return (
-    <div
-      style={{
-        // margin: "auto",
-        padding: "15px",
-        // maxWidth: "525px",
-        alignContent: "center",
-        margin: "0px 28px",
-      }}
-    >
+    <div className="pagecontainer">
       <Form
         {...layout}
         name="nest-messages"
         layout="vertical"
         onFinish={onFinish}
         validateMessages={validateMessages}
-        style={{ marginTop: "100px" }}
+        style={{ marginTop: "50px" }}
       >
-        <Row>
-          <Col span={8}>
-            <Form.Item
-              name="title"
-              label="Title"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="category"
-              label="Category"
-              rules={[{ required: true, message: "Please select Blog Topic!" }]}
-            >
-              <Select placeholder="select your blog topic">
-                {options.map((item, index) => (
-                  <Option key={index} value={item}>
-                    {item}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
+        {/* <Row>
+          <Col md={8}> */}
+        <Form.Item
+          name="title"
+          label="Title"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="category"
+          label="Category"
+          rules={[{ required: true, message: "Please select Blog Topic!" }]}
+        >
+          <Select placeholder="select your blog topic">
+            {options.map((item, index) => (
+              <Option key={index} value={item}>
+                {item}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-            <Form.Item
-              name="upload"
-              label="Image"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              rules={[{ required: true, message: "Please select an image!" }]}
-              // extra="longgggggggggggggggggggggggggggggggggg"
-            >
-              <Upload name="logo" action="/upload.do" listType="picture">
-                <Button icon={<UploadOutlined />}>Click to upload</Button>
-              </Upload>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="blog"
-              label="Blog"
-              rules={[{ required: true, message: "Please write a blog" }]}
-            >
-              <Input.TextArea rows={12} />
-            </Form.Item>
-            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-          </Col>
-        </Row>
+        <Form.Item
+          name="upload"
+          label="Image"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+          rules={[{ required: true, message: "Please select an image!" }]}
+          // extra="longgggggggggggggggggggggggggggggggggg"
+        >
+          <Upload
+            name="logo"
+            // action={"http://localhost:3000/"}
+            beforeUpload={() => false}
+            listType="picture"
+          >
+            <Button icon={<UploadOutlined />}>Click to upload</Button>
+          </Upload>
+        </Form.Item>
+        {/* </Col>
+          <Col md={16}> */}
+        <Form.Item
+          name="blog"
+          label="Blog"
+          rules={[{ required: true, message: "Please write a blog" }]}
+        >
+          <Input.TextArea rows={18} cols={22} showCount maxLength={1000} />
+        </Form.Item>
+        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+          <button className="submitBtn" type="primary">
+            Submit
+          </button>
+        </Form.Item>
+        {/* </Col>
+        </Row> */}
       </Form>
     </div>
   );

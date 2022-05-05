@@ -11,6 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.searchForm{
+  width: 500px;
+  margin: auto;
+  margin-top:15px;
+  align-content: center;
+}
 
 .categorySelect{
   width:100%;
@@ -22,4 +28,25 @@ code {
   color:red;
   text-align: left;
   font-size: 14px;
+}
+h1{
+  overflow:hidden;
+  text-align: center;
+}
+h1:before,h1:after{
+  background-color: black;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position:relative;
+  vertical-align: middle;
+  width:50%;
+}
+h1:before{
+  right:0.5em;
+  margin-left: -50%;
+}
+h1:after{
+  left:0.5em;
+  margin-right:-50%;
 }

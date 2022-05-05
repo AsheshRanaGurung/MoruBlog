@@ -1,16 +1,21 @@
 import React, { Component } from "react";
-import { Menu, Icon } from "antd";
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+import { Menu } from "antd";
+import { Link } from "react-router-dom";
+
 class RightMenu extends Component {
   render() {
     return (
       <Menu mode="horizontal">
-        <Menu.Item key="mail">
-          <a href="">Signin</a>
+        <Menu.Item key="mail2">
+          <Link to="/login" style={{ fontSize: "19px" }}>
+            {/* <UserAddOutlined style={{ fontSize: "18px" }} /> */}
+            SignIn
+          </Link>
         </Menu.Item>
         <Menu.Item key="app">
-          <a href="">Signup</a>
+          <Link to="/register" style={{ fontSize: "19px" }}>
+            Signup
+          </Link>
         </Menu.Item>
       </Menu>
     );
