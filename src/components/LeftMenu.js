@@ -45,7 +45,7 @@ class LeftMenu extends Component {
           </MenuItemGroup>
         </SubMenu>
         <Menu.Item key="alipay2">
-          <Link to="about" style={{ fontSize: "19px" }}>
+          <Link to="/addblog" style={{ fontSize: "19px" }}>
             Create Blog
           </Link>
         </Menu.Item>

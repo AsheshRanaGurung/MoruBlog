@@ -15,17 +15,18 @@ export const GetApiData = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
     },
-    decrement: (state) => {
-      state.value -= 1;
+    deleteThisBlog: (state, action) => {
+      console.log(action.payload);
+      state.blogs = state.blogs.filter((item) => item.id !== action.payload);
     },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
-    },
+    // GetThisBlog: (state, action) => {
+    //   console.log(action.payload);
+    //   state.blogs = state.blogs.filter((item) => item.id !== action.payload);
+    // },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { getApiDataSuccess, decrement, incrementByAmount } =
-  GetApiData.actions;
+export const { getApiDataSuccess, deleteThisBlog } = GetApiData.actions;
 
 export default GetApiData.reducer;

@@ -28,6 +28,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getApiDataSuccess } from "./redux/GetApiData";
 import Blog from "./pages/Blog";
+import ProfileScreen from "./pages/ProfileScreen";
 
 function App() {
   const getData = useSelector((state) => state.createBlog);
@@ -58,45 +59,15 @@ function App() {
           closeOnClick
           rtl={false}
         />
-        {/* <Layout>
-          <antHeader>
-            <Header />
-          </antHeader>
-          <Layout>
-            <Content>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/addBlog" element={<AddEditpage />} />
-                <Route path="/addBlog/:id" element={<AddEditpage />} />
-                <Route path="/blog/:id" element={<Blog />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/companyprofile" element={<CompanyProfile />} />
-                <Route path="/team" element={<Team />} />
-                <Route path="/mantra" element={<Mantra />} />
-                <Route path="/objectives" element={<StrategyPage />} />
-                <Route path="/ourgovernance" element={<Governance />} />
-                <Route path="/committee" element={<CommitteePage />} />
-
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </Content>
-            <Sider>Sider</Sider>
-          </Layout>
-          <antFooter>
-            <Footer />
-          </antFooter>
-        </Layout> */}
-        {/* <HeaderTop /> */}
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/addBlog" element={<AddEditpage />} />
-          <Route path="/addBlog/:id" element={<AddEditpage />} />
+          {/* <Route path="/addBlog" element={<AddEditpage />} /> */}
+          <Route path="/editblog/:id" element={<AddEditpage />} />
           <Route path="/blog/:id" element={<Blog />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/addblog" element={<About />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profilepage" element={<ProfileScreen />} />
           <Route path="/register" element={<Register />} />
           <Route path="/companyprofile" element={<CompanyProfile />} />
           <Route path="/team" element={<Team />} />

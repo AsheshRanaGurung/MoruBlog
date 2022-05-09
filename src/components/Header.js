@@ -158,7 +158,7 @@ class Header extends Component {
                 </SubMenu>
                 <Menu.Item key="alipay2">
                   <Link
-                    to="about"
+                    to="/addblog"
                     style={{ fontSize: "19px" }}
                     onClick={this.onClose}
                   >
@@ -235,15 +235,22 @@ class Header extends Component {
                     SignIn
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="app">
-                  <Link
-                    to="/register"
-                    style={{ fontSize: "19px" }}
-                    onClick={this.onClose}
-                  >
-                    Signup
-                  </Link>
-                </Menu.Item>
+                <SubMenu
+                  key="SubMenu3"
+                  title={<span>Profile</span>}
+                  style={{ fontSize: "19px" }}
+                >
+                  <MenuItemGroup>
+                    <Menu.Item key="setting:1">
+                      <Link to="/profilepage" onClick={this.onClose}>
+                        Profile page
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="setting:2" onClick={this.onClose}>
+                      Log Out{" "}
+                    </Menu.Item>
+                  </MenuItemGroup>
+                </SubMenu>
               </Menu>
             </Drawer>
           </div>

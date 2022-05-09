@@ -1,6 +1,6 @@
 import React from "react";
 import "./Footer.css";
-import { MDBCol, MDBContainer, MDBIcon, MDBRow } from "mdb-react-ui-kit";
+import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 
 function Footer() {
   return (
@@ -12,18 +12,21 @@ function Footer() {
         <MDBRow>
           <MDBCol md="3">
             <h5 className="title">BabaalDeal</h5>
-            <p className="footer-intro">
-              “BabaalDeal” is a full stack interactive B2C e-commerce providing
-              users with a platform to buy and review the electronics related
-              accessories online which will be built with reactjs for frontend,
-              redux for state management, postgres for database and DjangoREST
-              framework for backend.
+            <p className="footer-intro" style={{ textAlign: "justify" }}>
+              Our mission is to be the leading payment service provider,
+              delivering world class service through the blending of
+              state-of-the-art technology and visionary management in
+              partnership with competent and committed staff, to achieve
+              reliable system of services to all with sustainable value addition
+              to all our stakeholders.
             </p>
           </MDBCol>
           <MDBCol md="3">
-            <h5 className="title">Links</h5>
+            <h5 className="title">Quick Links</h5>
             <ul>
               <li className="list-unstyled">
+                <i className="fab fa-facebook"></i>
+
                 <a href="https://www.facebook.com/ashesh.ranagurung">
                   {" "}
                   facebook
@@ -34,8 +37,12 @@ function Footer() {
                 <a href="https://www.instagram.com/asheshrana.gr"> Instagram</a>
               </li>
               <li className="list-unstyled">
-                <i className="fab fa-github"></i>
-                <a href="https://github.com/VeNom198"> Github</a>
+                <i className="fab fa-twitter"></i>
+                <a href="https://twitter.com"> Twitter</a>
+              </li>
+              <li className="list-unstyled">
+                <i className="fab fa-youtube"></i>
+                <a href="https://youtube.com"> Youtube</a>
               </li>
               <li className="list-unstyled">
                 <i className="fab fa-linkedin-in"></i>
@@ -69,7 +76,7 @@ function Footer() {
                 {" "}
                 <i className="fas fa-envelope-open"></i> info@moru.com.np
               </li>
-              <li className="list-unstyled">
+              {/* <li className="list-unstyled">
                 <i
                   className="fab fa-facebook"
                   style={{ marginLeft: "4px" }}
@@ -85,7 +92,7 @@ function Footer() {
                 ></i>
                 <i className="fab fa-twitter" style={{ marginLeft: "4px" }}></i>
                 <i className="fab fa-youtube" style={{ marginLeft: "4px" }}></i>
-              </li>
+              </li> */}
             </ul>
           </MDBCol>
         </MDBRow>

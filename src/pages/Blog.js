@@ -52,6 +52,7 @@ const Blog = () => {
       getSingleBlog();
     }
   }, []);
+  //i removed dependency array
 
   const styleInfo = {
     display: "inline",
@@ -76,7 +77,7 @@ const Blog = () => {
         <img
           className="img-fluid rounded"
           style={{ width: "100%", maxHeight: "600px" }}
-          alt="This is blog image"
+          alt="This is blog"
           src="/images/Blog.jpg"
         ></img>
         <div style={{ marginTop: "20px" }}>
@@ -97,14 +98,16 @@ const Blog = () => {
               {blog && blog.category}
             </ColorBadge>
           </div>
-          {blog && blog.blog}
+          <div style={{ marginBottom: "20px", textAlign: "justify" }}>
+            {blog && blog.blog}
+          </div>{" "}
         </div>
         {relatedPost && relatedPost.length > 0 && (
           <>
             {relatedPost.length > 1 && <h1>Related Post</h1>}
             <MDBRow className="row-cols-1 row-cols-md-3 g-4 pb-3">
               {relatedPost
-                .filter((item) => item.id !== id)
+                .filter((item) => item.id != id)
                 .map((item, index) => (
                   <MDBCol key={index}>
                     <MDBCard style={{ width: "100%" }}>

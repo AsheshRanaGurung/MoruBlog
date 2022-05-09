@@ -1,259 +1,193 @@
-// import React, { useState } from "react";
-// import { MDBValidation, MDBInput, MDBBtn } from "mdb-react-ui-kit";
-// import axios from "axios";
-// import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
-
 // //s8l9wkk3
 
-// const initialState = {
-//   title: "",
-//   description: "",
-//   category: "",
-//   imageUrl: "",
-// };
-
-// const options = [
-//   "National News",
-//   "International News",
-//   "Business News",
-//   "Multimedia News",
-//   "Sports News",
-// ];
-
-// const AddEditpage = () => {
-//   const [formValue, setFormValue] = useState(initialState);
-//   const [categoryErrorMsg, setCategoryErrorMsg] = useState(null);
-//   const { title, description, category, imageUrl } = formValue;
-
-//   const navigate = useNavigate();
-//   const handleSubmit = (e) => {};
-//   const onInputChange = (e) => {
-//     let { name, value } = e.target.value;
-//     // console.log(name);
-//     console.log(value);
-//     // setFormValue({...formValue,})
-//   };
-//   const onUploadImage = (file) => {
-//     console.log(file);
-//   };
-//   const onFileChange = () => {};
-//   return (
-//     <>
-//       <MDBValidation
-//         // className="row g-3"
-//         style={{ marginTop: "100px" }}
-//         noValidate
-//         onSubmit={handleSubmit}
-//       >
-//         <h2>AddEditpage</h2>
-//         <div
-//           style={{
-//             margin: "auto",
-//             padding: "15px",
-//             maxWidth: "400px",
-//             alignContent: "center",
-//           }}
-//         >
-//           <MDBInput
-//             value={title}
-//             name="title"
-//             type="text"
-//             onChange={onInputChange}
-//             required
-//             label="Title"
-//             validation="Please provide a Title"
-//             // invalid
-//           ></MDBInput>
-//           <br />
-
-//           <MDBInput
-//             value={description}
-//             name="description"
-//             type="text"
-//             onChange={onInputChange}
-//             required
-//             label="Description"
-//             validation="Please provide a Description"
-//             textarea="true"
-//             rows={4}
-//             // invalid
-//           ></MDBInput>
-//           <br />
-
-//           <MDBInput
-//             name="image"
-//             type="file"
-//             onChange={(e) => onUploadImage(e.target.files[0])}
-//             required
-//             validation="Please provide a File"
-//             // invalid
-//           ></MDBInput>
-//           <br />
-
-//           <select className="categorySelect" onChange={onFileChange}>
-//             {/* <option>Please Select a category</option> */}
-//             {options.map((item, index) => (
-//               <option key={index} value={item}>
-//                 {item}
-//               </option>
-//             ))}
-//           </select>
-//         </div>
-//         <br />
-//         <MDBBtn type="submit" style={{ marginRight: "10px" }}>
-//           Submit
-//         </MDBBtn>
-//         <MDBBtn
-//           color="danger"
-//           style={{ marginRight: "10px" }}
-//           onClick={() => navigate("/")}
-//         >
-//           Cancel
-//         </MDBBtn>
-//       </MDBValidation>
-//     </>
-//   );
-// };
-
-// export default AddEditpage;
-
-import React, { useState } from "react";
-import { MDBValidation, MDBInput, MDBBtn } from "mdb-react-ui-kit";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Form, Input, Upload, Button, Select } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createNewBlog } from "../redux/CreateBlog";
 
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 18,
+  },
+};
+
+const { Option } = Select;
 const options = [
-  "National News",
-  "International News",
-  "Business News",
-  "Multimedia News",
-  "Sports News",
+  "National",
+  "International",
+  "Business",
+  "Multimedia",
+  "Sports",
 ];
 
-const AddEditpage = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState();
-  const [image, setImage] = useState();
+const normFile = (e) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  const formData = new FormData();
+  formData.append("file", e.file);
+  formData.append("upload_preset", "s8l9wkk3");
 
-  const [titleErrorMsg, setTitleErrorMsg] = useState(null);
-  const [categoryErrorMsg, setCategoryErrorMsg] = useState(null);
+  fetch("  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
+    method: "post",
+    body: formData,
+  })
+    .then((resp) => {
+      toast.info("Image Uploaded successfully!");
+      // console.log(resp);
+    })
+    .catch((error) => {
+      toast.error("Something went wrong");
+    });
+  return e.fileList;
+};
+
+const validateMessages = {
+  required: "${label} is required!",
+  types: {
+    email: "${label} is not a valid email!",
+    number: "${label} is not a valid number!",
+  },
+  number: {
+    range: "${label} must be between ${min} and ${max}",
+  },
+};
+
+const AddEditpage = () => {
+  const [titles, setTitle] = useState("");
+  const getData = useSelector((state) => state.getBlogdetail);
+  const { blog } = getData;
+
+  console.log(titles);
+  const { id } = useParams();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const submitFormdata = (e) => {
-    e.preventDefault();
-    if (!category) {
-      setCategoryErrorMsg("Please select a category!");
-    }
-    if (title === "") {
-      setTitleErrorMsg("Please write a title!");
-    }
-    console.log(title);
-    console.log(description);
-    console.log(category);
-    console.log(image);
-  };
-  const onCategoryChange = (e) => {
-    setCategoryErrorMsg(null);
-    setCategory(e.target.value);
+  const onFinish = async (values) => {
+    const nowDate = getDate();
+    const blog = { ...values, date: nowDate };
+    console.log(blog);
+    // const response = await axios.post("http://localhost:5000/blogs", blog);
+    // console.log(response.data);
+    // dispatch(createNewBlog(response.data));
+
+    // if ((response.status = 201)) {
+    //   toast.success("Blog edited successfully");
+    //   navigate("/");
+    // } else {
+    //   toast.error("Something went wrong");
+    // }
   };
 
-  const onTitleChange = (e) => {
-    setTitleErrorMsg(null);
-    setTitle(e.target.value);
+  const getDate = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0");
+    let yyyy = today.getFullYear();
+    today = yyyy + "/" + mm + "/" + dd;
+    // console.log(today);
+
+    return today;
   };
-  const onUploadImage = (file) => {
-    console.log(file);
+
+  const editThisId = async () => {
+    const response = await axios.put(`http://localhost:5000/blogs/${id}`);
+    // console.log(response.data);
+    // dispatch(getApiDataSuccess(response.data));
   };
+
+  useEffect(() => {
+    if (blog) {
+      setTitle(blog?.title);
+    }
+  }, [getData]);
 
   return (
-    <div className="Webcontainer">
-      <MDBValidation
-        // className="row g-3"
-        style={{ marginTop: "100px" }}
-        noValidate
-        onSubmit={submitFormdata}
+    <div className="pagecontainer">
+      {/* {JSON.stringify(idData[0]?.title)} */}
+      <Form
+        {...layout}
+        name="nest-messages"
+        layout="vertical"
+        initialValues={{ title: titles }}
+        onFinish={onFinish}
+        validateMessages={validateMessages}
+        style={{ marginTop: "50px" }}
       >
-        <h2>AddEditpage</h2>
-        <div
-          style={{
-            margin: "auto",
-            padding: "15px",
-            maxWidth: "400px",
-            alignContent: "center",
-          }}
+        {/* <Row>
+          <Col md={8}> */}
+        <Form.Item
+          // value={idData[0]?.title}
+          name="title"
+          label="Title"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
         >
-          <MDBInput
-            value={title}
-            name="title"
-            type="text"
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            label="Title"
-            validation="Please provide a Title"
-            invalid="true"
-          ></MDBInput>
-          <br />
-
-          <select
-            className="categorySelect"
-            onChange={(e) => onCategoryChange(e.target.value)}
-          >
-            {/* <option>Please Select a category</option> */}
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="category"
+          label="Category"
+          rules={[{ required: true, message: "Please select Blog Topic!" }]}
+        >
+          <Select placeholder="select your blog topic">
             {options.map((item, index) => (
-              <option key={index} value={item}>
+              <Option key={index} value={item}>
                 {item}
-              </option>
+              </Option>
             ))}
-          </select>
-          {categoryErrorMsg && (
-            <div className="categoryErrorMsg">{categoryErrorMsg}</div>
-          )}
-          <br />
-          <br />
+          </Select>
+        </Form.Item>
 
-          <MDBInput
-            name="image"
-            type="file"
-            onChange={(e) => setImage(e.target.files[0])}
-            required
-            validation="Please provide a File"
-            // invalid
-          ></MDBInput>
-          <br />
-
-          <textarea
-            name="description"
-            placeholder="Write your blog here..."
-            value={description}
-            type="text"
-            onChange={(e) => setDescription(e.target.value)}
-            className="form-control"
-            id="exampleFormControlTextarea1"
-            rows="5"
+        <Form.Item
+          name="upload"
+          label="Image"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+        >
+          <Upload
+            name="logo"
+            // action={"http://localhost:3000/"}
+            beforeUpload={() => false}
+            listType="picture"
+          >
+            <Button icon={<UploadOutlined />}>Click to upload</Button>
+          </Upload>
+        </Form.Item>
+        {/* </Col>
+          <Col md={16}> */}
+        <Form.Item
+          name="blog"
+          label="Blog"
+          rules={[{ required: true, message: "Please write a blog" }]}
+        >
+          <Input.TextArea
+            rows={18}
+            cols={22}
+            showCount
+            maxLength={10000}
+            // value={idData?.blog}
           />
-          <br />
-        </div>
-        <br />
-
-        <MDBBtn
-          type="submit"
-          style={{ marginRight: "10px" }}
-          // onClick={() => submitFormdata()}
-        >
-          Submit
-        </MDBBtn>
-        <MDBBtn
-          color="danger"
-          style={{ marginRight: "10px" }}
-          onClick={() => navigate("/")}
-        >
-          Cancel
-        </MDBBtn>
-      </MDBValidation>
+        </Form.Item>
+        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+          <button className="submitBtn" type="primary">
+            Update
+          </button>
+        </Form.Item>
+        {/* </Col>
+        </Row> */}
+      </Form>
     </div>
   );
 };

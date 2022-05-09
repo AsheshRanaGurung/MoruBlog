@@ -15,9 +15,10 @@ export const CreateBlog = createSlice({
       state.isLoading = false;
       state.isSuccess = Math.random();
     },
-    decrement: (state) => {
-      state.value -= 1;
-    },
+    // deleteThisBlog: (state, action) => {
+    //   console.log(action.payload);
+    //   state.blog = state.blog.filter((item) => item.id !== action.payload);
+    // },
     incrementByAmount: (state, action) => {
       state.value += action.payload;
     },
@@ -25,7 +26,6 @@ export const CreateBlog = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { createNewBlog, decrement, incrementByAmount } =
-  CreateBlog.actions;
+export const { createNewBlog, incrementByAmount } = CreateBlog.actions;
 
 export default CreateBlog.reducer;

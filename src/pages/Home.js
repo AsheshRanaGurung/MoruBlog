@@ -6,19 +6,50 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Blogs from "../components/Blogs";
 import Search from "../components/Search";
+import LatestBlog from "../components/LatestBlog";
+import Category from "../components/Category";
+import PaginationThis from "../components/Pagination";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState("");
   const getData = useSelector((state) => state?.Blogs);
-  const { blogs, isLoading } = getData;
+  const { blogs } = getData;
 
   const [allblogs, setAllblogs] = useState(blogs);
+  const [latestBlog, setLatestBlog] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postPerPage] = useState(6);
+
   // console.log(allblogs);
+
+  const options = [
+    "National",
+    "International",
+    "Business",
+    "Multimedia",
+    "Sports",
+  ];
 
   useEffect(() => {
     setAllblogs(blogs);
+    fetchLatestBlog();
   }, [blogs]);
 
+  const fetchLatestBlog = async () => {
+    const totalBlog = await axios.get("http://localhost:5000/blogs");
+    const start = totalBlog.data.length - 4;
+    const end = totalBlog.data.length;
+
+    const response = await axios.get(
+      `http://localhost:5000/blogs?_start=${start}&_end=${end}`
+    );
+    if (response.status === 200) {
+      setLatestBlog(response.data);
+    } else {
+      toast.error("Something went wrong!");
+    }
+  };
   // console.log(allblogs);
   const excerpt = (string) => {
     if (string.length > 60) {
@@ -33,13 +64,6 @@ const Home = () => {
       console.log("triggreed");
     }
     setSearchValue(e.target.value);
-  };
-
-  const loadBlogsData = async () => {
-    const response = await axios.get("http://localhost:5000/blogs");
-    console.log("search bar empty");
-    console.log(response.data);
-    // dispatch(getApiDataSuccess(response.data));
   };
 
   const handleSearch = async (e) => {
@@ -57,64 +81,81 @@ const Home = () => {
     }
   };
 
+  const handleCategory = async (category) => {
+    const response = await axios.get(
+      `http://localhost:5000/blogs?category=${category}`
+    );
+    if (response.status === 200) {
+      setAllblogs(response.data);
+    } else {
+      toast.error("Something went wrong!");
+    }
+    console.log(category);
+  };
+  //get curent posts
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexofFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = allblogs.slice(indexofFirstPost, indexOfLastPost);
+
+  //changepage
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div className="pagecontainer">
       {/* {JSON.stringify(allblogs)} */}
       {/* {JSON.stringify(filteredBlog)} */}
-      <Search
-        searchValue={searchValue}
-        onInputChange={onInputChange}
-        handleSearch={handleSearch}
-      />
 
-      {
-        <div className="LoginPage">
-          {/* {filteredBlog ? (
-            <>
-              <MDBRow>{filteredBlog.length === 0 && <p>Loading...</p>}</MDBRow>
-              <MDBRow gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                {filteredBlog &&
-                  filteredBlog.map((item, index) => (
-                    <MDBCol key={index} style={{ paddingBottom: "32px" }}>
-                      <Blogs
-                        id={item.id}
-                        title={item.title}
-                        date={item.date}
-                        category={item.category}
-                        description={item.blog}
-                        excerpt={excerpt}
-                      />
-                    </MDBCol>
-                  ))}
-              </MDBRow>
-            </>
-          ) : ( */}
+      <MDBRow>
+        <MDBCol md="10">
           <>
-            <MDBRow>{allblogs?.length === 0 && <p>Loading...</p>}</MDBRow>
-            <MDBRow>
-              {allblogs &&
-                allblogs?.map((item, index) => (
-                  <MDBCol
-                    key={index}
-                    // span={6}
+            <Search
+              searchValue={searchValue}
+              onInputChange={onInputChange}
+              handleSearch={handleSearch}
+            />
+            <div className="LoginPage">
+              <>
+                <MDBRow>{allblogs?.length === 0 && <p>Loading...</p>}</MDBRow>
+                <MDBRow>
+                  {allblogs &&
+                    currentPosts?.map((item, index) => (
+                      <MDBCol
+                        key={index}
+                        // span={6}
 
-                    style={{ paddingBottom: "32px" }}
-                  >
-                    <Blogs
-                      id={item.id}
-                      title={item.title}
-                      date={item.date}
-                      category={item.category}
-                      description={item.blog}
-                      excerpt={excerpt}
-                    />
-                  </MDBCol>
-                ))}
-            </MDBRow>
+                        style={{ paddingBottom: "32px" }}
+                      >
+                        <Blogs
+                          id={item.id}
+                          title={item.title}
+                          date={item.date}
+                          category={item.category}
+                          description={item.blog}
+                          excerpt={excerpt}
+                        />
+                      </MDBCol>
+                    ))}
+                </MDBRow>
+              </>
+              {/* )} */}
+            </div>
           </>
-          {/* )} */}
-        </div>
-      }
+        </MDBCol>
+        <MDBCol md="2">
+          <div style={{ marginTop: "40px" }}>
+            <h4>Latest Blogs</h4>
+            {latestBlog &&
+              latestBlog.map((item, index) => (
+                <LatestBlog key={index} {...item} />
+              ))}{" "}
+            <Category options={options} handleCategory={handleCategory} />
+          </div>
+        </MDBCol>
+      </MDBRow>
+      <PaginationThis
+        postsPerPage={postPerPage}
+        totalPosts={allblogs.length}
+        paginate={paginate}
+      />
     </div>
   );
 };

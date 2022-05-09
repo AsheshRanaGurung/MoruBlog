@@ -1,7 +1,7 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 // import { Card, Avatar, Col } from "antd";
 import {
-  MDBCol,
   MDBCard,
   MDBCardTitle,
   MDBCardBody,
@@ -13,20 +13,44 @@ import {
 
 import { Link } from "react-router-dom";
 import ColorBadge from "./ColorBadge";
+import { deleteThisBlog } from "../redux/GetApiData";
+import { GetThisBlogSuccess } from "../redux/GetThisBlog";
+import axios from "axios";
+import { toast } from "react-toastify";
+import AddEditpage from "../pages/AddEditpage";
+// import { getApiDataSuccess } from "../redux/GetApiData";
 
 // const { Meta } = Card;
 
-const Blogs = ({
-  title,
-  date,
-  category,
-  description,
-  id,
-  excerpt,
-  handleDelete,
-}) => {
+const Blogs = ({ title, date, category, description, id, excerpt }) => {
+  const dispatch = useDispatch();
+
+  const deleteThisId = async (id) => {
+    if (window.confirm("Are you sure you want to Delete this Blog?")) {
+      const response = await axios.delete(`http://localhost:5000/blogs/${id}`);
+      if (response.status === 200) {
+        dispatch(deleteThisBlog(id));
+        toast.success("Blog deleted successfully");
+        // console.log(response.data);
+        // dispatch(getApiDataSuccess(response.data));
+      } else {
+        toast.error("Something went wrong!");
+      }
+    }
+    // dispatch(deleteThisBlog(id));
+  };
+
+  const editThisBlog = async (id) => {
+    // console.log(id);
+    // console.log(title);
+    // console.log(desc);
+    const response = await axios.get(`http://localhost:5000/blogs/${id}`);
+    // console.log(response.data);
+    dispatch(GetThisBlogSuccess(response.data));
+  };
+
   return (
-    <MDBCard className="h-100 " style={{ width: "280px", margin: "0 10px" }}>
+    <MDBCard className="h-100 " style={{ width: "330px", margin: "0 0px" }}>
       <MDBCardImage
         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
         alt={title}
@@ -39,7 +63,6 @@ const Blogs = ({
         >
           {date}
         </MDBCardText>
-
         <MDBCardTitle
           style={{ fontSize: "25px", display: "flex", padding: "0" }}
         >
@@ -50,7 +73,24 @@ const Blogs = ({
           <Link to={`/blog/${id}`}> Read more</Link>
         </MDBCardText>
         <ColorBadge>{category}</ColorBadge>
-        {/* <button>delete</button> */}
+        {/* <DeleteOutlined style={{ fontSize: "22px", color: "red" }} />
+        <EditOutlined style={{ fontSize: "22px", color: "green" }} /> */}
+        <MDBBtn
+          tag="a"
+          className="mt-1"
+          color="none"
+          onClick={() => deleteThisId(id)}
+        >
+          <MDBIcon
+            fas
+            icon="trash"
+            style={{ color: "red", marginRight: "10px" }}
+            size="lg"
+          />
+        </MDBBtn>
+        <Link to={`/editblog/${id}`} onClick={() => editThisBlog(id)}>
+          <MDBIcon fas icon="edit" style={{ color: "green" }} size="lg" />
+        </Link>
       </MDBCardBody>
     </MDBCard>
   );

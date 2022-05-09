@@ -50,3 +50,8 @@ h1:after{
   left:0.5em;
   margin-right:-50%;
 }
+
+.latest-title{
+  color:black;
+  font-weight:600;
+}

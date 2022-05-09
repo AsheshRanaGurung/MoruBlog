@@ -154,7 +154,7 @@ const About = () => {
           label="Blog"
           rules={[{ required: true, message: "Please write a blog" }]}
         >
-          <Input.TextArea rows={18} cols={22} showCount maxLength={1000} />
+          <Input.TextArea rows={18} cols={22} showCount maxLength={10000} />
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <button className="submitBtn" type="primary">
