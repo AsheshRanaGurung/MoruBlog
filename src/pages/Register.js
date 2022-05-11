@@ -1,10 +1,32 @@
 import React from "react";
 import { Form, Input, Button, Row, Col } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const navigate = useNavigate();
+  const onFinish = async (values) => {
+    // console.log("Received values of form: ", values);
+    console.log("name", values.username);
+    console.log("name", values.email);
+    console.log("name", values.password);
+
+    const response = await axios.post(
+      "https://faker-rest.zeferinix.com/api/v1//auth/register",
+      {
+        firstName: values.username,
+        lastName: values.username,
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      }
+    );
+
+    if (response?.status === 200) {
+      toast.success("Registered Successfully");
+      navigate("/");
+    }
   };
 
   return (

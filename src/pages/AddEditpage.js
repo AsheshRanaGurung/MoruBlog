@@ -8,13 +8,14 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewBlog } from "../redux/CreateBlog";
+import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 
 const layout = {
   labelCol: {
     span: 8,
   },
   wrapperCol: {
-    span: 18,
+    span: 24,
   },
 };
 
@@ -62,14 +63,23 @@ const validateMessages = {
 
 const AddEditpage = () => {
   const [titles, setTitle] = useState("");
-  const getData = useSelector((state) => state.getBlogdetail);
-  const { blog } = getData;
-
-  console.log(titles);
-  const { id } = useParams();
+  const [desc, setDesc] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const getData = useSelector((state) => state?.getBlogdetail);
+  // const { blog } = getData;
+
+  // console.log("value", blog?.title);
+  // useEffect(() => {
+  //   if (blog) {
+  //     setTitle(blog?.title);
+  //     setDesc(blog?.blog);
+  //   }
+  // }, [blog]);
+
+  const { id } = useParams();
 
   const onFinish = async (values) => {
     const nowDate = getDate();
@@ -104,90 +114,102 @@ const AddEditpage = () => {
     // dispatch(getApiDataSuccess(response.data));
   };
 
-  useEffect(() => {
-    if (blog) {
-      setTitle(blog?.title);
-    }
-  }, [getData]);
-
   return (
     <div className="pagecontainer">
-      {/* {JSON.stringify(idData[0]?.title)} */}
       <Form
         {...layout}
         name="nest-messages"
         layout="vertical"
-        initialValues={{ title: titles }}
+        initialValues={{ title: getData?.title }}
         onFinish={onFinish}
         validateMessages={validateMessages}
         style={{ marginTop: "50px" }}
       >
-        {/* <Row>
-          <Col md={8}> */}
-        <Form.Item
-          // value={idData[0]?.title}
-          name="title"
-          label="Title"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="category"
-          label="Category"
-          rules={[{ required: true, message: "Please select Blog Topic!" }]}
-        >
-          <Select placeholder="select your blog topic">
-            {options.map((item, index) => (
-              <Option key={index} value={item}>
-                {item}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+        <MDBRow>
+          <MDBCol md={4}>
+            <Form.Item
+              name="title"
+              label="Title"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              {/* {/* {JSON.stringify(blog)} */}
+              {/* {JSON.stringify(getData.title)} */}
 
-        <Form.Item
-          name="upload"
-          label="Image"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-        >
-          <Upload
-            name="logo"
-            // action={"http://localhost:3000/"}
-            beforeUpload={() => false}
-            listType="picture"
-          >
-            <Button icon={<UploadOutlined />}>Click to upload</Button>
-          </Upload>
-        </Form.Item>
-        {/* </Col>
-          <Col md={16}> */}
-        <Form.Item
-          name="blog"
-          label="Blog"
-          rules={[{ required: true, message: "Please write a blog" }]}
-        >
-          <Input.TextArea
-            rows={18}
-            cols={22}
-            showCount
-            maxLength={10000}
-            // value={idData?.blog}
-          />
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-          <button className="submitBtn" type="primary">
-            Update
-          </button>
-        </Form.Item>
-        {/* </Col>
-        </Row> */}
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="category"
+              label="Category"
+              rules={[{ required: true, message: "Please select Blog Topic!" }]}
+            >
+              <Select placeholder="select your blog topic">
+                {options.map((item, index) => (
+                  <Option key={index} value={item}>
+                    {item}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              name="upload"
+              label="Image"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+            >
+              <Upload
+                name="logo"
+                // action={"http://localhost:3000/"}
+                beforeUpload={() => false}
+                listType="picture"
+              >
+                <Button icon={<UploadOutlined />}>Click to upload</Button>
+              </Upload>
+            </Form.Item>
+          </MDBCol>
+          <MDBCol md={8}>
+            <Form.Item
+              name="blog"
+              label="Blog"
+              rules={[{ required: true, message: "Please write a blog" }]}
+            >
+              <Input.TextArea
+                rows={18}
+                cols={22}
+                showCount
+                maxLength={10000}
+                value={desc}
+              ></Input.TextArea>
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+              <button className="submitBtn" type="primary">
+                Update
+              </button>
+            </Form.Item>
+          </MDBCol>
+        </MDBRow>
       </Form>
+
+      {/* 
+       <form>
+        title:
+        <input value={titles} onChange={(e) => setTitle(e.target.value)} />
+        <br />
+        blog:
+        <br />
+        <br />
+        <textarea
+          rows="50"
+          col="1000"
+          value={desc}
+          onChange={(e) => setDesc(e.target.value)}
+        />
+      </form>
+      */}
     </div>
   );
 };

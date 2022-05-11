@@ -17,10 +17,6 @@ import { deleteThisBlog } from "../redux/GetApiData";
 import { GetThisBlogSuccess } from "../redux/GetThisBlog";
 import axios from "axios";
 import { toast } from "react-toastify";
-import AddEditpage from "../pages/AddEditpage";
-// import { getApiDataSuccess } from "../redux/GetApiData";
-
-// const { Meta } = Card;
 
 const Blogs = ({ title, date, category, description, id, excerpt }) => {
   const dispatch = useDispatch();
@@ -37,7 +33,6 @@ const Blogs = ({ title, date, category, description, id, excerpt }) => {
         toast.error("Something went wrong!");
       }
     }
-    // dispatch(deleteThisBlog(id));
   };
 
   const editThisBlog = async (id) => {
@@ -59,9 +54,15 @@ const Blogs = ({ title, date, category, description, id, excerpt }) => {
       />
       <MDBCardBody>
         <MDBCardText
-          style={{ display: "flex", marginBottom: "0px", color: "#a3a199" }}
+          style={{
+            display: "flex",
+            marginBottom: "0px",
+            color: "#a3a199",
+            justifyContent: "space-between",
+          }}
         >
           {date}
+          <ColorBadge>{category}</ColorBadge>
         </MDBCardText>
         <MDBCardTitle
           style={{ fontSize: "25px", display: "flex", padding: "0" }}
@@ -72,7 +73,6 @@ const Blogs = ({ title, date, category, description, id, excerpt }) => {
           {excerpt(description)}
           <Link to={`/blog/${id}`}> Read more</Link>
         </MDBCardText>
-        <ColorBadge>{category}</ColorBadge>
         {/* <DeleteOutlined style={{ fontSize: "22px", color: "red" }} />
         <EditOutlined style={{ fontSize: "22px", color: "green" }} /> */}
         <MDBBtn

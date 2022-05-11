@@ -10,6 +10,8 @@ import LatestBlog from "../components/LatestBlog";
 import Category from "../components/Category";
 import PaginationThis from "../components/Pagination";
 import { toast } from "react-toastify";
+import { Spin, Space } from "antd";
+import DownloadButton from "../components/DownloadButton";
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -20,9 +22,6 @@ const Home = () => {
   const [latestBlog, setLatestBlog] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(6);
-  console.log(allblogs);
-
-  // console.log(allblogs);
 
   const options = [
     "National",
@@ -113,9 +112,13 @@ const Home = () => {
               onInputChange={onInputChange}
               handleSearch={handleSearch}
             />
-            <div className="LoginPage">
+            <div className="LoginPage" style={{ paddingTop: "30px" }}>
               <>
-                <MDBRow>{allblogs?.length === 0 && <p>Loading...</p>}</MDBRow>
+                <MDBRow>
+                  {allblogs?.length === 0 && (
+                    <Spin size="large" style={{ display: "block" }} />
+                  )}
+                </MDBRow>
                 <MDBRow>
                   {allblogs &&
                     currentPosts?.map((item, index) => (
@@ -149,6 +152,7 @@ const Home = () => {
                 <LatestBlog key={index} {...item} />
               ))}{" "}
             <Category options={options} handleCategory={handleCategory} />
+            <DownloadButton />
           </div>
         </MDBCol>
       </MDBRow>

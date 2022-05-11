@@ -11,7 +11,7 @@ function Footer() {
       <div className="Webcontainer">
         <MDBRow>
           <MDBCol md="3">
-            <h5 className="title">BabaalDeal</h5>
+            <h5 className="title">Moru Digital wallet</h5>
             <p className="footer-intro" style={{ textAlign: "justify" }}>
               Our mission is to be the leading payment service provider,
               delivering world class service through the blending of

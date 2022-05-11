@@ -1,12 +1,32 @@
 import React from "react";
 import { Form, Input, Button, Checkbox, Row, Col } from "antd";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { GetThisTokenSuccess } from "../redux/TokenHandle";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   //   const redirect = location.search ? location.search.split("=")[1] : "/";
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const onFinish = async (values) => {
+    // console.log("Received values of form: ", values);
+
+    const response = await axios.post(
+      "https://faker-rest.zeferinix.com/api/v1/auth/login",
+      { username: values.email, password: values.password }
+    );
+
+    if (response?.status === 200) {
+      localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
+      toast.success("Logged In Successfully");
+
+      dispatch(GetThisTokenSuccess(response.data.token));
+      navigate("/");
+    }
   };
 
   return (
