@@ -14,7 +14,7 @@ const LatestBlog = ({ id, title }) => {
       <Link to={`/blog/${id}`}>
         <MDBCard
           style={{
-            width: "16rem",
+            // width: "16rem",
             marginTop: "10px",
           }}
         >

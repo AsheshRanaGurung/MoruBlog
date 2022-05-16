@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,12 +9,15 @@ import { RemoveThisTokenSuccess } from "../redux/TokenHandle";
 const MenuItemGroup = Menu.ItemGroup;
 const RightMenu = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const userInfo = useSelector((state) => state.getToken.token);
 
   const removeToken = () => {
     localStorage.removeItem("MoruToken");
     dispatch(RemoveThisTokenSuccess());
     toast.success("Logged out Sccessfully!");
+    navigate("/");
 
     // alert("cliked");
   };

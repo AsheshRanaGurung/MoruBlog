@@ -63,7 +63,7 @@ const Blog = () => {
   return (
     <div className="pagecontainer">
       {/* <div className="LoginPage"> */}
-      <MDBContainer>
+      <MDBContainer style={{ marginTop: "32px" }}>
         <button className="submitBtn" onClick={() => navigate("/")}>
           Go back
         </button>

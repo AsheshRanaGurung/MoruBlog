@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LeftMenu from "./LeftMenu";
 import RightMenu from "./RightMenu";
 import { Drawer, Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { RemoveThisTokenSuccess } from "../redux/TokenHandle";
@@ -12,7 +12,7 @@ const MenuItemGroup = Menu.ItemGroup;
 const Header = () => {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const userInfo = useSelector((state) => state.getToken.token);
 
   const showDrawer = () => {
@@ -25,6 +25,8 @@ const Header = () => {
 
   const logOut = () => {
     onClose();
+    navigate("/");
+
     localStorage.removeItem("MoruToken");
     dispatch(RemoveThisTokenSuccess());
     toast.success("Logged out Sccessfully!");

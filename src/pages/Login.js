@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Button, Checkbox, Row, Col } from "antd";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -7,14 +7,21 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { GetThisTokenSuccess } from "../redux/TokenHandle";
 
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
 const Login = () => {
+  const [loginLoading, setLoginLoading] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   //   const redirect = location.search ? location.search.split("=")[1] : "/";
   const onFinish = async (values) => {
     // console.log("Received values of form: ", values);
-
+    setLoginLoading(true);
     const response = await axios.post(
       "https://faker-rest.zeferinix.com/api/v1/auth/login",
       { username: values.email, password: values.password }
@@ -22,6 +29,7 @@ const Login = () => {
 
     if (response?.status === 200) {
       localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
+      setLoginLoading(false);
       toast.success("Logged In Successfully");
 
       dispatch(GetThisTokenSuccess(response.data.token));
@@ -102,7 +110,7 @@ const Login = () => {
                     htmlType="submit"
                     className="login-form-button"
                   >
-                    Log in
+                    {loginLoading ? <Spin indicator={antIcon} /> : "Log in"}
                   </Button>
                   <br />
                   <br />

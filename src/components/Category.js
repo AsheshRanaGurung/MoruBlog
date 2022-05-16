@@ -4,7 +4,7 @@ import React from "react";
 const Category = ({ options, handleCategory }) => {
   return (
     <div>
-      <MDBCard style={{ width: "16rem", marginTop: "20px" }}>
+      <MDBCard style={{ marginTop: "20px" }}>
         <h4>Category</h4>
         <MDBListGroup flush>
           {options.map((item, index) => (

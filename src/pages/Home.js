@@ -10,7 +10,7 @@ import LatestBlog from "../components/LatestBlog";
 import Category from "../components/Category";
 import PaginationThis from "../components/Pagination";
 import { toast } from "react-toastify";
-import { Spin, Space } from "antd";
+import { Spin, Space, Button } from "antd";
 import DownloadButton from "../components/DownloadButton";
 
 const Home = () => {
@@ -22,6 +22,17 @@ const Home = () => {
   const [latestBlog, setLatestBlog] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(6);
+
+  const [showBtn, setShowBtn] = useState(false);
+
+  const showButton = () => {
+    setShowBtn(true);
+  };
+
+  const hideButton = () => {
+    setShowBtn(false);
+    setAllblogs(blogs);
+  };
 
   const options = [
     "National",
@@ -87,6 +98,7 @@ const Home = () => {
     );
     if (response.status === 200) {
       setAllblogs(response.data);
+      showButton();
     } else {
       toast.error("Something went wrong!");
     }
@@ -105,13 +117,8 @@ const Home = () => {
       {/* {JSON.stringify(filteredBlog)} */}
 
       <MDBRow>
-        <MDBCol md="10">
+        <MDBCol>
           <>
-            <Search
-              searchValue={searchValue}
-              onInputChange={onInputChange}
-              handleSearch={handleSearch}
-            />
             <div className="LoginPage" style={{ paddingTop: "30px" }}>
               <>
                 <MDBRow>
@@ -120,6 +127,20 @@ const Home = () => {
                   )}
                 </MDBRow>
                 <MDBRow>
+                  <Search
+                    searchValue={searchValue}
+                    onInputChange={onInputChange}
+                    handleSearch={handleSearch}
+                  />
+                  {showBtn && (
+                    <Button
+                      style={{ marginBottom: "20px" }}
+                      onClick={hideButton}
+                      type="primary"
+                    >
+                      Go back
+                    </Button>
+                  )}
                   {allblogs &&
                     currentPosts?.map((item, index) => (
                       <MDBCol
@@ -144,7 +165,7 @@ const Home = () => {
             </div>
           </>
         </MDBCol>
-        <MDBCol md="2">
+        <MDBCol lg={3}>
           <div style={{ marginTop: "40px" }}>
             <h4>Latest Blogs</h4>
             {latestBlog &&

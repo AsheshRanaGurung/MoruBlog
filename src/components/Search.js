@@ -4,7 +4,7 @@ import { SearchOutlined } from "@ant-design/icons";
 
 const Search = ({ searchValue, onInputChange, handleSearch }) => {
   return (
-    <div className="searchForm">
+    <div className="searchForm" style={{ margin: "10px 0 20px 0" }}>
       <form className="d-flex" onSubmit={handleSearch}>
         <input
           type="search"
