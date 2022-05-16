@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Button, Row, Col } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+
 const Login = () => {
+  const [loginLoading, setLoginLoading] = useState(false);
   const navigate = useNavigate();
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
   const onFinish = async (values) => {
     // console.log("Received values of form: ", values);
     console.log("name", values.username);
     console.log("name", values.email);
     console.log("name", values.password);
+
+    setLoginLoading(true);
 
     const response = await axios.post(
       "https://faker-rest.zeferinix.com/api/v1//auth/register",
@@ -25,6 +34,8 @@ const Login = () => {
 
     if (response?.status === 200) {
       toast.success("Registered Successfully");
+      setLoginLoading(false);
+
       navigate("/");
     }
   };
@@ -126,7 +137,7 @@ const Login = () => {
                     htmlType="submit"
                     className="login-form-button"
                   >
-                    Log in
+                    {loginLoading ? <Spin indicator={antIcon} /> : "Register"}
                   </Button>
                   <br />
                   <br />
