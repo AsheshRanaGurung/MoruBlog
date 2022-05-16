@@ -106,7 +106,7 @@ const Home = () => {
       {/* {JSON.stringify(filteredBlog)} */}
 
       <MDBRow>
-        <MDBCol md="10">
+        <MDBCol>
           <>
             <Search
               searchValue={searchValue}
@@ -141,7 +141,7 @@ const Home = () => {
             </div>
           </>
         </MDBCol>
-        <MDBCol md="2">
+        <MDBCol lg={3}>
           <div style={{ marginTop: "40px" }}>
             <h4>Latest Blogs</h4>
             {latestBlog &&
