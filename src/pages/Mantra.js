@@ -5,17 +5,10 @@ function Mantra() {
   return (
     <div className="LoginPage">
       <div className="pagecontainer">
-        {/* <Switch
-      // checked={ellipsis}
-      // onChange={() => {
-      //   setEllipsis(!ellipsis);
-      // }}
-    /> */}
-
         <Title level={2} style={{ color: "#c61e2e" }}>
           Power To the People
         </Title>
-        <Paragraph style={{ textAlign: "justify" }}>
+        <Paragraph style={{ textAlign: "justify", marginBottom: "90px" }}>
           At PNPL, we are keen to unleash the potential of general public,
           giving shape to their ideas and digital presence to their trade. We
           aspire to provide easy access to insurance, investment and credit to

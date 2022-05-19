@@ -47,7 +47,7 @@ const Blogs = ({ title, date, category, description, id, excerpt }) => {
   return (
     <MDBCard className="h-100 " style={{ margin: "0 0px" }}>
       <MDBCardImage
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+        src="images/Tech1.jpg"
         alt={title}
         position="top"
         style={{ maxWidth: "100%", height: "180px" }}

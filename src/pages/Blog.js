@@ -63,73 +63,75 @@ const Blog = () => {
   return (
     <div className="pagecontainer">
       {/* <div className="LoginPage"> */}
-      <MDBContainer style={{ marginTop: "32px" }}>
-        <button className="submitBtn" onClick={() => navigate("/")}>
-          Go back
-        </button>
-        <MDBTypography
-          tag="h2"
-          className="text-muted mt-2"
-          style={{ display: "inline-block" }}
-        >
-          {blog && blog.title}
-        </MDBTypography>
-        <img
-          className="img-fluid rounded"
-          style={{ width: "100%", maxHeight: "600px" }}
-          alt="This is blog"
-          src="/images/Blog.jpg"
-        ></img>
-        <div style={{ marginTop: "20px" }}>
-          <div style={{ height: "40px", background: "#f6f6f6" }}>
-            {/* <MDBIcon
-              style={{ float: "left" }}
-              className="mt-3"
-              far
-              icon="calender-alt"
-              size="lg"
-            /> */}
-            <CalendarOutlined style={{ float: "left", marginTop: "10px" }} />
-            <strong style={{ float: "left", margin: "7px 0 0 2px" }}>
-              {blog && blog.date}
-            </strong>
+      <MDBRow>
+        <MDBCol>
+          <MDBContainer style={{ marginTop: "32px" }}>
+            <button className="submitBtn" onClick={() => navigate("/")}>
+              Go back
+            </button>
+            <MDBTypography
+              tag="h2"
+              className="text-muted mt-2"
+              style={{ display: "inline-block" }}
+            >
+              {blog && blog.title}
+            </MDBTypography>
+            <img
+              className="img-fluid rounded"
+              style={{ width: "100%", maxHeight: "600px" }}
+              alt="This is blog"
+              src="/images/Blog.jpg"
+            ></img>
+            <div style={{ marginTop: "20px" }}>
+              <div style={{ height: "40px", background: "#f6f6f6" }}>
+                <CalendarOutlined
+                  style={{ float: "left", marginTop: "10px" }}
+                />
+                <strong style={{ float: "left", margin: "7px 0 0 2px" }}>
+                  {blog && blog.date}
+                </strong>
 
-            <ColorBadge styleInfo={styleInfo}>
-              {blog && blog.category}
-            </ColorBadge>
-          </div>
-          <div style={{ marginBottom: "20px", textAlign: "justify" }}>
-            {blog && blog.blog}
-          </div>{" "}
-        </div>
-        {relatedPost && relatedPost.length > 0 && (
-          <>
-            {relatedPost.length > 1 && <h1>Related Post</h1>}
-            <MDBRow className="row-cols-1 row-cols-md-3 g-4 pb-3">
+                <ColorBadge styleInfo={styleInfo}>
+                  {blog && blog.category}
+                </ColorBadge>
+              </div>
+              <div style={{ marginBottom: "20px", textAlign: "justify" }}>
+                {blog && blog.blog}
+              </div>{" "}
+            </div>
+          </MDBContainer>
+        </MDBCol>
+        <MDBCol lg={3} style={{ marginTop: "32px" }}>
+          {relatedPost && relatedPost.length > 0 && (
+            <>
+              {relatedPost.length > 1 && <h3>Related Post</h3>}
+
               {relatedPost
                 .filter((item) => item.id != id)
                 .map((item, index) => (
                   <MDBCol key={index}>
-                    <MDBCard style={{ width: "100%" }}>
-                      <MDBCardImage
-                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                        alt={item.title}
-                      ></MDBCardImage>
-                      <MDBCardBody>
-                        <MDBCardText>{item.date}</MDBCardText>
-                        <MDBCardTitle>{item.title}</MDBCardTitle>
-                        <MDBCardText style={{ display: "left", padding: "0" }}>
+                    <Link to={`/blog/${item.id}`}>
+                      <MDBCard style={{ width: "100%", marginBottom: "20px" }}>
+                        <MDBCardImage
+                          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                          alt={item.title}
+                        ></MDBCardImage>
+                        <MDBCardBody>
+                          <MDBCardText>{item.date}</MDBCardText>
+                          <MDBCardTitle>{item.title}</MDBCardTitle>
+                          {/* <MDBCardText style={{ display: "left", padding: "0" }}>
                           {excerpt(item.blog)}
                           <Link to={`/blog/${item.id}`}> Read more</Link>
-                        </MDBCardText>
-                      </MDBCardBody>
-                    </MDBCard>
+                        </MDBCardText> */}
+                        </MDBCardBody>
+                      </MDBCard>
+                    </Link>
                   </MDBCol>
                 ))}
-            </MDBRow>
-          </>
-        )}
-      </MDBContainer>
+            </>
+          )}
+        </MDBCol>
+      </MDBRow>
     </div>
   );
 };

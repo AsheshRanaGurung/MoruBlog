@@ -20,7 +20,7 @@ import StrategyPage from "./pages/StrategyPage";
 import Governance from "./pages/Governance";
 import CommitteePage from "./pages/CommitteePage";
 import Footer from "./components/Footer";
-
+import Dashboard from "./components/dashboard/Dashboard";
 import axios from "axios";
 
 // import { Layout } from "antd";
@@ -33,13 +33,12 @@ import ProfileScreen from "./pages/ProfileScreen";
 function App() {
   const getData = useSelector((state) => state.createBlog);
   const { isSuccess } = getData;
-  // const { Header: antHeader, Footer: antFooter, Sider, Content } = Layout;
+  // const userInfo = useSelector((state) => state.getToken.token);
+  const pathname = window.location.pathname;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // toast.success("Success");
-    // toast.error("Error");
     loadBlogsData();
   }, [isSuccess]);
 
@@ -59,26 +58,34 @@ function App() {
           closeOnClick
           rtl={false}
         />
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          {/* <Route path="/addBlog" element={<AddEditpage />} /> */}
-          <Route path="/editblog/:id" element={<AddEditpage />} />
-          <Route path="/blog/:id" element={<Blog />} />
-          <Route path="/addblog" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profilepage" element={<ProfileScreen />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/companyprofile" element={<CompanyProfile />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/mantra" element={<Mantra />} />
-          <Route path="/objectives" element={<StrategyPage />} />
-          <Route path="/ourgovernance" element={<Governance />} />
-          <Route path="/committee" element={<CommitteePage />} />
+        {pathname === "/dashboard" ? (
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        ) : (
+          <>
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              {/* <Route path="/addBlog" element={<AddEditpage />} /> */}
+              <Route path="/editblog/:id" element={<AddEditpage />} />
+              <Route path="/blog/:id" element={<Blog />} />
+              <Route path="/addblog" element={<About />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profilepage" element={<ProfileScreen />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/companyprofile" element={<CompanyProfile />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/mantra" element={<Mantra />} />
+              <Route path="/objectives" element={<StrategyPage />} />
+              <Route path="/ourgovernance" element={<Governance />} />
+              <Route path="/committee" element={<CommitteePage />} />
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        <Footer />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+            <Footer />
+          </>
+        )}
       </div>
     </BrowserRouter>
   );

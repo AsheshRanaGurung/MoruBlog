@@ -35,6 +35,11 @@ const Login = () => {
       dispatch(GetThisTokenSuccess(response.data.token));
       navigate("/");
     }
+
+    if (response?.status === 401) {
+      console.log(response);
+      toast.error(response.message);
+    }
   };
 
   return (

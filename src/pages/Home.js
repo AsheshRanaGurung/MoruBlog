@@ -122,16 +122,14 @@ const Home = () => {
             <div className="LoginPage" style={{ paddingTop: "30px" }}>
               <>
                 <MDBRow>
-                  {allblogs?.length === 0 && (
-                    <Spin size="large" style={{ display: "block" }} />
-                  )}
-                </MDBRow>
-                <MDBRow>
                   <Search
                     searchValue={searchValue}
                     onInputChange={onInputChange}
                     handleSearch={handleSearch}
                   />
+                  {allblogs?.length === 0 && (
+                    <Spin size="large" style={{ display: "block" }} />
+                  )}
                   {showBtn && (
                     <Button
                       style={{ marginBottom: "20px" }}
@@ -159,6 +157,11 @@ const Home = () => {
                         />
                       </MDBCol>
                     ))}
+                  <PaginationThis
+                    postsPerPage={postPerPage}
+                    totalPosts={allblogs.length}
+                    paginate={paginate}
+                  />
                 </MDBRow>
               </>
               {/* )} */}
@@ -177,11 +180,6 @@ const Home = () => {
           </div>
         </MDBCol>
       </MDBRow>
-      <PaginationThis
-        postsPerPage={postPerPage}
-        totalPosts={allblogs.length}
-        paginate={paginate}
-      />
     </div>
   );
 };
