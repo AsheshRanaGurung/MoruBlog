@@ -10,7 +10,7 @@ import LatestBlog from "../components/LatestBlog";
 import Category from "../components/Category";
 import PaginationThis from "../components/Pagination";
 import { toast } from "react-toastify";
-import { Spin, Space, Button } from "antd";
+import { Spin, Button } from "antd";
 import DownloadButton from "../components/DownloadButton";
 
 const Home = () => {
@@ -143,8 +143,10 @@ const Home = () => {
                     currentPosts?.map((item, index) => (
                       <MDBCol
                         key={index}
-                        // span={6}
-
+                        // lg={4}
+                        md={6}
+                        lg={4}
+                        sm={12}
                         style={{ paddingBottom: "32px" }}
                       >
                         <Blogs

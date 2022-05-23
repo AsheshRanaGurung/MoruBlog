@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "antd";
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 function CommitteePage() {
   return (

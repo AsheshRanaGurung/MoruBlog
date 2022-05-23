@@ -95,80 +95,83 @@ const DashboardForm = () => {
     return today;
   };
   return (
-    <Form
-      {...layout}
-      name="nest-messages"
-      layout="vertical"
-      onFinish={onFinish}
-      validateMessages={validateMessages}
-      style={{ marginTop: "50px" }}
-    >
-      <MDBRow>
-        <MDBCol md={4}>
-          <Form.Item
-            name="title"
-            label="Title"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            {/* {JSON.stringify(desc)} */}
-
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="category"
-            label="Category"
-            rules={[{ required: true, message: "Please select Blog Topic!" }]}
-          >
-            <Select placeholder="select your blog topic">
-              {options.map((item, index) => (
-                <Option key={index} value={item}>
-                  {item}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="upload"
-            label="Image"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-          >
-            <Upload
-              name="logo"
-              // action={"http://localhost:3000/"}
-              beforeUpload={() => false}
-              listType="picture"
+    <>
+      Add New Blog
+      <Form
+        {...layout}
+        name="nest-messages"
+        layout="vertical"
+        onFinish={onFinish}
+        validateMessages={validateMessages}
+        style={{ marginTop: "50px" }}
+      >
+        <MDBRow>
+          <MDBCol md={4}>
+            <Form.Item
+              name="title"
+              label="Title"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
             >
-              <Button icon={<UploadOutlined />}>Click to upload</Button>
-            </Upload>
-          </Form.Item>
-        </MDBCol>
-        <MDBCol md={8}>
-          <Form.Item
-            name="blog"
-            label="Blog"
-            rules={[{ required: true, message: "Please write a blog" }]}
-          >
-            <Input.TextArea
-              rows={18}
-              cols={22}
-              showCount
-              maxLength={10000}
-            ></Input.TextArea>
-          </Form.Item>
-          <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <button className="submitBtn" type="primary">
-              Submit
-            </button>
-          </Form.Item>
-        </MDBCol>
-      </MDBRow>
-    </Form>
+              {/* {JSON.stringify(desc)} */}
+
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="category"
+              label="Category"
+              rules={[{ required: true, message: "Please select Blog Topic!" }]}
+            >
+              <Select placeholder="select your blog topic">
+                {options.map((item, index) => (
+                  <Option key={index} value={item}>
+                    {item}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item
+              name="upload"
+              label="Image"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+            >
+              <Upload
+                name="logo"
+                // action={"http://localhost:3000/"}
+                beforeUpload={() => false}
+                listType="picture"
+              >
+                <Button icon={<UploadOutlined />}>Click to upload</Button>
+              </Upload>
+            </Form.Item>
+          </MDBCol>
+          <MDBCol md={8}>
+            <Form.Item
+              name="blog"
+              label="Blog"
+              rules={[{ required: true, message: "Please write a blog" }]}
+            >
+              <Input.TextArea
+                rows={18}
+                cols={22}
+                showCount
+                maxLength={10000}
+              ></Input.TextArea>
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+              <button className="submitBtn" type="primary">
+                Submit
+              </button>
+            </Form.Item>
+          </MDBCol>
+        </MDBRow>
+      </Form>
+    </>
   );
 };
 

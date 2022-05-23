@@ -42,30 +42,30 @@ const LeftMenu = () => {
       >
         <MenuItemGroup>
           <Link to="/companyprofile" style={{ color: "black" }}>
-            <Menu.Item key="settings:1">Company Profile</Menu.Item>
+            <Menu.Item key="settings:5">Company Profile</Menu.Item>
           </Link>
           <Link to="/team">
-            <Menu.Item key="settings:2" style={{ color: "black" }}>
+            <Menu.Item key="settings:6" style={{ color: "black" }}>
               Team{" "}
             </Menu.Item>
           </Link>
           <Link to="/mantra">
-            <Menu.Item key="settings:4" style={{ color: "black" }}>
+            <Menu.Item key="settings:7" style={{ color: "black" }}>
               Mantra
             </Menu.Item>
           </Link>
           <Link to="/objectives">
-            <Menu.Item key="settings:3" style={{ color: "black" }}>
+            <Menu.Item key="settings:8" style={{ color: "black" }}>
               Strategic Objectives
             </Menu.Item>
           </Link>
           <Link to="/ourgovernance">
-            <Menu.Item key="settings:5" style={{ color: "black" }}>
+            <Menu.Item key="settings:9" style={{ color: "black" }}>
               Corporate Governance
             </Menu.Item>
           </Link>
           <Link to="/committee">
-            <Menu.Item key="settings:6" style={{ color: "black" }}>
+            <Menu.Item key="settings:10" style={{ color: "black" }}>
               Committees formed by Board
             </Menu.Item>
           </Link>

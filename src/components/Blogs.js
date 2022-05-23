@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { Card, Avatar, Col } from "antd";
 import {
   MDBCard,
@@ -19,6 +19,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Blogs = ({ title, date, category, description, id, excerpt }) => {
+  const userInfo = useSelector((state) => state.getToken.token);
+
   const dispatch = useDispatch();
 
   const deleteThisId = async (id) => {
@@ -41,7 +43,7 @@ const Blogs = ({ title, date, category, description, id, excerpt }) => {
     // console.log(desc);
     const response = await axios.get(`http://localhost:5000/blogs/${id}`);
     // console.log(response.data);
-    dispatch(GetThisBlogSuccess(response.data));
+    dispatch(GetThisBlogSuccess(response?.data));
   };
 
   return (
@@ -75,22 +77,26 @@ const Blogs = ({ title, date, category, description, id, excerpt }) => {
         </MDBCardText>
         {/* <DeleteOutlined style={{ fontSize: "22px", color: "red" }} />
         <EditOutlined style={{ fontSize: "22px", color: "green" }} /> */}
-        <MDBBtn
-          tag="a"
-          className="mt-1"
-          color="none"
-          onClick={() => deleteThisId(id)}
-        >
-          <MDBIcon
-            fas
-            icon="trash"
-            style={{ color: "red", marginRight: "10px" }}
-            size="lg"
-          />
-        </MDBBtn>
-        <Link to={`/editblog/${id}`} onClick={() => editThisBlog(id)}>
-          <MDBIcon fas icon="edit" style={{ color: "green" }} size="lg" />
-        </Link>
+        {userInfo && (
+          <>
+            <MDBBtn
+              tag="a"
+              className="mt-1"
+              color="none"
+              onClick={() => deleteThisId(id)}
+            >
+              <MDBIcon
+                fas
+                icon="trash"
+                style={{ color: "red", marginRight: "10px" }}
+                size="lg"
+              />
+            </MDBBtn>
+            <Link to={`/editblog/${id}`} onClick={() => editThisBlog(id)}>
+              <MDBIcon fas icon="edit" style={{ color: "green" }} size="lg" />
+            </Link>
+          </>
+        )}
       </MDBCardBody>
     </MDBCard>
   );

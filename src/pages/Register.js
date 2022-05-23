@@ -7,12 +7,12 @@ import { toast } from "react-toastify";
 
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [loginLoading, setLoginLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 

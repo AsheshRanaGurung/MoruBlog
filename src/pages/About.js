@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Input, Upload, Button, Select } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import CreateNewBlog, { createNewBlog } from "../redux/CreateBlog";
+import { createNewBlog } from "../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 
 const layout = {

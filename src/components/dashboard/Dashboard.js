@@ -12,6 +12,7 @@ import {
 } from "@ant-design/icons";
 import { DesktopOutlined, FileOutlined } from "@ant-design/icons";
 import DashboardForm from "./DashboardForm";
+import BlogDetails from "./BlogDetails";
 
 const items1 = ["1", "2", "3"].map((key) => ({
   key,
@@ -74,12 +75,12 @@ const Dashboard = () => {
             style={{ height: "37px" }}
           ></img>
         </div>
-        <Menu
+        {/* <Menu
           theme="dark"
           mode="horizontal"
           //   defaultSelectedKeys={["1"]}
           items={items1}
-        />
+        /> */}
       </Header>
       <Sider
         collapsible
@@ -114,8 +115,8 @@ const Dashboard = () => {
             className="site-layout-background"
             style={{ padding: 24, textAlign: "center" }}
           >
-            Add New Blog
-            <DashboardForm />
+            {/* <DashboardForm /> */}
+            <BlogDetails />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>

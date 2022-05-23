@@ -40,12 +40,12 @@ const Blog = () => {
     }
   };
 
-  const excerpt = (string) => {
-    if (string?.length > 60) {
-      string = string.substring(0, 60) + "...";
-    }
-    return string;
-  };
+  // const excerpt = (string) => {
+  //   if (string?.length > 60) {
+  //     string = string.substring(0, 60) + "...";
+  //   }
+  //   return string;
+  // };
 
   useEffect(() => {
     if (id) {

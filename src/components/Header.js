@@ -73,34 +73,34 @@ const Header = () => {
             visible={visible}
           >
             <Menu>
-              <Menu.Item key="mail">
+              <Menu.Item key="mail2">
                 <Link to="/" style={{ fontSize: "19px" }} onClick={onClose}>
                   Home
                 </Link>
               </Menu.Item>
               <SubMenu
-                key="SubMenu"
+                key="SubMenu3"
                 title={<span>Blogs</span>}
                 style={{ fontSize: "19px" }}
               >
                 <MenuItemGroup title="Blog Category">
-                  <Menu.Item key="setting:1" onClick={onClose}>
+                  <Menu.Item key="setting:11" onClick={onClose}>
                     Hot News{" "}
                   </Menu.Item>
-                  <Menu.Item key="setting:2" onClick={onClose}>
+                  <Menu.Item key="setting:12" onClick={onClose}>
                     National news{" "}
                   </Menu.Item>
-                  <Menu.Item key="setting:3" onClick={onClose}>
+                  <Menu.Item key="setting:13" onClick={onClose}>
                     Business News
                   </Menu.Item>
-                  <Menu.Item key="setting:4" onClick={onClose}>
+                  <Menu.Item key="setting:14" onClick={onClose}>
                     International News
                   </Menu.Item>
                 </MenuItemGroup>
               </SubMenu>
 
               {userInfo && (
-                <Menu.Item key="alipay2">
+                <Menu.Item key="alipay22">
                   <Link
                     to="/addblog"
                     style={{ fontSize: "19px" }}
@@ -121,11 +121,11 @@ const Header = () => {
                     style={{ color: "black" }}
                     onClick={onClose}
                   >
-                    <Menu.Item key="settings:1">Company Profile</Menu.Item>
+                    <Menu.Item key="settings:5">Company Profile</Menu.Item>
                   </Link>
                   <Link to="/team">
                     <Menu.Item
-                      key="settings:2"
+                      key="settings:6"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -134,7 +134,7 @@ const Header = () => {
                   </Link>
                   <Link to="/mantra">
                     <Menu.Item
-                      key="settings:4"
+                      key="settings:7"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -143,7 +143,7 @@ const Header = () => {
                   </Link>
                   <Link to="/objectives">
                     <Menu.Item
-                      key="settings:3"
+                      key="settings:8"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -152,7 +152,7 @@ const Header = () => {
                   </Link>
                   <Link to="/ourgovernance">
                     <Menu.Item
-                      key="settings:5"
+                      key="settings:9"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -161,7 +161,7 @@ const Header = () => {
                   </Link>
                   <Link to="/committee">
                     <Menu.Item
-                      key="settings:6"
+                      key="settings:10"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -173,23 +173,23 @@ const Header = () => {
 
               {userInfo ? (
                 <SubMenu
-                  key="SubMenu3"
+                  key="SubMenu4444"
                   title={<span>Profile</span>}
                   style={{ fontSize: "19px" }}
                 >
                   <MenuItemGroup>
-                    <Menu.Item key="setting:1">
+                    <Menu.Item key="setting:21">
                       <Link to="/profilepage" onClick={onClose}>
                         Profile page
                       </Link>
                     </Menu.Item>
-                    <Menu.Item key="setting:2" onClick={() => logOut()}>
+                    <Menu.Item key="setting:22" onClick={() => logOut()}>
                       Log Out
                     </Menu.Item>
                   </MenuItemGroup>
                 </SubMenu>
               ) : (
-                <Menu.Item key="mail2">
+                <Menu.Item key="mail22">
                   <Link
                     to="/login"
                     style={{ fontSize: "19px" }}
