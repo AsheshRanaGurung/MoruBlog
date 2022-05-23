@@ -10,6 +10,8 @@ import LatestBlog from "../components/LatestBlog";
 import Category from "../components/Category";
 import PaginationThis from "../components/Pagination";
 import { toast } from "react-toastify";
+import { Spin, Button } from "antd";
+import DownloadButton from "../components/DownloadButton";
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -20,9 +22,17 @@ const Home = () => {
   const [latestBlog, setLatestBlog] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(6);
-  console.log(allblogs);
 
-  // console.log(allblogs);
+  const [showBtn, setShowBtn] = useState(false);
+
+  const showButton = () => {
+    setShowBtn(true);
+  };
+
+  const hideButton = () => {
+    setShowBtn(false);
+    setAllblogs(blogs);
+  };
 
   const options = [
     "National",
@@ -88,6 +98,7 @@ const Home = () => {
     );
     if (response.status === 200) {
       setAllblogs(response.data);
+      showButton();
     } else {
       toast.error("Something went wrong!");
     }
@@ -108,21 +119,34 @@ const Home = () => {
       <MDBRow>
         <MDBCol>
           <>
-            <Search
-              searchValue={searchValue}
-              onInputChange={onInputChange}
-              handleSearch={handleSearch}
-            />
-            <div className="LoginPage">
+            <div className="LoginPage" style={{ paddingTop: "30px" }}>
               <>
-                <MDBRow>{allblogs?.length === 0 && <p>Loading...</p>}</MDBRow>
                 <MDBRow>
+                  <Search
+                    searchValue={searchValue}
+                    onInputChange={onInputChange}
+                    handleSearch={handleSearch}
+                  />
+                  {allblogs?.length === 0 && (
+                    <Spin size="large" style={{ display: "block" }} />
+                  )}
+                  {showBtn && (
+                    <Button
+                      style={{ marginBottom: "20px" }}
+                      onClick={hideButton}
+                      type="primary"
+                    >
+                      Go back
+                    </Button>
+                  )}
                   {allblogs &&
                     currentPosts?.map((item, index) => (
                       <MDBCol
                         key={index}
-                        // span={6}
-
+                        // lg={4}
+                        md={6}
+                        lg={4}
+                        sm={12}
                         style={{ paddingBottom: "32px" }}
                       >
                         <Blogs
@@ -135,6 +159,11 @@ const Home = () => {
                         />
                       </MDBCol>
                     ))}
+                  <PaginationThis
+                    postsPerPage={postPerPage}
+                    totalPosts={allblogs.length}
+                    paginate={paginate}
+                  />
                 </MDBRow>
               </>
               {/* )} */}
@@ -149,14 +178,10 @@ const Home = () => {
                 <LatestBlog key={index} {...item} />
               ))}{" "}
             <Category options={options} handleCategory={handleCategory} />
+            <DownloadButton />
           </div>
         </MDBCol>
       </MDBRow>
-      <PaginationThis
-        postsPerPage={postPerPage}
-        totalPosts={allblogs.length}
-        paginate={paginate}
-      />
     </div>
   );
 };

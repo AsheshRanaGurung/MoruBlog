@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import { store } from "./redux/Store";
 import { Provider } from "react-redux";
+import { BrowserRouter, Routes } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

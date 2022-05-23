@@ -1,6 +1,6 @@
 import React from "react";
 import { MDBRow, MDBCol } from "mdb-react-ui-kit";
-import { Form, Input, Button, Row, Col } from "antd";
+import { Form, Input, Button } from "antd";
 
 const ProfileScreen = () => {
   const onFinish = (values) => {
@@ -10,11 +10,11 @@ const ProfileScreen = () => {
     <div className="LoginPage">
       <div className="pagecontainer" style={{ marginBottom: "20px" }}>
         <MDBRow>
-          <MDBCol size="4">
+          <MDBCol md={6}>
             <h3>User Profile</h3>
             <Form
-              name="normal_login"
-              className="login-form"
+              name="profile-form"
+              className="profile-form"
               initialValues={{
                 remember: true,
               }}
@@ -102,7 +102,13 @@ const ProfileScreen = () => {
               </Form.Item>
             </Form>
           </MDBCol>
-          <MDBCol></MDBCol>
+          <MDBCol>
+            <img
+              src="/images/user.gif"
+              alt="user"
+              style={{ width: "100%", height: "300px", objectFit: "contain" }}
+            />
+          </MDBCol>
         </MDBRow>
       </div>
     </div>

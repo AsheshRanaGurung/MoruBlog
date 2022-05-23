@@ -11,12 +11,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.searchForm{
-  width: 500px;
-  margin: auto;
-  margin-top:15px;
-  align-content: center;
-}
 
 .categorySelect{
   width:100%;
@@ -29,11 +23,11 @@ code {
   text-align: left;
   font-size: 14px;
 }
-h1{
+h3{
   overflow:hidden;
   text-align: center;
 }
-h1:before,h1:after{
+h3:before,h3:after{
   background-color: black;
   content: "";
   display: inline-block;
@@ -42,11 +36,11 @@ h1:before,h1:after{
   vertical-align: middle;
   width:50%;
 }
-h1:before{
+h3:before{
   right:0.5em;
   margin-left: -50%;
 }
-h1:after{
+h3:after{
   left:0.5em;
   margin-right:-50%;
 }

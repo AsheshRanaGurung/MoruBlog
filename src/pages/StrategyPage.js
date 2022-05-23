@@ -16,7 +16,7 @@ function StrategyPage() {
         <Title level={2} style={{ color: "#c61e2e" }}>
           Strategic Objectives
         </Title>
-        <Paragraph style={{ textAlign: "justify" }}>
+        <Paragraph style={{ textAlign: "justify", marginBottom: "45px" }}>
           The company will partner with prominent financial institutions,
           massive public utility undertakings, contemporary and non-
           contemporary merchant groups and infinite private businesses, to

@@ -11,7 +11,7 @@ function Footer() {
       <div className="Webcontainer">
         <MDBRow>
           <MDBCol md="3">
-            <h5 className="title">BabaalDeal</h5>
+            <h5 className="title">Moru Digital wallet</h5>
             <p className="footer-intro" style={{ textAlign: "justify" }}>
               Our mission is to be the leading payment service provider,
               delivering world class service through the blending of
@@ -61,15 +61,16 @@ function Footer() {
             <h5 className="title">Contact Us</h5>
             <ul>
               <li className="list-unstyled">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <i className="fa fa-map-marker" aria-hidden="true"></i>
                 3rd Floor, Nirdhan Bhawan, Bhagwati Bahal, Naxal-1 Kathmandu,
                 Nepal
               </li>{" "}
               <li className="list-unstyled">
-                <i class="fa fa-phone" aria-hidden="true"></i> +977-1-4543888
+                <i className="fa fa-phone" aria-hidden="true"></i>{" "}
+                +977-1-4543888
               </li>
               <li className="list-unstyled">
-                <i class="fa fa-phone" aria-hidden="true"></i>
+                <i className="fa fa-phone" aria-hidden="true"></i>
                 16600114888
               </li>
               <li className="list-unstyled">

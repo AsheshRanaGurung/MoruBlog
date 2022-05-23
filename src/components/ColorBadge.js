@@ -10,9 +10,9 @@ const ColorBadge = ({ children, styleInfo }) => {
     Multimedia: "danger",
   };
   return (
-    <h5 style={styleInfo}>
+    <div style={styleInfo}>
       <MDBBadge color={color[children]}>{children}</MDBBadge>
-    </h5>
+    </div>
   );
 };
 
