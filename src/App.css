@@ -82,7 +82,9 @@ height:500px;
     padding: 20px;
     height: 40vh;
     width: 400px;
-    margin-top: 145px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    /* margin-top: 145px; */
     /* margin: 8rem auto; */
     border: solid gray 1px;
     border-radius: 4px;
@@ -248,14 +250,17 @@ height:500px;
     padding: 10px 20px;
   }
   .form-page{
-    margin-top: 70px;
-    width:350px;
-    height: 60vh;
+    /* margin-top: 70px; */
+    width:100%;
+    /* width:350px; */
+    /* height: 40vh; */
+    height: 50vh;
     /* object-fit: contain; */
   }
-  .LoginPage_image{
+  /* .LoginPage_image{
     display: none;
-  }
+  } */
+
 
 }
 
@@ -273,11 +278,11 @@ height:500px;
     }
     .form-page{
       
-
-    padding: 20px;
-    height: 60vh;
-    width: 280px;
-    margin: 42px 0 0 0;
+    width: auto;
+    padding: 20px 20px 0 20px;
+    height: 43vh;
+    /* width: 280px; */
+    margin: 0 0 26px 0;
     /* margin: 8rem auto; */
     border: solid gray 1px;
     border-radius: 4px;

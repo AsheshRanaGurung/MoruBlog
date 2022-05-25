@@ -72,16 +72,17 @@ const About = () => {
 
     const nowDate = getDate();
     const blog = { ...values, date: nowDate };
-    const response = await axios.post("http://localhost:5000/blogs", blog);
-    console.log(response.data);
-    dispatch(createNewBlog(response.data));
+    console.log(blog);
+    // const response = await axios.post("http://localhost:5000/blogs", blog);
+    // console.log(response.data);
+    // dispatch(createNewBlog(response.data));
 
-    if ((response.status = 201)) {
-      toast.success("Blog created successfully");
-      navigate("/");
-    } else {
-      toast.error("Something went wrong");
-    }
+    // if ((response.status = 201)) {
+    //   toast.success("Blog created successfully");
+    //   navigate("/");
+    // } else {
+    //   toast.error("Something went wrong");
+    // }
   };
 
   const getDate = () => {

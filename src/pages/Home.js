@@ -12,6 +12,7 @@ import PaginationThis from "../components/Pagination";
 import { toast } from "react-toastify";
 import { Spin, Button } from "antd";
 import DownloadButton from "../components/DownloadButton";
+import Weather from "../components/Weather";
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -113,7 +114,7 @@ const Home = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div className="pagecontainer">
-      {/* {JSON.stringify(allblogs)} */}
+      {/* {JSON.stringify(weather)} */}
       {/* {JSON.stringify(filteredBlog)} */}
 
       <MDBRow>
@@ -122,6 +123,17 @@ const Home = () => {
             <div className="LoginPage" style={{ paddingTop: "30px" }}>
               <>
                 <MDBRow>
+                  {/* <div className="flex">
+                    Petrol price tommorow: Rs
+                    <h1>
+                      <CountUp
+                        end={1000000}
+                        duration={100}
+                        prefix="Rs."
+                        decimals={2}
+                      />
+                    </h1>
+                  </div> */}
                   <Search
                     searchValue={searchValue}
                     onInputChange={onInputChange}
@@ -170,8 +182,9 @@ const Home = () => {
             </div>
           </>
         </MDBCol>
-        <MDBCol lg={3}>
+        <MDBCol xl={3}>
           <div style={{ marginTop: "40px" }}>
+            <Weather />
             <h4>Latest Blogs</h4>
             {latestBlog &&
               latestBlog.map((item, index) => (
