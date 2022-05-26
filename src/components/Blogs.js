@@ -13,21 +13,42 @@ import {
 
 import { Link } from "react-router-dom";
 import ColorBadge from "./ColorBadge";
-import { deleteThisBlog } from "../redux/GetApiData";
+import { deleteThisBlog, getApiDataSuccess } from "../redux/GetApiData";
 import { GetThisBlogSuccess } from "../redux/GetThisBlog";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Blogs = ({ title, date, category, description, id, excerpt }) => {
-  const userInfo = useSelector((state) => state.getToken.token);
+// const Blogs = ({ title, date, category, description, id, excerpt }) => {
+const Blogs = ({ title, date, description, id, excerpt }) => {
+  const userToken = useSelector((state) => state.getToken);
+  const { token } = userToken;
 
   const dispatch = useDispatch();
 
+  const loadBlogsData = async () => {
+    const response2 = await axios.get(
+      "https://flaskapi-sanjeev.herokuapp.com/posts"
+    );
+    console.log("response2", response2?.data?.posts);
+    dispatch(getApiDataSuccess(response2?.data?.posts));
+  };
+
   const deleteThisId = async (id) => {
     if (window.confirm("Are you sure you want to Delete this Blog?")) {
-      const response = await axios.delete(`http://localhost:5000/blogs/${id}`);
+      const config = {
+        headers: {
+          access_token: token,
+        },
+      };
+      const response = await axios.delete(
+        `https://flaskapi-sanjeev.herokuapp.com/posts/${id}/delete`,
+
+        config
+      );
       if (response.status === 200) {
         dispatch(deleteThisBlog(id));
+        loadBlogsData();
+
         toast.success("Blog deleted successfully");
         // console.log(response.data);
         // dispatch(getApiDataSuccess(response.data));
@@ -63,8 +84,8 @@ const Blogs = ({ title, date, category, description, id, excerpt }) => {
             justifyContent: "space-between",
           }}
         >
-          {date}
-          <ColorBadge>{category}</ColorBadge>
+          {date?.slice(0, 10)}
+          {/* <ColorBadge>{category}</ColorBadge> */}
         </MDBCardText>
         <MDBCardTitle
           style={{ fontSize: "25px", display: "flex", padding: "0" }}
@@ -77,7 +98,7 @@ const Blogs = ({ title, date, category, description, id, excerpt }) => {
         </MDBCardText>
         {/* <DeleteOutlined style={{ fontSize: "22px", color: "red" }} />
         <EditOutlined style={{ fontSize: "22px", color: "green" }} /> */}
-        {userInfo && (
+        {token && (
           <>
             <MDBBtn
               tag="a"

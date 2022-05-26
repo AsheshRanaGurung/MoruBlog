@@ -4,9 +4,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createNewBlog } from "../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
+import { getApiDataSuccess } from "../redux/GetApiData";
 
 const layout = {
   labelCol: {
@@ -66,6 +67,7 @@ const About = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+<<<<<<< Updated upstream
   const onFinish = async (values) => {
     // console.log(values);
     // temporary post on json server
@@ -82,18 +84,56 @@ const About = () => {
     } else {
       toast.error("Something went wrong");
     }
+=======
+  const userToken = useSelector((state) => state.getToken);
+  const { token } = userToken;
+
+  const loadBlogsData = async () => {
+    const response2 = await axios.get(
+      "https://flaskapi-sanjeev.herokuapp.com/posts"
+    );
+    console.log("response2", response2?.data?.posts);
+    dispatch(getApiDataSuccess(response2?.data?.posts));
+>>>>>>> Stashed changes
   };
 
-  const getDate = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0");
-    let yyyy = today.getFullYear();
-    today = yyyy + "/" + mm + "/" + dd;
-    // console.log(today);
+  const onFinish = async (values) => {
+    // const nowDate = getDate();
 
-    return today;
+    // console.log(values.blog);
+    // console.log(values.title);
+    // console.log(values.category);
+
+    const config = {
+      headers: {
+        access_token: token,
+      },
+    };
+
+    const response = await axios.post(
+      "https://flaskapi-sanjeev.herokuapp.com/posts/new",
+      {
+        content: values.blog,
+        title: values.title,
+        // category:values.category
+      },
+      config
+    );
+
+    if ((response.status = 201)) {
+      // dispatch(createNewBlog({
+
+      // }));
+      loadBlogsData();
+
+      toast.success("Blog created successfully");
+
+      navigate("/");
+    } else {
+      toast.error("Something went wrong");
+    }
   };
+
   return (
     <div className="pagecontainer">
       <Form

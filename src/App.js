@@ -29,6 +29,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getApiDataSuccess } from "./redux/GetApiData";
 import Blog from "./pages/Blog";
 import ProfileScreen from "./pages/ProfileScreen";
+// import { loadBlogsData } from "./service";
 
 function App() {
   const getData = useSelector((state) => state.createBlog);
@@ -43,10 +44,17 @@ function App() {
   }, [isSuccess]);
 
   const loadBlogsData = async () => {
-    const response = await axios.get("http://localhost:5000/blogs");
-    // console.log(response.data);
-    dispatch(getApiDataSuccess(response.data));
+    // const response = await axios.get("http://localhost:5000/blogs");
+    // console.log("response1", response.data);
+    // dispatch(getApiDataSuccess(response.data));
+
+    const response2 = await axios.get(
+      "https://flaskapi-sanjeev.herokuapp.com/posts"
+    );
+    console.log("response2", response2?.data?.posts);
+    dispatch(getApiDataSuccess(response2?.data?.posts));
   };
+
   return (
     <BrowserRouter>
       <div className="App">

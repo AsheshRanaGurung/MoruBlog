@@ -26,14 +26,16 @@ const Blog = () => {
   const navigate = useNavigate();
 
   const getSingleBlog = async () => {
-    const response = await axios.get(`http://localhost:5000/blogs/${id}`);
+    const response = await axios.get(
+      `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`
+    );
 
     const relatedPostData = await axios.get(
       `http://localhost:5000/blogs?category=${response.data.category}&_start=0&_end=3`
     );
     // console.log(relatedPostData.data);
     if (response.status === 200 || relatedPostData.status === 200) {
-      setBlog(response.data);
+      setBlog(response?.data?.message);
       setRelatedPost(relatedPostData.data);
     } else {
       toast.error("Something is wrong!");
@@ -76,6 +78,10 @@ const Blog = () => {
             >
               {blog && blog.title}
             </MDBTypography>
+            <br />
+            <div style={{ textAlign: "left" }}>
+              Author:{blog && blog.user.username}
+            </div>{" "}
             <img
               className="img-fluid rounded"
               style={{ width: "100%", maxHeight: "600px" }}
@@ -88,15 +94,14 @@ const Blog = () => {
                   style={{ float: "left", marginTop: "10px" }}
                 />
                 <strong style={{ float: "left", margin: "7px 0 0 2px" }}>
-                  {blog && blog.date}
+                  {blog && blog.created_at.slice(0, 10)}
                 </strong>
-
                 <ColorBadge styleInfo={styleInfo}>
                   {blog && blog.category}
                 </ColorBadge>
               </div>
               <div style={{ marginBottom: "20px", textAlign: "justify" }}>
-                {blog && blog.blog}
+                {blog && blog.content}
               </div>{" "}
             </div>
           </MDBContainer>

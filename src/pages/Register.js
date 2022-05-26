@@ -25,10 +25,9 @@ const Login = () => {
     setLoginLoading(true);
 
     const response = await axios.post(
-      "https://faker-rest.zeferinix.com/api/v1//auth/register",
+      "https://flaskapi-sanjeev.herokuapp.com/register",
+
       {
-        firstName: values.username,
-        lastName: values.username,
         username: values.username,
         email: values.email,
         password: values.password,
@@ -36,8 +35,6 @@ const Login = () => {
     );
 
     if (response?.status === 200) {
-      // localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
-
       toast.success("Registered Successfully");
       setLoginLoading(false);
       // dispatch(GetThisTokenSuccess(response.data.token));

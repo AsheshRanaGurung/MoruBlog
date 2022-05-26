@@ -22,9 +22,23 @@ const Login = () => {
   const onFinish = async (values) => {
     // console.log("Received values of form: ", values);
     setLoginLoading(true);
+
+    var credentials = btoa(values?.email + ":" + values?.password);
+
+    var basicAuth = "Basic " + credentials;
+
+    const config = {
+      headers: { Authorization: basicAuth },
+      auth: {
+        username: values.email,
+        password: values.password,
+      },
+    };
+
     const response = await axios.post(
-      "https://faker-rest.zeferinix.com/api/v1/auth/login",
-      { username: values.email, password: values.password }
+      "https://flaskapi-sanjeev.herokuapp.com/login",
+      {},
+      config
     );
 
     if (response?.status === 200) {

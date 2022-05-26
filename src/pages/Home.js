@@ -3,7 +3,7 @@ import { MDBRow, MDBCol } from "mdb-react-ui-kit";
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Blogs from "../components/Blogs";
 import Search from "../components/Search";
 import LatestBlog from "../components/LatestBlog";
@@ -25,6 +25,8 @@ const Home = () => {
 
   const [showBtn, setShowBtn] = useState(false);
 
+  const dispatch = useDispatch();
+
   const showButton = () => {
     setShowBtn(true);
   };
@@ -42,8 +44,18 @@ const Home = () => {
     "Sports",
   ];
 
+  // useEffect(() => {
+  //   setAllblogs(blogs);
+  //   getUsers().then((data) => {
+  //     setAllblogs();
+  //   });
+  //   // fetchLatestBlog();
+  //   // return setAllblogs
+  // }, [blogs]);
+
   useEffect(() => {
     setAllblogs(blogs);
+
     fetchLatestBlog();
   }, [blogs]);
 
@@ -63,7 +75,7 @@ const Home = () => {
   };
   // console.log(allblogs);
   const excerpt = (string) => {
-    if (string.length > 60) {
+    if (string?.length > 60) {
       string = string.substring(0, 60) + "...";
     }
     return string;
@@ -102,7 +114,7 @@ const Home = () => {
     } else {
       toast.error("Something went wrong!");
     }
-    console.log(category);
+    // console.log(category);
   };
   //get curent posts
   const indexOfLastPost = currentPage * postPerPage;
@@ -152,9 +164,11 @@ const Home = () => {
                         <Blogs
                           id={item.id}
                           title={item.title}
-                          date={item.date}
-                          category={item.category}
-                          description={item.blog}
+                          date={item.created_at}
+                          // date={item.date}
+                          // category={item.category}
+                          description={item.content}
+                          // description={item.blog}
                           excerpt={excerpt}
                         />
                       </MDBCol>
