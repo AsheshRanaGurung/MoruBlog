@@ -67,36 +67,6 @@ const About = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-<<<<<<< Updated upstream
-  const onFinish = async (values) => {
-    // console.log(values);
-    // temporary post on json server
-
-    const nowDate = getDate();
-    const blog = { ...values, date: nowDate };
-    const response = await axios.post("http://localhost:5000/blogs", blog);
-    console.log(response.data);
-    dispatch(createNewBlog(response.data));
-
-    if ((response.status = 201)) {
-      toast.success("Blog created successfully");
-      navigate("/");
-    } else {
-      toast.error("Something went wrong");
-    }
-=======
-  const userToken = useSelector((state) => state.getToken);
-  const { token } = userToken;
-
-  const loadBlogsData = async () => {
-    const response2 = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/posts"
-    );
-    console.log("response2", response2?.data?.posts);
-    dispatch(getApiDataSuccess(response2?.data?.posts));
->>>>>>> Stashed changes
-  };
-
   const onFinish = async (values) => {
     // const nowDate = getDate();
 
