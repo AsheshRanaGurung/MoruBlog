@@ -63,7 +63,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         ) : (
-          <>
+          <div>
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
@@ -84,7 +84,7 @@ function App() {
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <Footer />
-          </>
+          </div>
         )}
       </div>
     </BrowserRouter>

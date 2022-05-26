@@ -44,11 +44,7 @@ const LeftMenu = () => {
           <Link to="/companyprofile" style={{ color: "black" }}>
             <Menu.Item key="settings:5">Company Profile</Menu.Item>
           </Link>
-          <Link to="/team">
-            <Menu.Item key="settings:6" style={{ color: "black" }}>
-              Team{" "}
-            </Menu.Item>
-          </Link>
+
           <Link to="/mantra">
             <Menu.Item key="settings:7" style={{ color: "black" }}>
               Mantra
