@@ -3,6 +3,8 @@ import { Form, Input, Button, Row, Col } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { MDBCol, MDBRow } from "mdb-react-ui-kit";
+
 // import { GetThisTokenSuccess } from "../redux/TokenHandle";
 
 import { Spin } from "antd";
@@ -45,16 +47,9 @@ const Login = () => {
 
   return (
     <div className="LoginPage">
-      <div className="pagecontainer" style={{ paddingTop: "0px" }}>
-        <Row>
-          <Col className="LoginPage_image" md={12}>
-            <img
-              src="/images/Morubanner.jpg"
-              alt="banner"
-              style={{ height: "100%", width: "100%", objectFit: "contain" }}
-            ></img>
-          </Col>
-          <Col md={12}>
+      <div className="pagecontainer">
+        <MDBRow>
+          <MDBCol lg={6}>
             <div className="form-page">
               <Form
                 name="normal_login"
@@ -150,8 +145,15 @@ const Login = () => {
                 </Form.Item>
               </Form>
             </div>
-          </Col>
-        </Row>
+          </MDBCol>
+          <MDBCol className="LoginPage_image" lg={6}>
+            <img
+              src="/images/Morubanner.jpg"
+              alt="banner"
+              style={{ maxHeight: "100%", maxWidth: "100%" }}
+            ></img>
+          </MDBCol>
+        </MDBRow>
       </div>
     </div>
   );
