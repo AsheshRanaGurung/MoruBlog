@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewBlog } from "../redux/CreateBlog";
+// import { createNewBlog } from "../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../redux/GetApiData";
 
@@ -66,6 +66,16 @@ const validateMessages = {
 const About = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userToken = useSelector((state) => state.getToken);
+  const { token } = userToken;
+
+  const loadBlogsData = async () => {
+    const response2 = await axios.get(
+      "https://flaskapi-sanjeev.herokuapp.com/posts"
+    );
+    // console.log("response2", response2?.data?.posts);
+    dispatch(getApiDataSuccess(response2?.data?.posts));
+  };
 
   const onFinish = async (values) => {
     // const nowDate = getDate();

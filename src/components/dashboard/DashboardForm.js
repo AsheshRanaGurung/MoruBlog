@@ -4,9 +4,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createNewBlog } from "../../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
+import { getApiDataSuccess } from "../../redux/GetApiData";
 
 const layout = {
   labelCol: {
@@ -65,20 +66,44 @@ const validateMessages = {
 const DashboardForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userToken = useSelector((state) => state.getToken);
+  const { token } = userToken;
+
+  const loadBlogsData = async () => {
+    const response2 = await axios.get(
+      "https://flaskapi-sanjeev.herokuapp.com/posts"
+    );
+    // console.log("response2", response2?.data?.posts);
+    dispatch(getApiDataSuccess(response2?.data?.posts));
+  };
 
   const onFinish = async (values) => {
-    // console.log(values);
-    // temporary post on json server
+    const config = {
+      headers: {
+        access_token: token,
+      },
+    };
 
-    const nowDate = getDate();
-    const blog = { ...values, date: nowDate };
-    const response = await axios.post("http://localhost:5000/blogs", blog);
-    console.log(response.data);
-    dispatch(createNewBlog(response.data));
+    const response = await axios.post(
+      "https://flaskapi-sanjeev.herokuapp.com/posts/new",
+      {
+        content: values.blog,
+        title: values.title,
+        // category:values.category
+      },
+      config
+    );
 
     if ((response.status = 201)) {
+      // dispatch(createNewBlog({
+
+      // }));
+
+      loadBlogsData();
+
       toast.success("Blog created successfully");
-      navigate("/");
+
+      navigate("/dashboard");
     } else {
       toast.error("Something went wrong");
     }

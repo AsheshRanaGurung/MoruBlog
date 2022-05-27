@@ -21,6 +21,7 @@ import Governance from "./pages/Governance";
 import CommitteePage from "./pages/CommitteePage";
 import Footer from "./components/Footer";
 import Dashboard from "./components/dashboard/Dashboard";
+import DashboardForm from "./components/dashboard/DashboardForm";
 import axios from "axios";
 
 // import { Layout } from "antd";
@@ -29,6 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getApiDataSuccess } from "./redux/GetApiData";
 import Blog from "./pages/Blog";
 import ProfileScreen from "./pages/ProfileScreen";
+import BlogDetails from "./components/dashboard/BlogDetails";
 // import { loadBlogsData } from "./service";
 
 function App() {
@@ -36,6 +38,7 @@ function App() {
   const { isSuccess } = getData;
   // const userInfo = useSelector((state) => state.getToken.token);
   const pathname = window.location.pathname;
+  // const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -51,7 +54,7 @@ function App() {
     const response2 = await axios.get(
       "https://flaskapi-sanjeev.herokuapp.com/posts"
     );
-    console.log("response2", response2?.data?.posts);
+
     dispatch(getApiDataSuccess(response2?.data?.posts));
   };
 
@@ -68,13 +71,23 @@ function App() {
         />
         {pathname === "/dashboard" ? (
           <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />}>
+              {/* <Route
+                path={`${location?.pathname}/blog-details`}
+                element={BlogDetails}
+              />
+              <Route
+                path={`${location?.pathname}/add-blogs`}
+                element={DashboardForm}
+              /> */}
+            </Route>
           </Routes>
         ) : (
           <div>
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
+
               {/* <Route path="/addBlog" element={<AddEditpage />} /> */}
               <Route path="/editblog/:id" element={<AddEditpage />} />
               <Route path="/blog/:id" element={<Blog />} />

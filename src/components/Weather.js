@@ -30,7 +30,7 @@ const Weather = () => {
       axios
         .request(options1)
         .then(function (response) {
-          console.log(response.data);
+          // console.log(response.data);
           setWeather(response.data);
         })
         .catch(function (error) {
@@ -45,7 +45,7 @@ const Weather = () => {
       <h4>Weather status</h4>
       <MDBCard>
         <MDBCardBody style={{ textAlign: "left" }}>
-          Location:{weather?.location?.name}
+          Location:{weather ? weather?.location?.name : "kathmandu"}
           <br />
           Weather:
           <img
