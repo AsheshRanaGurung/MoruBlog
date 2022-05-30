@@ -123,7 +123,11 @@ const Login = () => {
                     htmlType="submit"
                     className="login-form-button"
                   >
-                    {loginLoading ? <Spin indicator={antIcon} /> : "Log in"}
+                    {loginLoading ? (
+                      <Spin indicator={antIcon} style={{ color: "white" }} />
+                    ) : (
+                      "Log in"
+                    )}
                   </Button>
                   <br />
                   <br />

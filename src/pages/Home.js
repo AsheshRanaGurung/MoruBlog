@@ -38,11 +38,11 @@ const Home = () => {
   };
 
   const options = [
-    "National",
-    "International",
-    "Business",
-    "Multimedia",
-    "Sports",
+    "Latest Offer",
+    "Trending",
+    "New Event",
+    "Stories",
+    "Careers",
   ];
 
   // useEffect(() => {

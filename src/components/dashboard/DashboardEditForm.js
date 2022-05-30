@@ -3,11 +3,11 @@ import { Form, Input, Upload, Button, Select, Spin } from "antd";
 import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { createNewBlog } from "../redux/CreateBlog";
+
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
-import { getApiDataSuccess } from "../redux/GetApiData";
+import { getApiDataSuccess } from "../../redux/GetApiData";
 
 const layout = {
   labelCol: {
@@ -21,6 +21,7 @@ const layout = {
 
 const { Option } = Select;
 const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
+
 const normFile = (e) => {
   // console.log("Upload event1:", e.file);
   if (Array.isArray(e)) {
@@ -56,32 +57,29 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 
-const About = () => {
-  const [loginLoading, setLoginLoading] = useState(false);
-
-  const navigate = useNavigate();
+const DashboardEditForm = () => {
+  const [updateLoading, setUpdateLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
+  const getData = useSelector((state) => state?.getBlogdetail);
+  const { blog } = getData;
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+  const { id } = useParams();
 
   const loadBlogsData = async () => {
     const response2 = await axios.get(
       "https://flaskapi-sanjeev.herokuapp.com/posts"
     );
-    // console.log("response2", response2?.data?.posts);
+
     dispatch(getApiDataSuccess(response2?.data?.posts));
   };
-
   const onFinish = async (values) => {
-    // const nowDate = getDate();
-
-    // console.log(values.blog);
-    // console.log(values.title);
-    // console.log(values.category);
-
-    setLoginLoading(true);
+    setUpdateLoading(true);
 
     const config = {
       headers: {
@@ -89,37 +87,36 @@ const About = () => {
       },
     };
 
-    const response = await axios.post(
-      "https://flaskapi-sanjeev.herokuapp.com/posts/new",
+    const response = await axios.put(
+      `https://flaskapi-sanjeev.herokuapp.com/posts/${id}/update`,
       {
-        content: values.blog,
         title: values.title,
-        // category:values.category
+        content: values.blog,
       },
       config
     );
 
-    if ((response.status = 201)) {
-      // dispatch(createNewBlog({
-
-      // }));
+    if (response.status === 200) {
+      setUpdateLoading(false);
       loadBlogsData();
-      setLoginLoading(false);
-      toast.success("Blog created successfully");
 
-      navigate("/");
+      toast.success("Blog edited successfully");
+      //   console.log(response.data);
+
+      navigate("/dashboard");
     } else {
       toast.error("Something went wrong");
     }
   };
-
   return (
-    <div className="pagecontainer">
+    <>
+      Edit Blog
       <Form
         {...layout}
         name="nest-messages"
         layout="vertical"
         onFinish={onFinish}
+        initialValues={{ title: blog?.title, blog: blog?.description }}
         validateMessages={validateMessages}
         style={{ marginTop: "50px" }}
       >
@@ -183,7 +180,7 @@ const About = () => {
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <button className="submitBtn" type="primary">
-                {loginLoading ? (
+                {updateLoading ? (
                   <Spin
                     indicator={antIcon}
                     style={{ margin: "auto", color: "white" }}
@@ -196,8 +193,8 @@ const About = () => {
           </MDBCol>
         </MDBRow>
       </Form>
-    </div>
+    </>
   );
 };
 
-export default About;
+export default DashboardEditForm;

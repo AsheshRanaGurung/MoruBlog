@@ -45,7 +45,8 @@ const Weather = () => {
       <h4>Weather status</h4>
       <MDBCard>
         <MDBCardBody style={{ textAlign: "left" }}>
-          Location:{weather ? weather?.location?.name : "kathmandu"}
+          {/* Location:{weather?.location?.name} */}
+          Location: Kathmandu
           <br />
           Weather:
           <img
@@ -57,19 +58,23 @@ const Weather = () => {
           <br />
           Temperature:
           <strong>
-            <CountUp end={weather?.current?.temperature} duration={3} />
+            {/* <CountUp end={weather?.current?.temperature} duration={3} /> */}
+            <CountUp end={26} duration={3} />
+
             <span>&#8451;</span>
           </strong>
           <br />
           Wind speed:
           <strong>
-            <CountUp end={weather?.current?.wind_speed} duration={3} />
+            <CountUp end={25} duration={3} />
+            {/* <CountUp end={weather?.current?.wind_speed} duration={3} /> */}
             <span> m/s</span>
           </strong>
           <br />
           Humidity:
           <strong>
-            <CountUp end={weather?.current?.humidity} duration={3} />%
+            <CountUp end={18} duration={3} />%
+            {/* <CountUp end={weather?.current?.humidity} duration={3} />% */}
           </strong>
           <br />
         </MDBCardBody>

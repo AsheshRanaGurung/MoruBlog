@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, BrowserRouter, Route } from "react-router-dom";
+import { Routes, BrowserRouter, Route, useLocation } from "react-router-dom";
 import AddEditpage from "./pages/AddEditpage";
 import Blogs from "./components/Blogs";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -31,6 +31,8 @@ import { getApiDataSuccess } from "./redux/GetApiData";
 import Blog from "./pages/Blog";
 import ProfileScreen from "./pages/ProfileScreen";
 import BlogDetails from "./components/dashboard/BlogDetails";
+import DashboardLandingPage from "./components/dashboard/DashboardLandingPage";
+import DashboardEditForm from "./components/dashboard/DashboardEditForm";
 // import { loadBlogsData } from "./service";
 
 function App() {
@@ -61,7 +63,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        {/* {JSON.stringify(isSuccess)} */}
+        {/* {JSON.stringify(pathname)} */}
         <ToastContainer
           position="top-right"
           autoClose={2000}
@@ -71,15 +73,14 @@ function App() {
         />
         {pathname === "/dashboard" ? (
           <Routes>
-            <Route path="dashboard" element={<Dashboard />}>
-              {/* <Route
-                path={`${location?.pathname}/blog-details`}
-                element={BlogDetails}
-              />
+            <Route path="/dashboard" element={<Dashboard />}>
+              <Route path="/dashboard" element={<DashboardLandingPage />} />
+              <Route path="blog-details" element={<BlogDetails />} />
+              <Route path="add-blogs" element={<DashboardForm />} />
               <Route
-                path={`${location?.pathname}/add-blogs`}
-                element={DashboardForm}
-              /> */}
+                path="blog-details/edit-blog/:id"
+                element={<DashboardEditForm />}
+              />
             </Route>
           </Routes>
         ) : (

@@ -1,8 +1,8 @@
 // //s8l9wkk3
 
 import React, { useEffect, useState } from "react";
-import { Form, Input, Upload, Button, Select } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Form, Input, Upload, Button, Select, Spin } from "antd";
+import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,13 +20,7 @@ const layout = {
 };
 
 const { Option } = Select;
-const options = [
-  "National",
-  "International",
-  "Business",
-  "Multimedia",
-  "Sports",
-];
+const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
 
 const normFile = (e) => {
   if (Array.isArray(e)) {
@@ -62,50 +56,45 @@ const validateMessages = {
 };
 
 const AddEditpage = () => {
-  const [titles, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-
+  const [updateLoading, setUpdateLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const userToken = useSelector((state) => state.getToken);
+  const { token } = userToken;
 
   const getData = useSelector((state) => state?.getBlogdetail);
-  // const { blog } = getData;
+  const { blog } = getData;
 
-  // console.log("value", blog?.title);
-  // useEffect(() => {
-  //   if (blog) {
-  //     setTitle(blog?.title);
-  //     setDesc(blog?.blog);
-  //   }
-  // }, [blog]);
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const { id } = useParams();
 
   const onFinish = async (values) => {
-    const nowDate = getDate();
-    const blog = { ...values, date: nowDate };
-    console.log(blog);
-    // const response = await axios.post("http://localhost:5000/blogs", blog);
-    // console.log(response.data);
+    setUpdateLoading(true);
+    const config = {
+      headers: {
+        access_token: token,
+      },
+    };
+
+    const response = await axios.put(
+      `https://flaskapi-sanjeev.herokuapp.com/posts/${id}/update`,
+      {
+        title: values.title,
+        content: values.blog,
+      },
+      config
+    );
     // dispatch(createNewBlog(response.data));
 
-    // if ((response.status = 201)) {
-    //   toast.success("Blog edited successfully");
-    //   navigate("/");
-    // } else {
-    //   toast.error("Something went wrong");
-    // }
-  };
+    if (response.status === 200) {
+      setUpdateLoading(false);
+      toast.success("Blog edited successfully");
+      console.log(response.data);
 
-  const getDate = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0");
-    let yyyy = today.getFullYear();
-    today = yyyy + "/" + mm + "/" + dd;
-    // console.log(today);
-
-    return today;
+      navigate("/");
+    } else {
+      toast.error("Something went wrong");
+    }
   };
 
   const editThisId = async () => {
@@ -120,7 +109,7 @@ const AddEditpage = () => {
         {...layout}
         name="nest-messages"
         layout="vertical"
-        initialValues={{ title: getData?.title }}
+        initialValues={{ title: blog?.title, blog: blog?.description }}
         onFinish={onFinish}
         validateMessages={validateMessages}
         style={{ marginTop: "50px" }}
@@ -136,8 +125,8 @@ const AddEditpage = () => {
                 },
               ]}
             >
-              {/* {/* {JSON.stringify(blog)} */}
-              {/* {JSON.stringify(getData.title)} */}
+              {/* {JSON.stringify(titles)}
+              {JSON.stringify(desc)} */}
 
               <Input />
             </Form.Item>
@@ -182,12 +171,18 @@ const AddEditpage = () => {
                 cols={22}
                 showCount
                 maxLength={10000}
-                value={desc}
               ></Input.TextArea>
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <button className="submitBtn" type="primary">
-                Update
+                {updateLoading ? (
+                  <Spin
+                    indicator={antIcon}
+                    style={{ margin: "auto", color: "white" }}
+                  />
+                ) : (
+                  <div style={{ margin: "auto", color: "white" }}>Update</div>
+                )}
               </button>
             </Form.Item>
           </MDBCol>

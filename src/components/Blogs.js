@@ -58,13 +58,8 @@ const Blogs = ({ title, date, description, id, excerpt }) => {
     }
   };
 
-  const editThisBlog = async (id) => {
-    // console.log(id);
-    // console.log(title);
-    // console.log(desc);
-    const response = await axios.get(`http://localhost:5000/blogs/${id}`);
-    // console.log(response.data);
-    dispatch(GetThisBlogSuccess(response?.data));
+  const editThisBlog = async (id, title, description) => {
+    dispatch(GetThisBlogSuccess({ title: title, description: description }));
   };
 
   return (
@@ -115,7 +110,10 @@ const Blogs = ({ title, date, description, id, excerpt }) => {
                 size="lg"
               />
             </MDBBtn>
-            <Link to={`/editblog/${id}`} onClick={() => editThisBlog(id)}>
+            <Link
+              to={`/editblog/${id}`}
+              onClick={() => editThisBlog(id, title, description)}
+            >
               <MDBIcon fas icon="edit" style={{ color: "green" }} size="lg" />
             </Link>
           </>

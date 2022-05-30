@@ -31,7 +31,7 @@ const Blog = () => {
     );
 
     const relatedPostData = await axios.get(
-      `http://localhost:5000/blogs?category=${response.data.category}&_start=0&_end=3`
+      `https://flaskapi-sanjeev.herokuapp.com/posts?category=${response.data.category}&_start=0&_end=3`
     );
     // console.log(relatedPostData.data);
     if (response.status === 200 || relatedPostData.status === 200) {

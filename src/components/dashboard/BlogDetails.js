@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { deleteThisBlog, getApiDataSuccess } from "../../redux/GetApiData";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { GetThisBlogSuccess } from "../../redux/GetThisBlog";
 
 const getRandomuserParams = (params) => ({
   results: params?.pagination.pageSize,
@@ -63,7 +65,12 @@ const BlogDetails = () => {
       key: "x",
       render: (record) => (
         <>
-          <EditOutlined />
+          <Link
+            to={`edit-blog/${record.id}`}
+            onClick={() => editThisBlog(record)}
+          >
+            <EditOutlined />
+          </Link>
           <DeleteOutlined
             onClick={() => onDelete(record)}
             style={{ color: "red", marginLeft: "12px" }}
@@ -73,6 +80,15 @@ const BlogDetails = () => {
       width: "10%",
     },
   ];
+
+  const editThisBlog = async (record) => {
+    dispatch(
+      GetThisBlogSuccess({
+        title: record.title,
+        description: record.content,
+      })
+    );
+  };
 
   const onDelete = async (record) => {
     if (window.confirm("Are you sure you want to Delete this Blog?")) {

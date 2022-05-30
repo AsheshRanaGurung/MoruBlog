@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { MDBRow, MDBCol } from "mdb-react-ui-kit";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ProfileScreen = () => {
+  const [updateloading, setUpdateloading] = useState(false);
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+  const navigate = useNavigate();
+
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    setUpdateloading(true);
+
+    // const response= await axios.put(`https://flaskapi-sanjeev.herokuapp.com/users/${id}/update`,{
+    //   username:values.username,
+    //   email:values.email,
+    //   password:values.password,
+    // })
+
+    // if(response?.status===200){
+    //   setUpdateloading(false)
+    //   toast.success("User updated Successfully");
+    //   navigate("/")
+    // }
+    // if (response?.status === 401) {
+    //   console.log(response);
+    //   toast.error(response.message);
+    // }
+    console.log("Received values of name ", values.username);
+    console.log("Received values of email: ", values.email);
+    console.log("Received values of pswd: ", values.password);
   };
   return (
     <div className="LoginPage">
@@ -22,7 +50,7 @@ const ProfileScreen = () => {
             >
               <Form.Item
                 label="Username"
-                name="username"
+                name="email"
                 rules={[
                   {
                     required: true,
@@ -33,8 +61,8 @@ const ProfileScreen = () => {
                 <Input />
               </Form.Item>
               <Form.Item
-                name="email"
                 label="E-mail"
+                name="username"
                 rules={[
                   {
                     type: "email",
@@ -96,7 +124,11 @@ const ProfileScreen = () => {
                   htmlType="submit"
                   className="login-form-button"
                 >
-                  Update
+                  {updateloading ? (
+                    <Spin indicator={antIcon} style={{ color: "white" }} />
+                  ) : (
+                    "Update"
+                  )}
                 </Button>
                 <br />
               </Form.Item>

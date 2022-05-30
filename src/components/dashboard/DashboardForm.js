@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Form, Input, Upload, Button, Select } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Form, Input, Upload, Button, Select, Spin } from "antd";
+import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -20,13 +20,7 @@ const layout = {
 /* eslint-disable no-template-curly-in-string */
 
 const { Option } = Select;
-const options = [
-  "National",
-  "International",
-  "Business",
-  "Multimedia",
-  "Sports",
-];
+const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
 
 const normFile = (e) => {
   // console.log("Upload event1:", e.file);
@@ -64,10 +58,14 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 const DashboardForm = () => {
+  const [loginLoading, setLoginLoading] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const loadBlogsData = async () => {
     const response2 = await axios.get(
@@ -78,6 +76,8 @@ const DashboardForm = () => {
   };
 
   const onFinish = async (values) => {
+    setLoginLoading(true);
+
     const config = {
       headers: {
         access_token: token,
@@ -100,10 +100,10 @@ const DashboardForm = () => {
       // }));
 
       loadBlogsData();
-
+      setLoginLoading(false);
       toast.success("Blog created successfully");
 
-      navigate("/dashboard");
+      navigate("/dashboard/blog-details");
     } else {
       toast.error("Something went wrong");
     }
@@ -190,7 +190,14 @@ const DashboardForm = () => {
             </Form.Item>
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <button className="submitBtn" type="primary">
-                Submit
+                {loginLoading ? (
+                  <Spin
+                    indicator={antIcon}
+                    style={{ margin: "auto", color: "white" }}
+                  />
+                ) : (
+                  <div style={{ margin: "auto", color: "white" }}>Submit</div>
+                )}
               </button>
             </Form.Item>
           </MDBCol>

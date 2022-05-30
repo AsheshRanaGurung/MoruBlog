@@ -9,12 +9,13 @@ import {
   UserOutlined,
   UploadOutlined,
   VideoCameraOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, Router, useLocation, Outlet } from "react-router-dom";
 import { DesktopOutlined, FileOutlined } from "@ant-design/icons";
 import DashboardForm from "./DashboardForm";
 import BlogDetails from "./BlogDetails";
-import { Link, Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const items1 = ["1", "2", "3"].map((key) => ({
   key,
@@ -59,11 +60,16 @@ const items = [
 }));
 const Dashboard = () => {
   const [collapse, setCollapse] = useState(false);
-  // const location = useLocation();
+
+  const refreshPage = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  };
   return (
     <Layout hasSider>
       <>
-        <Header
+        {/* <Header
           className="header"
           style={{
             position: "fixed",
@@ -72,14 +78,15 @@ const Dashboard = () => {
           }}
         >
           <div className="logo">
-            {" "}
-            <img
-              src="images/moru.jpg"
-              alt="logo"
-              style={{ height: "37px" }}
-            ></img>
+            <Link to="/dashboard">
+              <img
+                src="images/moru.jpg"
+                alt="logo"
+                style={{ height: "37px" }}
+              ></img>
+            </Link>
           </div>
-        </Header>
+        </Header> */}
         <Sider
           collapsible
           collapsed={collapse}
@@ -89,7 +96,15 @@ const Dashboard = () => {
             position: "fixed",
           }}
         >
-          <div className="logo" />
+          <div className="dashboard-logo" style={{ marginTop: "10px" }}>
+            <Link to="/dashboard">
+              <img
+                src="images/moru.jpg"
+                alt="logo"
+                style={{ height: "37px" }}
+              ></img>
+            </Link>
+          </div>
           <Menu
             mode="inline"
             theme="dark"
@@ -98,21 +113,28 @@ const Dashboard = () => {
             style={{
               height: "100%",
               borderRight: 0,
-              marginTop: "70px",
+              marginTop: "11px",
             }}
           >
             <Menu.Item key="1">
-              {/* <Link to={`${location?.pathname}/blog-details`}> */}
-              <FileOutlined />
-              <span>Blog Details</span>
-              {/* </Link> */}
+              <Link to="blog-details">
+                <FileOutlined />
+                <span>Blog Details</span>
+              </Link>
             </Menu.Item>
 
             <Menu.Item key="2">
-              {/* <Link to={`${location?.pathname}/add-blogs`}> */}
-              <DesktopOutlined />
-              <span>Add Blogs</span>
-              {/* </Link> */}
+              <Link to="add-blogs">
+                <DesktopOutlined />
+                <span>Add Blogs</span>
+              </Link>
+            </Menu.Item>
+
+            <Menu.Item key="3">
+              <Link to="/" onClick={() => refreshPage()}>
+                <LogoutOutlined />
+                <span>Log Out</span>
+              </Link>
             </Menu.Item>
           </Menu>
         </Sider>
@@ -120,26 +142,13 @@ const Dashboard = () => {
           className="site-layout"
           style={{ marginLeft: collapse ? 80 : 200 }}
         >
-          <Header className="site-layout-background" style={{ padding: 0 }} />
+          {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
             <div
               className="site-layout-background"
               style={{ padding: 24, textAlign: "center" }}
             >
-              {/* <Routes>
-                <Route
-                  path={`${location?.pathname}/add-blogs`}
-                  element={<DashboardForm />}
-                />
-                <Route
-                  path={`${location?.pathname}/blog-details`}
-                  element={<BlogDetails />}
-                />
-              </Routes> */}
-              {/* {JSON.stringify(location.pathname)} */}
-
-              <DashboardForm />
-              <BlogDetails />
+              <Outlet />
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
