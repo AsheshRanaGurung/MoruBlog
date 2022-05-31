@@ -33,6 +33,7 @@ import ProfileScreen from "./pages/ProfileScreen";
 import BlogDetails from "./components/dashboard/BlogDetails";
 import DashboardLandingPage from "./components/dashboard/DashboardLandingPage";
 import DashboardEditForm from "./components/dashboard/DashboardEditForm";
+import VerifyBlogs from "./components/dashboard/VerifyBlogs";
 // import { loadBlogsData } from "./service";
 
 function App() {
@@ -75,8 +76,10 @@ function App() {
           <Routes>
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="/dashboard" element={<DashboardLandingPage />} />
-              <Route path="blog-details" element={<BlogDetails />} />
               <Route path="add-blogs" element={<DashboardForm />} />
+              <Route path="blog-details" element={<BlogDetails />} />
+              <Route path="verify-blogs" element={<VerifyBlogs />} />
+
               <Route
                 path="blog-details/edit-blog/:id"
                 element={<DashboardEditForm />}

@@ -16,18 +16,12 @@ const LeftMenu = () => {
           Home
         </Link>
       </Menu.Item>
-      <SubMenu
-        key="SubMenu"
-        title={<span>Blogs</span>}
-        style={{ fontSize: "19px" }}
-      >
-        <MenuItemGroup title="Blog Category">
-          <Menu.Item key="setting:1">Hot News </Menu.Item>
-          <Menu.Item key="setting:2">National news </Menu.Item>
-          <Menu.Item key="setting:3">Business News</Menu.Item>
-          <Menu.Item key="setting:4">International News</Menu.Item>
-        </MenuItemGroup>
-      </SubMenu>
+      <Menu.Item key="load">
+        <a href="https://moru.com.np/" style={{ fontSize: "19px" }}>
+          Load Fund
+        </a>
+      </Menu.Item>
+
       {userInfo && (
         <Menu.Item key="alipay2">
           <Link to="/addblog" style={{ fontSize: "19px" }}>

@@ -19,11 +19,18 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 // const Blogs = ({ title, date, category, description, id, excerpt }) => {
-const Blogs = ({ title, date, description, id, excerpt }) => {
+const Blogs = ({ title, date, category, description, id, excerpt }) => {
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
 
   const dispatch = useDispatch();
+
+  const excerpt2 = (string) => {
+    if (string?.length > 45) {
+      string = string.substring(0, 45) + "...";
+    }
+    return string;
+  };
 
   const loadBlogsData = async () => {
     const response2 = await axios.get(
@@ -82,12 +89,12 @@ const Blogs = ({ title, date, description, id, excerpt }) => {
           }}
         >
           {date?.slice(0, 10)}
-          {/* <ColorBadge>{category}</ColorBadge> */}
+          <ColorBadge>{category}</ColorBadge>
         </MDBCardText>
         <MDBCardTitle
-          style={{ fontSize: "25px", display: "flex", padding: "0" }}
+          style={{ fontSize: "23px", display: "flex", padding: "0" }}
         >
-          {title}
+          {excerpt2(title)}
         </MDBCardTitle>
         <MDBCardText style={{ display: "left", padding: "0" }}>
           {excerpt(description)}

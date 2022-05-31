@@ -163,7 +163,8 @@ height:500px;
 
 .menuCon .leftMenu {
   float: left;
-  width:497px
+  width:571px
+  /* width:497px */
 }
 
 .menuCon .rightMenu {
@@ -227,7 +228,8 @@ height:500px;
   border-bottom-color: transparent;
 }
 
-@media (max-width: 1049px) {
+@media (max-width: 1124px) {
+  /* @media (max-width: 1049px) { */
   .barsMenu {
     display: inline-block;
   }

@@ -92,6 +92,7 @@ const DashboardEditForm = () => {
       {
         title: values.title,
         content: values.blog,
+        category: values.category.replace(/\s/g, ""),
       },
       config
     );

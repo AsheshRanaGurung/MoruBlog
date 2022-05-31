@@ -10,6 +10,7 @@ import {
   UploadOutlined,
   VideoCameraOutlined,
   LogoutOutlined,
+  CalendarOutlined,
 } from "@ant-design/icons";
 import { Route, Routes, Router, useLocation, Outlet } from "react-router-dom";
 import { DesktopOutlined, FileOutlined } from "@ant-design/icons";
@@ -131,6 +132,13 @@ const Dashboard = () => {
             </Menu.Item>
 
             <Menu.Item key="3">
+              <Link to="verify-blogs">
+                <CalendarOutlined />
+                <span>Verify Blogs</span>
+              </Link>
+            </Menu.Item>
+
+            <Menu.Item key="4">
               <Link to="/" onClick={() => refreshPage()}>
                 <LogoutOutlined />
                 <span>Log Out</span>

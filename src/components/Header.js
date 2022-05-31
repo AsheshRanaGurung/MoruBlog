@@ -78,26 +78,11 @@ const Header = () => {
                   Home
                 </Link>
               </Menu.Item>
-              <SubMenu
-                key="SubMenu3"
-                title={<span>Blogs</span>}
-                style={{ fontSize: "19px" }}
-              >
-                <MenuItemGroup title="Blog Category">
-                  <Menu.Item key="setting:11" onClick={onClose}>
-                    Hot News{" "}
-                  </Menu.Item>
-                  <Menu.Item key="setting:12" onClick={onClose}>
-                    National news{" "}
-                  </Menu.Item>
-                  <Menu.Item key="setting:13" onClick={onClose}>
-                    Business News
-                  </Menu.Item>
-                  <Menu.Item key="setting:14" onClick={onClose}>
-                    International News
-                  </Menu.Item>
-                </MenuItemGroup>
-              </SubMenu>
+              <Menu.Item key="load">
+                <a href="https://moru.com.np/" style={{ fontSize: "19px" }}>
+                  Load Fund
+                </a>
+              </Menu.Item>
 
               {userInfo && (
                 <Menu.Item key="alipay22">

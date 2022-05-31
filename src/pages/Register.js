@@ -1,20 +1,15 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Row, Col } from "antd";
+import { Form, Input, Button } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
-
-// import { GetThisTokenSuccess } from "../redux/TokenHandle";
-
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-// import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [loginLoading, setLoginLoading] = useState(false);
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -33,6 +28,7 @@ const Login = () => {
         username: values.username,
         email: values.email,
         password: values.password,
+        is_admin: "false",
       }
     );
 

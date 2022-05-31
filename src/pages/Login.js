@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox, Row, Col } from "antd";
+import { Form, Input, Button, Checkbox } from "antd";
 
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";

@@ -94,7 +94,7 @@ const About = () => {
       {
         content: values.blog,
         title: values.title,
-        // category:values.category
+        category: values.category.replace(/\s/g, ""),
       },
       config
     );

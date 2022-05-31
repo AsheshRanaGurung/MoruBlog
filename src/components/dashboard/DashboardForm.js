@@ -89,7 +89,7 @@ const DashboardForm = () => {
       {
         content: values.blog,
         title: values.title,
-        // category:values.category
+        category: values.category.replace(/\s/g, ""),
       },
       config
     );

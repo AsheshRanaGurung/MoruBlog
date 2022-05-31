@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { Spin, Button } from "antd";
 import DownloadButton from "../components/DownloadButton";
 import Weather from "../components/Weather";
+import { getLatestDataSuccess } from "../redux/GetLatestBlog";
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -61,23 +62,20 @@ const Home = () => {
   }, [blogs]);
 
   const fetchLatestBlog = async () => {
-    const totalBlog = await axios.get("http://localhost:5000/blogs");
-    const start = totalBlog.data.length - 4;
-    const end = totalBlog.data.length;
-
     const response = await axios.get(
-      `http://localhost:5000/blogs?_start=${start}&_end=${end}`
+      `https://flaskapi-sanjeev.herokuapp.com/posts?page=1&perpage=4`
     );
     if (response.status === 200) {
-      setLatestBlog(response.data);
+      // setLatestBlog(response.data.posts);
+      dispatch(getLatestDataSuccess(response.data.posts));
     } else {
       toast.error("Something went wrong!");
     }
   };
   // console.log(allblogs);
   const excerpt = (string) => {
-    if (string?.length > 60) {
-      string = string.substring(0, 60) + "...";
+    if (string?.length > 50) {
+      string = string.substring(0, 50) + "...";
     }
     return string;
   };
@@ -107,10 +105,14 @@ const Home = () => {
 
   const handleCategory = async (category) => {
     const response = await axios.get(
-      `http://localhost:5000/blogs?category=${category}`
+      `https://flaskapi-sanjeev.herokuapp.com/posts?category=${category.replace(
+        /\s/g,
+        ""
+      )}`
     );
     if (response.status === 200) {
-      setAllblogs(response.data);
+      setAllblogs(response.data.posts);
+
       showButton();
     } else {
       toast.error("Something went wrong!");
@@ -124,6 +126,7 @@ const Home = () => {
 
   //changepage
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="pagecontainer">
       {/* {JSON.stringify(weather)} */}
@@ -135,17 +138,6 @@ const Home = () => {
             <div className="LoginPage" style={{ paddingTop: "30px" }}>
               <>
                 <MDBRow>
-                  {/* <div className="flex">
-                    Petrol price tommorow: Rs
-                    <h1>
-                      <CountUp
-                        end={1000000}
-                        duration={100}
-                        prefix="Rs."
-                        decimals={2}
-                      />
-                    </h1>
-                  </div> */}
                   <Search
                     searchValue={searchValue}
                     onInputChange={onInputChange}
@@ -178,7 +170,7 @@ const Home = () => {
                           title={item.title}
                           date={item.created_at}
                           // date={item.date}
-                          // category={item.category}
+                          category={item.category}
                           description={item.content}
                           // description={item.blog}
                           excerpt={excerpt}
@@ -192,18 +184,13 @@ const Home = () => {
                   />
                 </MDBRow>
               </>
-              {/* )} */}
             </div>
           </>
         </MDBCol>
         <MDBCol xl={3}>
           <div style={{ marginTop: "40px" }}>
             <Weather />
-            <h4>Latest Blogs</h4>
-            {latestBlog &&
-              latestBlog.map((item, index) => (
-                <LatestBlog key={index} {...item} />
-              ))}{" "}
+
             <Category options={options} handleCategory={handleCategory} />
             <DownloadButton />
           </div>

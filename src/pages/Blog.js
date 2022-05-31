@@ -16,10 +16,22 @@ import {
 } from "mdb-react-ui-kit";
 import { CalendarOutlined } from "@ant-design/icons";
 import ColorBadge from "../components/ColorBadge";
+import LatestBlog from "../components/LatestBlog";
+import { Spin } from "antd";
+import Message from "../components/Message";
+import { useSelector } from "react-redux";
+import ReviewForm from "../components/ReviewForm";
 
 const Blog = () => {
   const [blog, setBlog] = useState();
   const [relatedPost, setRelatedPost] = useState([]);
+  // const [latestBlog, setLatestBlog] = useState([]);
+
+  const userToken = useSelector((state) => state.getToken);
+  const { token } = userToken;
+
+  const latestBlog2 = useSelector((state) => state.getLatestBLog);
+  const { blogs } = latestBlog2;
 
   const { id } = useParams();
 
@@ -35,7 +47,8 @@ const Blog = () => {
     );
     // console.log(relatedPostData.data);
     if (response.status === 200 || relatedPostData.status === 200) {
-      setBlog(response?.data?.message);
+      setBlog(response?.data?.post);
+      // console.log(response.data.post);
       setRelatedPost(relatedPostData.data);
     } else {
       toast.error("Something is wrong!");
@@ -68,9 +81,9 @@ const Blog = () => {
       <MDBRow>
         <MDBCol>
           <MDBContainer style={{ marginTop: "32px" }}>
-            <button className="submitBtn" onClick={() => navigate("/")}>
+            {/* <button className="submitBtn" onClick={() => navigate("/")}>
               Go back
-            </button>
+            </button> */}
             <MDBTypography
               tag="h2"
               className="text-muted mt-2"
@@ -79,9 +92,19 @@ const Blog = () => {
               {blog && blog.title}
             </MDBTypography>
             <br />
-            <div style={{ textAlign: "left" }}>
-              Author:{blog && blog.user.username}
-            </div>{" "}
+
+            <div style={{ height: "40px", background: "#f6f6f6" }}>
+              <div style={{ float: "left", margin: "7px 0 0 2px" }}>
+                Author:{blog && blog.user.username},
+              </div>
+              {/* <CalendarOutlined style={{ float: "left", marginTop: "10px" }} /> */}
+              <strong style={{ float: "left", margin: "7px 0 0 2px" }}>
+                {blog && blog.created_at.slice(0, 10)}
+              </strong>
+              <ColorBadge styleInfo={styleInfo}>
+                {blog && blog.category}
+              </ColorBadge>
+            </div>
             <img
               className="img-fluid rounded"
               style={{ width: "100%", maxHeight: "600px" }}
@@ -89,52 +112,36 @@ const Blog = () => {
               src="/images/Blog.jpg"
             ></img>
             <div style={{ marginTop: "20px" }}>
-              <div style={{ height: "40px", background: "#f6f6f6" }}>
-                <CalendarOutlined
-                  style={{ float: "left", marginTop: "10px" }}
-                />
-                <strong style={{ float: "left", margin: "7px 0 0 2px" }}>
-                  {blog && blog.created_at.slice(0, 10)}
-                </strong>
-                <ColorBadge styleInfo={styleInfo}>
-                  {blog && blog.category}
-                </ColorBadge>
-              </div>
               <div style={{ marginBottom: "20px", textAlign: "justify" }}>
-                {blog && blog.content}
+                {!blog?.content ? (
+                  <Spin size="medium" style={{ display: "block" }} />
+                ) : (
+                  blog?.content
+                )}
               </div>{" "}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <h4>Reviews</h4>
+              {token ? (
+                <ReviewForm />
+              ) : (
+                <div style={{ marginBottom: "10px" }}>
+                  <Message type="info">
+                    Please Login to review this blog
+                  </Message>
+                </div>
+              )}
             </div>
           </MDBContainer>
         </MDBCol>
         <MDBCol lg={3} style={{ marginTop: "32px" }}>
-          {relatedPost && relatedPost.length > 0 && (
-            <>
-              {relatedPost.length > 1 && <h3>Related Post</h3>}
-
-              {relatedPost
-                .filter((item) => item.id != id)
-                .map((item, index) => (
-                  <MDBCol key={index}>
-                    <Link to={`/blog/${item.id}`}>
-                      <MDBCard style={{ width: "100%", marginBottom: "20px" }}>
-                        <MDBCardImage
-                          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                          alt={item.title}
-                        ></MDBCardImage>
-                        <MDBCardBody>
-                          <MDBCardText>{item.date}</MDBCardText>
-                          <MDBCardTitle>{item.title}</MDBCardTitle>
-                          {/* <MDBCardText style={{ display: "left", padding: "0" }}>
-                          {excerpt(item.blog)}
-                          <Link to={`/blog/${item.id}`}> Read more</Link>
-                        </MDBCardText> */}
-                        </MDBCardBody>
-                      </MDBCard>
-                    </Link>
-                  </MDBCol>
-                ))}
-            </>
+          {blogs?.length === 0 ? (
+            <Spin size="medium" style={{ display: "block" }} />
+          ) : (
+            <h3>Latest Post</h3>
           )}
+          {blogs &&
+            blogs?.map((item, index) => <LatestBlog key={index} {...item} />)}
         </MDBCol>
       </MDBRow>
     </div>

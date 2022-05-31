@@ -3,11 +3,11 @@ import { MDBBadge } from "mdb-react-ui-kit";
 
 const ColorBadge = ({ children, styleInfo }) => {
   const color = {
-    National: "success",
-    International: "primary",
-    Business: "info",
-    Sports: "warning",
-    Multimedia: "danger",
+    Careers: "success",
+    LatestOffer: "primary",
+    NewEvent: "info",
+    Stories: "warning",
+    Trending: "danger",
   };
   return (
     <div style={styleInfo}>
