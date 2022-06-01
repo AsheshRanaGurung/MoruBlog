@@ -53,14 +53,14 @@ const ReviewForm = () => {
     >
       <Form.Item
         name="review"
-        label="Review"
+        label="Write your review"
         rules={[{ required: true, message: "Please write a review" }]}
       >
         <Input.TextArea
           rows={4}
           cols={10}
           showCount
-          maxLength={1000}
+          maxLength={200}
         ></Input.TextArea>
       </Form.Item>
 

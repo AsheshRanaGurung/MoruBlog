@@ -88,7 +88,7 @@ const DashboardEditForm = () => {
     };
 
     const response = await axios.put(
-      `https://flaskapi-sanjeev.herokuapp.com/posts/${id}/update`,
+      `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
       {
         title: values.title,
         content: values.blog,

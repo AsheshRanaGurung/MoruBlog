@@ -1,20 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import {
-  MDBCard,
   MDBCardBody,
-  MDBCardImage,
   MDBCardText,
-  MDBCardTitle,
   MDBCol,
   MDBContainer,
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
-import { CalendarOutlined } from "@ant-design/icons";
+import { LikeTwoTone } from "@ant-design/icons";
 import ColorBadge from "../components/ColorBadge";
 import LatestBlog from "../components/LatestBlog";
 import { Spin } from "antd";
@@ -35,8 +32,6 @@ const Blog = () => {
 
   const { id } = useParams();
 
-  const navigate = useNavigate();
-
   const getSingleBlog = async () => {
     const response = await axios.get(
       `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`
@@ -54,19 +49,14 @@ const Blog = () => {
       toast.error("Something is wrong!");
     }
   };
-
-  // const excerpt = (string) => {
-  //   if (string?.length > 60) {
-  //     string = string.substring(0, 60) + "...";
-  //   }
-  //   return string;
-  // };
-
+  const hitLike = () => {
+    alert("Like button pressed");
+  };
   useEffect(() => {
     if (id) {
       getSingleBlog();
     }
-  }, []);
+  }, [id]);
   //i removed dependency array
 
   const styleInfo = {
@@ -95,7 +85,7 @@ const Blog = () => {
 
             <div style={{ height: "40px", background: "#f6f6f6" }}>
               <div style={{ float: "left", margin: "7px 0 0 2px" }}>
-                Author:{blog && blog.user.username},
+                Author:{blog && blog.author.username},
               </div>
               {/* <CalendarOutlined style={{ float: "left", marginTop: "10px" }} /> */}
               <strong style={{ float: "left", margin: "7px 0 0 2px" }}>
@@ -120,8 +110,138 @@ const Blog = () => {
                 )}
               </div>{" "}
             </div>
+            <div style={{ textAlign: "right" }}>
+              <div style={{ marginTop: "10px" }}>
+                If you Liked This Blog, Do Like it.{" "}
+              </div>
+              <LikeTwoTone
+                onClick={() => hitLike()}
+                className="likeButton"
+                style={{ fontSize: "40px" }}
+              />
+            </div>
+
+            <div style={{ marginBottom: "5px" }}>
+              <h4>Reviews and comments</h4>
+              <MDBRow>
+                <MDBCol md={1}>
+                  <img
+                    src="../images/user.jpg
+                    "
+                    alt="imag"
+                    fluid
+                    style={{
+                      height: "36px",
+                      borderRadius: "50%",
+                      margin: "12px 0",
+                    }}
+                  ></img>
+                </MDBCol>
+                <MDBCol md={10}>
+                  <MDBCardText
+                    style={{
+                      display: "flex",
+                      margin: "5px 0px 0px 0px",
+                      padding: "0px",
+                    }}
+                  >
+                    Ashesh says:
+                  </MDBCardText>
+
+                  <MDBCardBody
+                    style={{
+                      display: "flex",
+
+                      padding: "0px",
+                    }}
+                  >
+                    <MDBCardText>
+                      these are commentsthese are commentsthese are
+                      commentsthese are commentsthese are commentsthese are
+                      commentsthese are commentsthese are commentsthese are
+                      commentsthese are commentsthese are commentsthese are
+                      commentsthese are commentsthese are commentsthese are
+                      commentsthese are commentsthese are commentsthese are
+                      commentsthese are commentsthese are commentsthese are
+                      comments
+                    </MDBCardText>
+                  </MDBCardBody>
+                </MDBCol>
+              </MDBRow>
+              <MDBRow>
+                <MDBCol md={1}>
+                  <img
+                    src="../images/user.jpg
+                    "
+                    alt="imag"
+                    fluid
+                    style={{
+                      height: "36px",
+                      borderRadius: "50%",
+                      margin: "12px 0",
+                    }}
+                  ></img>
+                </MDBCol>
+                <MDBCol md={10}>
+                  <MDBCardText
+                    style={{
+                      display: "flex",
+                      margin: "5px 0px 0px 0px",
+                      padding: "0px",
+                    }}
+                  >
+                    Ashesh says:
+                  </MDBCardText>
+
+                  <MDBCardBody
+                    style={{
+                      display: "flex",
+
+                      padding: "0px",
+                    }}
+                  >
+                    <MDBCardText>these are comments</MDBCardText>
+                  </MDBCardBody>
+                </MDBCol>
+              </MDBRow>{" "}
+              <MDBRow>
+                <MDBCol md={1}>
+                  <img
+                    src="../images/user.jpg
+                    "
+                    alt="imag"
+                    fluid
+                    style={{
+                      height: "36px",
+                      borderRadius: "50%",
+                      margin: "12px 0",
+                    }}
+                  ></img>
+                </MDBCol>
+                <MDBCol md={10}>
+                  <MDBCardText
+                    style={{
+                      display: "flex",
+                      margin: "5px 0px 0px 0px",
+                      padding: "0px",
+                    }}
+                  >
+                    Ashesh says:
+                  </MDBCardText>
+
+                  <MDBCardBody
+                    style={{
+                      display: "flex",
+
+                      padding: "0px",
+                    }}
+                  >
+                    <MDBCardText>these are comments</MDBCardText>
+                  </MDBCardBody>
+                </MDBCol>
+              </MDBRow>
+            </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <h4>Reviews</h4>
               {token ? (
                 <ReviewForm />
               ) : (
@@ -141,7 +261,9 @@ const Blog = () => {
             <h3>Latest Post</h3>
           )}
           {blogs &&
-            blogs?.map((item, index) => <LatestBlog key={index} {...item} />)}
+            blogs
+              ?.filter((item) => item.id !== parseInt(id))
+              .map((item, index) => <LatestBlog key={index} {...item} />)}
         </MDBCol>
       </MDBRow>
     </div>

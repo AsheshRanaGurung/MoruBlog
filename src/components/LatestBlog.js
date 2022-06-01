@@ -6,11 +6,14 @@ const LatestBlog = ({ id, title, created_at }) => {
   return (
     <div>
       <Link to={`/blog/${id}`}>
-        <MDBCard style={{ width: "100%", marginBottom: "20px" }}>
-          <MDBCardImage
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-            alt={title}
-          ></MDBCardImage>
+        <MDBCard
+          style={{
+            width: "100%",
+            marginBottom: "20px",
+            borderTopRadius: "8px",
+          }}
+        >
+          <MDBCardImage src="../images/food.jpg" alt={title}></MDBCardImage>
 
           {/* <MDBCardText>{created_at}</MDBCardText> */}
           <MDBCardTitle>{title}</MDBCardTitle>

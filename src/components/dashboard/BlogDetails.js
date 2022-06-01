@@ -56,7 +56,7 @@ const BlogDetails = () => {
     },
     {
       title: "Author",
-      dataIndex: "user",
+      dataIndex: "author",
       width: "10%",
       render: (record) => <>{record.username}</>,
     },

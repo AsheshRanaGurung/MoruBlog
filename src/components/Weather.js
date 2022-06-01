@@ -14,15 +14,15 @@ const Weather = () => {
   const MINUTE_MS = 300000;
 
   useEffect(() => {
-    axios
-      .request(options1)
-      .then(function (response) {
-        // console.log(response.data);
-        setWeather(response.data);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    // axios
+    //   .request(options1)
+    //   .then(function (response) {
+    //     // console.log(response.data);
+    //     setWeather(response.data);
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error);
+    //   });
   }, []);
 
   useEffect(() => {
