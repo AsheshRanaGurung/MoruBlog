@@ -34,6 +34,7 @@ import BlogDetails from "./components/dashboard/BlogDetails";
 import DashboardLandingPage from "./components/dashboard/DashboardLandingPage";
 import DashboardEditForm from "./components/dashboard/DashboardEditForm";
 import VerifyBlogs from "./components/dashboard/VerifyBlogs";
+import GetAllUser from "./components/dashboard/GetAllUser";
 // import { loadBlogsData } from "./service";
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
               <Route path="add-blogs" element={<DashboardForm />} />
               <Route path="blog-details" element={<BlogDetails />} />
               <Route path="verify-blogs" element={<VerifyBlogs />} />
+              <Route path="allusers" element={<GetAllUser />} />
 
               <Route
                 path="blog-details/edit-blog/:id"

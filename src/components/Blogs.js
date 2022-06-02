@@ -19,9 +19,22 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 // const Blogs = ({ title, date, category, description, id, excerpt }) => {
-const Blogs = ({ title, date, category, description, id, excerpt }) => {
+const Blogs = ({
+  title,
+  date,
+  category,
+  description,
+  id,
+  excerpt,
+  userIdWhoCreatedThisBLog,
+}) => {
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
+
+  const userID = useSelector(
+    (state) => state.getLoggedInUserDetail?.loggedinuserDetail
+  );
+  const { id: userIDFromRedux, is_admin } = userID;
 
   const dispatch = useDispatch();
 
@@ -102,7 +115,7 @@ const Blogs = ({ title, date, category, description, id, excerpt }) => {
         </MDBCardText>
         {/* <DeleteOutlined style={{ fontSize: "22px", color: "red" }} />
         <EditOutlined style={{ fontSize: "22px", color: "green" }} /> */}
-        {token && (
+        {(is_admin || userIdWhoCreatedThisBLog === userIDFromRedux) && (
           <>
             <MDBBtn
               tag="a"

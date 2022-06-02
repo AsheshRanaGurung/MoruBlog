@@ -10,6 +10,7 @@ import { GetThisTokenSuccess } from "../redux/TokenHandle";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
+import { GetLoggedInUserDetailSuccess } from "../redux/UserLoggedInDetails";
 
 const Login = () => {
   const [loginLoading, setLoginLoading] = useState(false);
@@ -48,6 +49,7 @@ const Login = () => {
       toast.success("Logged In Successfully");
 
       dispatch(GetThisTokenSuccess(response.data.token));
+      dispatch(GetLoggedInUserDetailSuccess(response.data.user));
       navigate("/");
     }
 

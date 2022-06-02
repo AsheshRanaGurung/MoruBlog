@@ -14,12 +14,14 @@ const RightMenu = () => {
   const userInfo = useSelector((state) => state.getToken.token);
 
   const removeToken = () => {
-    localStorage.removeItem("MoruToken");
-    dispatch(RemoveThisTokenSuccess());
-    toast.success("Logged out Sccessfully!");
+    toast.success("Logged out Successfully!");
+
     navigate("/");
 
-    // alert("cliked");
+    window.location.reload();
+
+    localStorage.removeItem("MoruToken");
+    dispatch(RemoveThisTokenSuccess());
   };
   return (
     <Menu mode="horizontal">

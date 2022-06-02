@@ -16,13 +16,13 @@ import ColorBadge from "../components/ColorBadge";
 import LatestBlog from "../components/LatestBlog";
 import { Spin } from "antd";
 import Message from "../components/Message";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ReviewForm from "../components/ReviewForm";
+import { GetThisBlogSuccess } from "../redux/GetThisBlog";
 
 const Blog = () => {
   const [blog, setBlog] = useState();
   const [relatedPost, setRelatedPost] = useState([]);
-  // const [latestBlog, setLatestBlog] = useState([]);
 
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
@@ -30,7 +30,11 @@ const Blog = () => {
   const latestBlog2 = useSelector((state) => state.getLatestBLog);
   const { blogs } = latestBlog2;
 
+  const comments = useSelector((state) => state.getBlogdetail?.blog);
+
   const { id } = useParams();
+
+  const dispatch = useDispatch();
 
   const getSingleBlog = async () => {
     const response = await axios.get(
@@ -40,10 +44,11 @@ const Blog = () => {
     const relatedPostData = await axios.get(
       `https://flaskapi-sanjeev.herokuapp.com/posts?category=${response.data.category}&_start=0&_end=3`
     );
-    // console.log(relatedPostData.data);
+
     if (response.status === 200 || relatedPostData.status === 200) {
       setBlog(response?.data?.post);
-      // console.log(response.data.post);
+      //GetThisBlogSuccess is the redux store name for comments only
+      dispatch(GetThisBlogSuccess(response?.data?.post?.comments));
       setRelatedPost(relatedPostData.data);
     } else {
       toast.error("Something is wrong!");
@@ -123,127 +128,57 @@ const Blog = () => {
 
             <div style={{ marginBottom: "5px" }}>
               <h4>Reviews and comments</h4>
-              <MDBRow>
-                <MDBCol md={1}>
-                  <img
-                    src="../images/user.jpg
-                    "
-                    alt="imag"
-                    fluid
-                    style={{
-                      height: "36px",
-                      borderRadius: "50%",
-                      margin: "12px 0",
-                    }}
-                  ></img>
-                </MDBCol>
-                <MDBCol md={10}>
-                  <MDBCardText
-                    style={{
-                      display: "flex",
-                      margin: "5px 0px 0px 0px",
-                      padding: "0px",
-                    }}
-                  >
-                    Ashesh says:
-                  </MDBCardText>
-
-                  <MDBCardBody
-                    style={{
-                      display: "flex",
-
-                      padding: "0px",
-                    }}
-                  >
-                    <MDBCardText>
-                      these are commentsthese are commentsthese are
-                      commentsthese are commentsthese are commentsthese are
-                      commentsthese are commentsthese are commentsthese are
-                      commentsthese are commentsthese are commentsthese are
-                      commentsthese are commentsthese are commentsthese are
-                      commentsthese are commentsthese are commentsthese are
-                      commentsthese are commentsthese are commentsthese are
-                      comments
+              {comments?.length === 0 && (
+                <Message type="info">No comments.</Message>
+              )}
+              {comments?.map((item, index) => (
+                <MDBRow key={index}>
+                  <MDBCol md={1}>
+                    <img
+                      src="../images/user.jpg
+      "
+                      alt="imag"
+                      fluid
+                      style={{
+                        height: "36px",
+                        borderRadius: "50%",
+                        margin: "12px 0",
+                      }}
+                    ></img>
+                  </MDBCol>
+                  <MDBCol md={10}>
+                    <MDBCardText
+                      style={{
+                        textAlign: "left",
+                        margin: "5px 0px 0px 0px",
+                        padding: "0px",
+                      }}
+                    >
+                      {item.author.username} says:
                     </MDBCardText>
-                  </MDBCardBody>
-                </MDBCol>
-              </MDBRow>
-              <MDBRow>
-                <MDBCol md={1}>
-                  <img
-                    src="../images/user.jpg
-                    "
-                    alt="imag"
-                    fluid
-                    style={{
-                      height: "36px",
-                      borderRadius: "50%",
-                      margin: "12px 0",
-                    }}
-                  ></img>
-                </MDBCol>
-                <MDBCol md={10}>
-                  <MDBCardText
-                    style={{
-                      display: "flex",
-                      margin: "5px 0px 0px 0px",
-                      padding: "0px",
-                    }}
-                  >
-                    Ashesh says:
-                  </MDBCardText>
 
-                  <MDBCardBody
-                    style={{
-                      display: "flex",
+                    {/* <MDBCardText style={{ textAlign: "left" }}>
+                      {item.author.created_at}
+                    </MDBCardText> */}
 
-                      padding: "0px",
-                    }}
-                  >
-                    <MDBCardText>these are comments</MDBCardText>
-                  </MDBCardBody>
-                </MDBCol>
-              </MDBRow>{" "}
-              <MDBRow>
-                <MDBCol md={1}>
-                  <img
-                    src="../images/user.jpg
-                    "
-                    alt="imag"
-                    fluid
-                    style={{
-                      height: "36px",
-                      borderRadius: "50%",
-                      margin: "12px 0",
-                    }}
-                  ></img>
-                </MDBCol>
-                <MDBCol md={10}>
-                  <MDBCardText
-                    style={{
-                      display: "flex",
-                      margin: "5px 0px 0px 0px",
-                      padding: "0px",
-                    }}
-                  >
-                    Ashesh says:
-                  </MDBCardText>
+                    <MDBCardBody
+                      style={{
+                        display: "flex",
 
-                  <MDBCardBody
-                    style={{
-                      display: "flex",
-
-                      padding: "0px",
-                    }}
-                  >
-                    <MDBCardText>these are comments</MDBCardText>
-                  </MDBCardBody>
-                </MDBCol>
-              </MDBRow>
+                        padding: "0px",
+                      }}
+                    >
+                      <MDBCardText>
+                        <strong>{item.message}</strong>
+                      </MDBCardText>
+                    </MDBCardBody>
+                  </MDBCol>
+                </MDBRow>
+              ))}
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               {token ? (
-                <ReviewForm />
+                <ReviewForm id={id} />
               ) : (
                 <div style={{ marginBottom: "10px" }}>
                   <Message type="info">

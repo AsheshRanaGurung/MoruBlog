@@ -171,6 +171,7 @@ const Home = () => {
                           date={item.created_at}
                           // date={item.date}
                           category={item.category}
+                          userIdWhoCreatedThisBLog={item.author.id}
                           description={item.content}
                           // description={item.blog}
                           excerpt={excerpt}

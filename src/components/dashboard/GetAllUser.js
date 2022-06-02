@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Table } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { deleteThisBlog, getApiDataSuccess } from "../../redux/GetApiData";
-import { toast } from "react-toastify";
+import { Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteThisUser, GetUserDetailssuccess } from "../../redux/GetAllUsers";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { GetThisBlogSuccess } from "../../redux/GetThisBlog";
+import { toast } from "react-toastify";
 
-const getRandomuserParams = (params) => ({
-  results: params?.pagination.pageSize,
-  page: params?.pagination.current,
-  ...params,
-});
-
-const BlogDetails = () => {
-  const [state, setState] = useState({
+const GetAllUser = () => {
+  const [user, setUser] = useState({
     data: [],
     pagination: {
       current: 1,
@@ -23,28 +16,40 @@ const BlogDetails = () => {
     },
     loading: false,
   });
+  const { data, pagination, loading } = user;
 
-  const getData = useSelector((state) => state?.Blogs);
-  const { blogs } = getData;
+  const getallusers = useSelector((state) => state.getUserDetails?.users);
 
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
 
   const dispatch = useDispatch();
-  const { data, pagination, loading } = state;
 
+  const getallUsers = async () => {
+    const response = await axios.get(
+      "https://flaskapi-sanjeev.herokuapp.com/account"
+    );
+    if (response.status === 200) {
+      dispatch(GetUserDetailssuccess(response.data.users));
+    }
+  };
   const columns = [
     {
       title: "ID",
       sorter: (a, b) => a.id - b.id,
       dataIndex: "id",
+      width: "5%",
+    },
+    {
+      title: "Name",
+      dataIndex: "username",
+      render: (name) => `${name}`,
       width: "10%",
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      render: (name) => `${name}`,
-      width: "20%",
+      title: "Email",
+      dataIndex: "email",
+      width: "15%",
     },
     {
       sorter: (a, b) => a.date - b.date,
@@ -54,16 +59,12 @@ const BlogDetails = () => {
       render: (record) => <>{record.slice(0, 10)}</>,
     },
     {
-      title: "Author",
-      dataIndex: "author",
+      title: "Is Admin",
+      dataIndex: "is_admin",
       width: "10%",
-      render: (record) => <>{record.username}</>,
+      render: (record) => <>{record === true ? "True" : "False"}</>,
     },
-    {
-      title: "Category",
-      dataIndex: "category",
-      width: "10%",
-    },
+
     {
       title: "Action",
       dataIndex: "",
@@ -72,7 +73,7 @@ const BlogDetails = () => {
         <>
           <Link
             to={`edit-blog/${record.id}`}
-            onClick={() => editThisBlog(record)}
+            // onClick={() => editThisBlog(record)}
           >
             <EditOutlined />
           </Link>
@@ -85,41 +86,27 @@ const BlogDetails = () => {
       width: "10%",
     },
   ];
-
-  const editThisBlog = async (record) => {
-    dispatch(
-      GetThisBlogSuccess({
-        title: record.title,
-        description: record.content,
-      })
-    );
-  };
-
   const onDelete = async (record) => {
-    if (window.confirm("Are you sure you want to Delete this Blog?")) {
+    if (window.confirm("Are you sure you want to Delete this user?")) {
       const config = {
         headers: {
           access_token: token,
         },
       };
       const response = await axios.delete(
-        `https://flaskapi-sanjeev.herokuapp.com/posts/${record.id}/delete`,
+        `https://flaskapi-sanjeev.herokuapp.com/delete_user/${record.id}`,
 
         config
       );
       if (response.status === 200) {
-        dispatch(deleteThisBlog(record.id));
+        dispatch(deleteThisUser(record.id));
 
-        toast.success("Blog deleted successfully");
+        toast.success("User deleted successfully");
       } else {
         toast.error("Something went wrong!");
       }
     }
   };
-
-  useEffect(() => {
-    fetch();
-  }, [blogs]);
 
   const handleTableChange = (pagination, filters, sorter) => {
     fetch({
@@ -131,19 +118,22 @@ const BlogDetails = () => {
   };
 
   const fetch = (params = {}) => {
-    setState({ loading: true });
-    setState({
+    setUser({ loading: true });
+    setUser({
       loading: false,
-      data: blogs,
+      data: getallusers,
       pagination: {
         ...params.pagination,
-        total: blogs.totalCount,
+        total: getallusers.totalCount,
         // 200 is mock data, you should read it from server
         // total: data.totalCount,
       },
     });
   };
-
+  useEffect(() => {
+    getallUsers();
+    fetch();
+  }, []);
   return (
     <Table
       columns={columns}
@@ -156,4 +146,4 @@ const BlogDetails = () => {
   );
 };
 
-export default BlogDetails;
+export default GetAllUser;

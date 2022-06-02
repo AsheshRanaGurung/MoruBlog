@@ -25,11 +25,11 @@ const Header = () => {
 
   const logOut = () => {
     onClose();
+    toast.success("Logged out Successfully!");
     navigate("/");
-
+    window.location.reload();
     localStorage.removeItem("MoruToken");
     dispatch(RemoveThisTokenSuccess());
-    toast.success("Logged out Sccessfully!");
   };
 
   useEffect(() => {}, [userInfo]);

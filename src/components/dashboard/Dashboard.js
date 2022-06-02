@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
 import {
   AppstoreOutlined,
@@ -17,6 +17,9 @@ import { DesktopOutlined, FileOutlined } from "@ant-design/icons";
 import DashboardForm from "./DashboardForm";
 import BlogDetails from "./BlogDetails";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { GetUserDetailssuccess } from "../../redux/GetAllUsers";
+import { useDispatch } from "react-redux";
 
 const items1 = ["1", "2", "3"].map((key) => ({
   key,
@@ -61,12 +64,13 @@ const items = [
 }));
 const Dashboard = () => {
   const [collapse, setCollapse] = useState(false);
-
+  const dispatch = useDispatch();
   const refreshPage = () => {
     setTimeout(() => {
       window.location.reload();
     }, 500);
   };
+
   return (
     <Layout hasSider>
       <>
@@ -137,6 +141,12 @@ const Dashboard = () => {
                 <span>Verify Blogs</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="5">
+              <Link to="allusers">
+                <UserOutlined />
+                <span>User Details</span>
+              </Link>
+            </Menu.Item>
 
             <Menu.Item key="4">
               <Link to="/" onClick={() => refreshPage()}>
@@ -159,7 +169,9 @@ const Dashboard = () => {
               <Outlet />
             </div>
           </Content>
-          <Footer style={{ textAlign: "center" }}>
+          <Footer
+            style={{ textAlign: "center", position: "sticky", bottom: "0" }}
+          >
             Ant Design ©2018 Created by Ant UED
           </Footer>
         </Layout>
