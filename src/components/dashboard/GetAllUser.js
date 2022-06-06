@@ -6,8 +6,11 @@ import { deleteThisUser, GetUserDetailssuccess } from "../../redux/GetAllUsers";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import EditModal from "../Modal/EditModal";
+// import { useTasksQuery } from "../../redux/GetAllUsers";
 
 const GetAllUser = () => {
+  // const { data } = useTasksQuery();
   const [user, setUser] = useState({
     data: [],
     pagination: {
@@ -17,6 +20,7 @@ const GetAllUser = () => {
     loading: false,
   });
   const { data, pagination, loading } = user;
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const getallusers = useSelector((state) => state.getUserDetails?.users);
 
@@ -25,14 +29,13 @@ const GetAllUser = () => {
 
   const dispatch = useDispatch();
 
-  const getallUsers = async () => {
-    const response = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/account"
-    );
-    if (response.status === 200) {
-      dispatch(GetUserDetailssuccess(response.data.users));
-    }
+  const showModal = () => {
+    setIsModalVisible(true);
   };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const columns = [
     {
       title: "ID",
@@ -71,12 +74,8 @@ const GetAllUser = () => {
       key: "x",
       render: (record) => (
         <>
-          <Link
-            to={`edit-blog/${record.id}`}
-            // onClick={() => editThisBlog(record)}
-          >
-            <EditOutlined />
-          </Link>
+          <EditOutlined onClick={() => editThisBlog(record)} />
+
           <DeleteOutlined
             onClick={() => onDelete(record)}
             style={{ color: "red", marginLeft: "12px" }}
@@ -108,6 +107,10 @@ const GetAllUser = () => {
     }
   };
 
+  const editThisBlog = async (record) => {
+    showModal();
+  };
+
   const handleTableChange = (pagination, filters, sorter) => {
     fetch({
       sortField: sorter.field,
@@ -131,18 +134,21 @@ const GetAllUser = () => {
     });
   };
   useEffect(() => {
-    getallUsers();
+    // getallUsers();
     fetch();
-  }, []);
+  }, [getallusers]);
   return (
-    <Table
-      columns={columns}
-      // rowKey={(record) => record.login.uuid}
-      dataSource={data}
-      pagination={pagination}
-      loading={data.length === 0}
-      onChange={handleTableChange}
-    />
+    <>
+      <EditModal isModalVisible={isModalVisible} handleCancel={handleCancel} />
+      <Table
+        columns={columns}
+        // rowKey={(record) => record.login.uuid}
+        dataSource={data}
+        pagination={pagination}
+        loading={data.length === 0}
+        onChange={handleTableChange}
+      />
+    </>
   );
 };
 

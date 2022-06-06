@@ -6,7 +6,9 @@ import { deleteThisUser, GetUserDetailssuccess } from "../../redux/GetAllUsers";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { GetUnverifiedBlog } from "../../redux/GetUnverifiedBlogs";
+// import { GetUnverifiedBlog } from "../../redux/GetUnverifiedBlogs";
+
+import VerifyBlogModal from "../Modal/VerifyBlogModal";
 
 const VerifyBlogs = () => {
   const [unverifiedBlogs, setVerifiedBlogs] = useState({
@@ -19,28 +21,44 @@ const VerifyBlogs = () => {
   });
   const { data, pagination, loading } = unverifiedBlogs;
 
-  const getUnverifiedBlog = useSelector((state) => state.getUnverifiedBlog);
-  const { blogs } = getUnverifiedBlog;
+  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [message, setMessage] = useState("");
 
-  const userToken = useSelector((state) => state.getToken);
-  const { token } = userToken;
-  const dispatch = useDispatch();
-
-  const getUnverifiedBlogs = async () => {
-    const config = {
-      headers: {
-        access_token: token,
-      },
-    };
-    const response = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/review_posts",
-      config
-    );
-    if (response.status === 200) {
-      dispatch(GetUnverifiedBlog(response.data.posts));
-    }
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
+  const getUnverifiedBlog = useSelector((state) => state.getUnverifiedBlog);
+  // const { blogs } = getUnverifiedBlog;
+
+  const dispatch = useDispatch();
+
+  // const getUnverifiedBlogs = async () => {
+  //   const config = {
+  //     headers: {
+  //       access_token: token,
+  //     },
+  //   };
+  //   const response = await axios.get(
+  //     "https://flaskapi-sanjeev.herokuapp.com/review_posts",
+  //     config
+  //   );
+  //   if (response.status === 200) {
+  //     dispatch(GetUnverifiedBlog(response.data.posts));
+  //   }
+  // };
+  const editThisBlog = (record) => {
+    showModal();
+    setTitle(record.title);
+    setCategory(record.category);
+    setMessage(record.content);
+  };
   const columns = [
     {
       title: "ID",
@@ -86,12 +104,8 @@ const VerifyBlogs = () => {
       key: "x",
       render: (record) => (
         <>
-          <Link
-            to={`edit-blog/${record.id}`}
-            // onClick={() => editThisBlog(record)}
-          >
-            <EditOutlined />
-          </Link>
+          <EditOutlined onClick={() => editThisBlog(record)} />
+
           <DeleteOutlined
             // onClick={() => onDelete(record)}
             style={{ color: "red", marginLeft: "12px" }}
@@ -106,10 +120,10 @@ const VerifyBlogs = () => {
     setVerifiedBlogs({ loading: true });
     setVerifiedBlogs({
       loading: false,
-      data: blogs,
+      data: getUnverifiedBlog?.blogs,
       pagination: {
         ...params.pagination,
-        total: blogs.totalCount,
+        total: getUnverifiedBlog?.blogs.totalCount,
         // 200 is mock data, you should read it from server
         // total: data.totalCount,
       },
@@ -126,18 +140,28 @@ const VerifyBlogs = () => {
   };
 
   useEffect(() => {
-    getUnverifiedBlogs();
+    // getUnverifiedBlogs();
     fetch();
   }, []);
   return (
-    <Table
-      columns={columns}
-      // rowKey={(record) => record.login.uuid}
-      dataSource={data}
-      pagination={pagination}
-      loading={data.length === 0}
-      onChange={handleTableChange}
-    />
+    <>
+      <VerifyBlogModal
+        isModalVisible={isModalVisible}
+        handleCancel={handleCancel}
+        name={name}
+        title={title}
+        category={category}
+        message={message}
+      />
+      <Table
+        columns={columns}
+        // rowKey={(record) => record.login.uuid}
+        dataSource={data}
+        pagination={pagination}
+        loading={data.length === 0}
+        onChange={handleTableChange}
+      />
+    </>
   );
 };
 

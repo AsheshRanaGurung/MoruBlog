@@ -5,6 +5,7 @@ import SubMenu from "antd/lib/menu/SubMenu";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { RemoveThisTokenSuccess } from "../redux/TokenHandle";
+import { RemoveLoggedInUserDetailSuccess } from "../redux/UserLoggedInDetails";
 
 const MenuItemGroup = Menu.ItemGroup;
 const RightMenu = () => {
@@ -12,6 +13,10 @@ const RightMenu = () => {
   const navigate = useNavigate();
 
   const userInfo = useSelector((state) => state.getToken.token);
+
+  const user = useSelector(
+    (state) => state.getLoggedInUserDetail?.loggedinuserDetail
+  );
 
   const removeToken = () => {
     toast.success("Logged out Successfully!");
@@ -22,17 +27,15 @@ const RightMenu = () => {
 
     localStorage.removeItem("MoruToken");
     dispatch(RemoveThisTokenSuccess());
+    dispatch(RemoveLoggedInUserDetailSuccess());
+    localStorage.removeItem("LoginUser");
   };
   return (
     <Menu mode="horizontal">
       {userInfo ? (
         <SubMenu
           key="SubMenu2"
-          title={
-            <span>
-              <i className="fas fa-user"></i> Profile
-            </span>
-          }
+          title={user ? user.username : "Profile"}
           style={{ fontSize: "19px" }}
         >
           <MenuItemGroup>

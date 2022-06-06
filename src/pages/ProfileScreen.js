@@ -4,35 +4,44 @@ import { Form, Input, Button, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProfileScreen = () => {
   const [updateloading, setUpdateloading] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+  const userToken = useSelector((state) => state.getToken);
+  const { token } = userToken;
+
   const navigate = useNavigate();
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     setUpdateloading(true);
 
-    // const response= await axios.put(`https://flaskapi-sanjeev.herokuapp.com/users/${id}/update`,{
-    //   username:values.username,
-    //   email:values.email,
-    //   password:values.password,
-    // })
+    const config = {
+      headers: {
+        access_token: token,
+      },
+    };
 
-    // if(response?.status===200){
-    //   setUpdateloading(false)
-    //   toast.success("User updated Successfully");
-    //   navigate("/")
-    // }
-    // if (response?.status === 401) {
-    //   console.log(response);
-    //   toast.error(response.message);
-    // }
-    console.log("Received values of name ", values.username);
-    console.log("Received values of email: ", values.email);
-    console.log("Received values of pswd: ", values.password);
+    const response = await axios.put(
+      `https://flaskapi-sanjeev.herokuapp.com/update_user`,
+      {
+        username: values.email,
+      },
+      config
+    );
+
+    if (response.status === 200 || response.status === 201) {
+      setUpdateloading(false);
+      navigate("/");
+      toast.success("User updated successfully");
+    } else {
+      setUpdateloading(false);
+
+      toast.error("Something went wrong");
+    }
   };
   return (
     <div className="LoginPage">

@@ -19,7 +19,8 @@ import BlogDetails from "./BlogDetails";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { GetUserDetailssuccess } from "../../redux/GetAllUsers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { GetUnverifiedBlog } from "../../redux/GetUnverifiedBlogs";
 
 const items1 = ["1", "2", "3"].map((key) => ({
   key,
@@ -65,11 +66,42 @@ const items = [
 const Dashboard = () => {
   const [collapse, setCollapse] = useState(false);
   const dispatch = useDispatch();
+
+  const userToken = useSelector((state) => state.getToken);
+  const { token } = userToken;
+
   const refreshPage = () => {
     setTimeout(() => {
       window.location.reload();
     }, 500);
   };
+
+  const getUnverifiedBlogs = async () => {
+    const config = {
+      headers: {
+        access_token: token,
+      },
+    };
+    const response = await axios.get(
+      "https://flaskapi-sanjeev.herokuapp.com/review_posts",
+      config
+    );
+    if (response.status === 200) {
+      dispatch(GetUnverifiedBlog(response.data.posts));
+    }
+  };
+  const getallUsers = async () => {
+    const response = await axios.get(
+      "https://flaskapi-sanjeev.herokuapp.com/account"
+    );
+    if (response.status === 200) {
+      dispatch(GetUserDetailssuccess(response.data.users));
+    }
+  };
+  useEffect(() => {
+    getUnverifiedBlogs();
+    getallUsers();
+  }, []);
 
   return (
     <Layout hasSider>

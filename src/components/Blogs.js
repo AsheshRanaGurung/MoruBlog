@@ -31,10 +31,11 @@ const Blogs = ({
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
 
-  const userID = useSelector(
+  const user = useSelector(
     (state) => state.getLoggedInUserDetail?.loggedinuserDetail
   );
-  const { id: userIDFromRedux, is_admin } = userID;
+
+  // const { id: userIDFromRedux, is_admin } = userID;
 
   const dispatch = useDispatch();
 
@@ -115,7 +116,7 @@ const Blogs = ({
         </MDBCardText>
         {/* <DeleteOutlined style={{ fontSize: "22px", color: "red" }} />
         <EditOutlined style={{ fontSize: "22px", color: "green" }} /> */}
-        {(is_admin || userIdWhoCreatedThisBLog === userIDFromRedux) && (
+        {(user?.is_admin || userIdWhoCreatedThisBLog === user?.id) && (
           <>
             <MDBBtn
               tag="a"

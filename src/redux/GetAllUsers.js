@@ -26,3 +26,22 @@ export const GetUserDetails = createSlice({
 export const { GetUserDetailssuccess, deleteThisUser } = GetUserDetails.actions;
 
 export default GetUserDetails.reducer;
+
+// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
+// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+// export const taskApi = createApi({
+//   reducerPath: "tasksApi",
+//   baseQuery: fetchBaseQuery({
+//     baseUrl: "https://flaskapi-sanjeev.herokuapp.com/",
+//   }),
+//   endpoints: (builder) => ({
+//     tasks: builder.query({
+//       query: () => "/account",
+//     }),
+//     addTask:(builder)=>({
+
+//     })
+//   }),
+// });
+// export const { useTasksQuery } = taskApi;

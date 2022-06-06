@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { RemoveThisTokenSuccess } from "../redux/TokenHandle";
+import { RemoveLoggedInUserDetailSuccess } from "../redux/UserLoggedInDetails";
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -14,6 +15,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.getToken.token);
+
+  const user = useSelector(
+    (state) => state.getLoggedInUserDetail?.loggedinuserDetail
+  );
 
   const showDrawer = () => {
     setVisible(true);
@@ -30,6 +35,8 @@ const Header = () => {
     window.location.reload();
     localStorage.removeItem("MoruToken");
     dispatch(RemoveThisTokenSuccess());
+    dispatch(RemoveLoggedInUserDetailSuccess());
+    localStorage.removeItem("LoginUser");
   };
 
   useEffect(() => {}, [userInfo]);
@@ -151,7 +158,7 @@ const Header = () => {
               {userInfo ? (
                 <SubMenu
                   key="SubMenu4444"
-                  title={<span>Profile</span>}
+                  title={user ? user.username : "Profile"}
                   style={{ fontSize: "19px" }}
                 >
                   <MenuItemGroup>

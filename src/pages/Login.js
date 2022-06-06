@@ -45,6 +45,8 @@ const Login = () => {
 
     if (response?.status === 200) {
       localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
+      localStorage.setItem("LoginUser", JSON.stringify(response.data.user));
+
       setLoginLoading(false);
       toast.success("Logged In Successfully");
 

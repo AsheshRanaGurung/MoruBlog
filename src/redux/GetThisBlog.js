@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   blog: [],
+  blogvote: null,
   isLoading: true,
   isSuccess: false,
 };
@@ -15,10 +16,13 @@ export const GetThisBlog = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
     },
+    GetThisBlogVote: (state, action) => {
+      state.blogvote = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { GetThisBlogSuccess } = GetThisBlog.actions;
+export const { GetThisBlogSuccess, GetThisBlogVote } = GetThisBlog.actions;
 
 export default GetThisBlog.reducer;

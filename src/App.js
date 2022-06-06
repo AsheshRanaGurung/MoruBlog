@@ -39,6 +39,10 @@ import GetAllUser from "./components/dashboard/GetAllUser";
 
 function App() {
   const getData = useSelector((state) => state.createBlog);
+
+  const user = useSelector(
+    (state) => state.getLoggedInUserDetail?.loggedinuserDetail
+  );
   const { isSuccess } = getData;
   // const userInfo = useSelector((state) => state.getToken.token);
   const pathname = window.location.pathname;
