@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { Form, Input, Modal, Button, Select, Spin } from "antd";
-import axios from "axios";
+import { Form, Input, Modal, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { GetThisBlogSuccess } from "../../redux/GetThisBlog";
 import { useParams } from "react-router-dom";
 import { GetUserDetailssuccess } from "../../redux/GetAllUsers";
 
@@ -42,6 +39,8 @@ const VerifyBlogModal = ({
     <>
       <Modal
         title="Basic Modal"
+        centered
+        width={890}
         visible={isModalVisible}
         // onOk={handleOk}
         onCancel={handleCancel}
@@ -87,16 +86,28 @@ const VerifyBlogModal = ({
             ></Input.TextArea>
           </Form.Item>
 
-          <button className="submitBtn" type="primary">
-            {loginLoading ? (
-              <Spin
-                indicator={antIcon}
-                style={{ margin: "auto", color: "white" }}
-              />
-            ) : (
-              <div style={{ margin: "auto", color: "white" }}>Verify Blog</div>
-            )}
-          </button>
+          <div style={{ display: "flex", justifyContent: "right" }}>
+            <button className="submitBtn" type="primary">
+              {loginLoading ? (
+                <Spin
+                  indicator={antIcon}
+                  style={{ margin: "auto", color: "white" }}
+                />
+              ) : (
+                <div style={{ margin: "auto", color: "white" }}>Verify</div>
+              )}
+            </button>
+            <button className="submitBtn" type="primary">
+              {loginLoading ? (
+                <Spin
+                  indicator={antIcon}
+                  style={{ margin: "auto", color: "white" }}
+                />
+              ) : (
+                <div style={{ margin: "auto", color: "white" }}>Discard</div>
+              )}
+            </button>
+          </div>
         </Form>
       </Modal>
     </>

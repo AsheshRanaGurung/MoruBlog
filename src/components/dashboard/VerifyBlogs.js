@@ -1,11 +1,9 @@
-import axios from "axios";
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteThisUser, GetUserDetailssuccess } from "../../redux/GetAllUsers";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+
 // import { GetUnverifiedBlog } from "../../redux/GetUnverifiedBlogs";
 
 import VerifyBlogModal from "../Modal/VerifyBlogModal";
@@ -21,15 +19,12 @@ const VerifyBlogs = () => {
   });
   const { data, pagination, loading } = unverifiedBlogs;
 
-  const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [message, setMessage] = useState("");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -54,10 +49,10 @@ const VerifyBlogs = () => {
   //   }
   // };
   const editThisBlog = (record) => {
-    showModal();
     setTitle(record.title);
     setCategory(record.category);
     setMessage(record.content);
+    setIsModalVisible(true);
   };
   const columns = [
     {
@@ -69,7 +64,6 @@ const VerifyBlogs = () => {
     },
     {
       title: "Name",
-      dataIndex: "username",
       dataIndex: "author",
       render: (record) => <>{record.username}</>,
       width: "5%",
@@ -90,14 +84,6 @@ const VerifyBlogs = () => {
       dataIndex: "category",
       width: "5%",
     },
-
-    // {
-    //   title: "Is Admin",
-    //   dataIndex: "is_admin",
-    //   width: "10%",
-    //   render: (record) => <>{record === true ? "True" : "False"}</>,
-    // },
-
     {
       title: "Action",
       dataIndex: "",
@@ -145,14 +131,17 @@ const VerifyBlogs = () => {
   }, []);
   return (
     <>
-      <VerifyBlogModal
-        isModalVisible={isModalVisible}
-        handleCancel={handleCancel}
-        name={name}
-        title={title}
-        category={category}
-        message={message}
-      />
+      {isModalVisible && (
+        <VerifyBlogModal
+          isModalVisible={isModalVisible}
+          handleCancel={handleCancel}
+          // name={name}
+          title={title}
+          category={category}
+          message={message}
+        />
+      )}
+
       <Table
         columns={columns}
         // rowKey={(record) => record.login.uuid}
