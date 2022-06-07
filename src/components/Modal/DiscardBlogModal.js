@@ -2,21 +2,12 @@ import React, { useState } from "react";
 import { Form, Input, Modal, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { GetUserDetailssuccess } from "../../redux/GetAllUsers";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { deleteThisBlog } from "../../redux/GetUnverifiedBlogs";
 
-const VerifyBlogModal = ({
-  blogId,
-  title,
-  category,
-  message,
-  isModalVisible,
-  handleCancel,
-}) => {
-  const [verifyblog, setVerifyBlog] = useState(false);
+const DiscardBlogModal = ({ blogId, discardModalVisible, handleCancel }) => {
   const [discardblog, setDiscardBlog] = useState(false);
 
   const userToken = useSelector((state) => state.getToken);
@@ -25,8 +16,6 @@ const VerifyBlogModal = ({
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const dispatch = useDispatch();
-  const { id } = useParams();
-
   const getUnverifiedBlogs = async () => {
     const config = {
       headers: {
@@ -43,7 +32,7 @@ const VerifyBlogModal = ({
   };
 
   const onFinish = async (values) => {
-    setVerifyBlog(true);
+    setDiscardBlog(true);
 
     const config = {
       headers: {
@@ -53,16 +42,17 @@ const VerifyBlogModal = ({
     const response = await axios.put(
       `https://flaskapi-sanjeev.herokuapp.com/update_post_status/${blogId}`,
       {
-        is_accepted: true,
+        is_accepted: false,
+        rejected_reason: values.title,
       },
       config
     );
     if (response.status === 200) {
-      setVerifyBlog(false);
+      setDiscardBlog(false);
       dispatch(deleteThisBlog(blogId));
 
       handleCancel();
-      toast.success("Blog verified successfully");
+      toast.success("Blog discarded successfully");
     }
   };
   const validateMessages = {
@@ -74,9 +64,7 @@ const VerifyBlogModal = ({
       <Modal
         title="Basic Modal"
         centered
-        width={890}
-        visible={isModalVisible}
-        // onOk={handleOk}
+        visible={discardModalVisible}
         onCancel={handleCancel}
         footer={null}
       >
@@ -84,51 +72,30 @@ const VerifyBlogModal = ({
           name="nest-messages"
           layout="vertical"
           onFinish={onFinish}
-          initialValues={{
-            title: title,
-
-            category: category,
-            content: message,
-          }}
           validateMessages={validateMessages}
         >
           <Form.Item
             name="title"
-            label="Title"
-            rules={[{ required: true, message: "Please enter your title" }]}
-          >
-            <Input></Input>
-          </Form.Item>
-
-          <Form.Item
-            name="category"
-            label="Category"
-            rules={[{ required: true, message: "Please enter your category" }]}
-          >
-            <Input></Input>
-          </Form.Item>
-          <Form.Item
-            name="content"
-            label="Content"
-            rules={[{ required: true, message: "Please enter your Content" }]}
+            label="Discard reason"
+            rules={[{ required: true, message: "Please enter valid reason" }]}
           >
             <Input.TextArea
-              rows={18}
-              cols={22}
+              rows={10}
+              cols={10}
               showCount
-              maxLength={10000}
+              maxLength={500}
             ></Input.TextArea>
           </Form.Item>
 
           <div style={{ display: "flex", justifyContent: "right" }}>
             <button className="submitBtn" type="primary">
-              {verifyblog ? (
+              {discardblog ? (
                 <Spin
                   indicator={antIcon}
                   style={{ margin: "auto", color: "white" }}
                 />
               ) : (
-                <div style={{ margin: "auto", color: "white" }}>Verify</div>
+                <div style={{ margin: "auto", color: "white" }}>Discard</div>
               )}
             </button>
           </div>
@@ -138,4 +105,4 @@ const VerifyBlogModal = ({
   );
 };
 
-export default VerifyBlogModal;
+export default DiscardBlogModal;

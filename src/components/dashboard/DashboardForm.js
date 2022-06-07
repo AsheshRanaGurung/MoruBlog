@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createNewBlog } from "../../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../../redux/GetApiData";
+import { GetUnverifiedBlog } from "../../redux/GetUnverifiedBlogs";
 
 const layout = {
   labelCol: {
@@ -75,6 +76,20 @@ const DashboardForm = () => {
     dispatch(getApiDataSuccess(response2?.data?.posts));
   };
 
+  const getUnverifiedBlogs = async () => {
+    const config = {
+      headers: {
+        access_token: token,
+      },
+    };
+    const response = await axios.get(
+      "https://flaskapi-sanjeev.herokuapp.com/review_posts",
+      config
+    );
+    if (response.status === 200) {
+      dispatch(GetUnverifiedBlog(response.data.posts));
+    }
+  };
   const onFinish = async (values) => {
     setLoginLoading(true);
 
@@ -102,8 +117,9 @@ const DashboardForm = () => {
       loadBlogsData();
       setLoginLoading(false);
       toast.success("Blog created successfully");
+      getUnverifiedBlogs();
 
-      navigate("/dashboard/blog-details");
+      navigate("/dashboard/verify-blogs");
     } else {
       toast.error("Something went wrong");
     }

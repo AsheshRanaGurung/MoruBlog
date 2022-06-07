@@ -38,13 +38,18 @@ const BlogDetails = () => {
       title: "ID",
       sorter: (a, b) => a.id - b.id,
       dataIndex: "id",
-      width: "10%",
+      width: "2%",
     },
     {
       title: "Title",
       dataIndex: "title",
       render: (name) => `${name}`,
-      width: "20%",
+      width: "15%",
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      width: "5%",
     },
     {
       sorter: (a, b) => a.date - b.date,
@@ -59,11 +64,7 @@ const BlogDetails = () => {
       width: "10%",
       render: (record) => <>{record.username}</>,
     },
-    {
-      title: "Category",
-      dataIndex: "category",
-      width: "10%",
-    },
+
     {
       title: "Action",
       dataIndex: "",

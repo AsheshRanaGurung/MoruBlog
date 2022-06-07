@@ -20,10 +20,6 @@ export const GetUnverifiedBlogs = createSlice({
       state.blogs = state.blogs.filter((item) => item.id !== action.payload);
       // state.isSuccess = true;
     },
-    // GetThisBlog: (state, action) => {
-    //   console.log(action.payload);
-    //   state.blogs = state.blogs.filter((item) => item.id !== action.payload);
-    // },
   },
 });
 
