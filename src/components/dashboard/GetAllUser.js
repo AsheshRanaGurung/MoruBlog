@@ -20,6 +20,8 @@ const GetAllUser = () => {
     loading: false,
   });
   const { data, pagination, loading } = user;
+  const [id, setid] = useState("");
+  const [title, setTitle] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const getallusers = useSelector((state) => state.getUserDetails?.users);
@@ -107,8 +109,10 @@ const GetAllUser = () => {
     }
   };
 
-  const editThisBlog = async (record) => {
-    showModal();
+  const editThisBlog = (record) => {
+    setid(record.id);
+    setTitle(record.username);
+    setIsModalVisible(true);
   };
 
   const handleTableChange = (pagination, filters, sorter) => {
@@ -139,7 +143,13 @@ const GetAllUser = () => {
   }, [getallusers]);
   return (
     <>
-      <EditModal isModalVisible={isModalVisible} handleCancel={handleCancel} />
+      {isModalVisible && (
+        <EditModal
+          name={title}
+          isModalVisible={isModalVisible}
+          handleCancel={handleCancel}
+        />
+      )}{" "}
       <Table
         columns={columns}
         // rowKey={(record) => record.login.uuid}

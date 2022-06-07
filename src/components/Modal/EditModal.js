@@ -8,12 +8,7 @@ import { GetThisBlogSuccess } from "../../redux/GetThisBlog";
 import { useParams } from "react-router-dom";
 import { GetUserDetailssuccess } from "../../redux/GetAllUsers";
 
-const EditModal = ({
-  commentId,
-  commentMessage,
-  isModalVisible,
-  handleCancel,
-}) => {
+const EditModal = ({ name, isModalVisible, handleCancel }) => {
   const [loginLoading, setLoginLoading] = useState(false);
 
   const userToken = useSelector((state) => state.getToken);
@@ -87,7 +82,7 @@ const EditModal = ({
           name="nest-messages"
           layout="vertical"
           onFinish={onFinish}
-          initialValues={{ review: commentMessage }}
+          initialValues={{ review: name }}
           validateMessages={validateMessages}
         >
           <Form.Item
