@@ -12,7 +12,7 @@ import {
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
-import { LikeOutlined, LikeTwoTone } from "@ant-design/icons";
+import { LikeTwoTone } from "@ant-design/icons";
 import ColorBadge from "../components/ColorBadge";
 import LatestBlog from "../components/LatestBlog";
 import { Spin } from "antd";
@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ReviewForm from "../components/ReviewForm";
 import { GetThisBlogSuccess, GetThisBlogVote } from "../redux/GetThisBlog";
 import ModalDesign from "../components/Modal/Modal";
+import { getLatestDataSuccess } from "../redux/GetLatestBlog";
 
 const Blog = () => {
   const [blog, setBlog] = useState();
@@ -44,8 +45,6 @@ const Blog = () => {
 
   const latestBlog2 = useSelector((state) => state.getLatestBLog);
   const { blogs } = latestBlog2;
-
-  const blogVote = useSelector((state) => state.getBlogdetail?.blogvote);
 
   const comments = useSelector((state) => state.getBlogdetail?.blog);
 
@@ -79,6 +78,18 @@ const Blog = () => {
       toast.error("Something is wrong!");
     }
   };
+
+  const fetchLatestBlog = async () => {
+    const response = await axios.get(
+      `https://flaskapi-sanjeev.herokuapp.com/posts?page=1&perpage=4`
+    );
+    if (response.status === 200) {
+      dispatch(getLatestDataSuccess(response.data.posts));
+    } else {
+      toast.error("Something went wrong!");
+    }
+  };
+
   const config = {
     headers: {
       access_token: token,
@@ -124,6 +135,7 @@ const Blog = () => {
   useEffect(() => {
     if (id) {
       getSingleBlog();
+      fetchLatestBlog();
     }
   }, [id, likeTrigger]);
   //i removed dependency array
@@ -289,6 +301,7 @@ const Blog = () => {
           {blogs &&
             blogs
               ?.filter((item) => item.id !== parseInt(id))
+              .slice(0, 3)
               .map((item, index) => <LatestBlog key={index} {...item} />)}
         </MDBCol>
       </MDBRow>

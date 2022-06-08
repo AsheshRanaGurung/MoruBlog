@@ -16,12 +16,6 @@ export const GetThisBlog = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
     },
-    GetThisBlogVote: (state, action) => {
-      state.blogvote += action.payload;
-    },
-    RemoveThisBlogVote: (state, action) => {
-      state.blogvote -= action.payload;
-    },
   },
 });
 

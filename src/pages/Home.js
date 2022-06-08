@@ -1,16 +1,15 @@
 import { MDBRow, MDBCol } from "mdb-react-ui-kit";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Blogs from "../components/Blogs";
 import Search from "../components/Search";
-import LatestBlog from "../components/LatestBlog";
+
 import Category from "../components/Category";
 import { toast } from "react-toastify";
 import { Spin, Button, Pagination } from "antd";
 import DownloadButton from "../components/DownloadButton";
 import Weather from "../components/Weather";
-import { getLatestDataSuccess } from "../redux/GetLatestBlog";
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -31,11 +30,6 @@ const Home = () => {
   };
 
   const [showBtn, setShowBtn] = useState(false);
-
-  const onChange = (page) => {
-    setCurrent(page);
-  };
-  const dispatch = useDispatch();
 
   const showButton = () => {
     setShowBtn(true);
@@ -58,20 +52,7 @@ const Home = () => {
     setAllblogs(blogs);
     setTotalPage(blogs?.length / pageSize);
     setMaxIndex(pageSize);
-
-    fetchLatestBlog();
   }, [blogs]);
-
-  const fetchLatestBlog = async () => {
-    const response = await axios.get(
-      `https://flaskapi-sanjeev.herokuapp.com/posts?page=1&perpage=4`
-    );
-    if (response.status === 200) {
-      dispatch(getLatestDataSuccess(response.data.posts));
-    } else {
-      toast.error("Something went wrong!");
-    }
-  };
 
   const excerpt = (string) => {
     if (string?.length > 50) {
