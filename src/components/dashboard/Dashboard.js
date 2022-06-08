@@ -21,6 +21,9 @@ import axios from "axios";
 import { GetUserDetailssuccess } from "../../redux/GetAllUsers";
 import { useDispatch, useSelector } from "react-redux";
 import { GetUnverifiedBlog } from "../../redux/GetUnverifiedBlogs";
+import { RemoveThisTokenSuccess } from "../../redux/TokenHandle";
+import { RemoveLoggedInUserDetailSuccess } from "../../redux/UserLoggedInDetails";
+import { toast } from "react-toastify";
 
 const items1 = ["1", "2", "3"].map((key) => ({
   key,
@@ -71,9 +74,11 @@ const Dashboard = () => {
   const { token } = userToken;
 
   const refreshPage = () => {
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
+    localStorage.removeItem("MoruToken");
+    dispatch(RemoveThisTokenSuccess());
+    dispatch(RemoveLoggedInUserDetailSuccess());
+    localStorage.removeItem("LoginUser");
+    toast.success("Logged out");
   };
 
   const getUnverifiedBlogs = async () => {

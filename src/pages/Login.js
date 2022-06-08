@@ -44,15 +44,26 @@ const Login = () => {
     );
 
     if (response?.status === 200) {
-      localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
-      localStorage.setItem("LoginUser", JSON.stringify(response.data.user));
+      if (response.data.user.is_admin === true) {
+        navigate("/dashboard");
+        localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
+        localStorage.setItem("LoginUser", JSON.stringify(response.data.user));
+        setLoginLoading(false);
+        toast.success("Logged In Successfully");
 
-      setLoginLoading(false);
-      toast.success("Logged In Successfully");
+        dispatch(GetThisTokenSuccess(response.data.token));
+        dispatch(GetLoggedInUserDetailSuccess(response.data.user));
+      } else {
+        localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
+        localStorage.setItem("LoginUser", JSON.stringify(response.data.user));
 
-      dispatch(GetThisTokenSuccess(response.data.token));
-      dispatch(GetLoggedInUserDetailSuccess(response.data.user));
-      navigate("/");
+        setLoginLoading(false);
+        toast.success("Logged In Successfully");
+
+        dispatch(GetThisTokenSuccess(response.data.token));
+        dispatch(GetLoggedInUserDetailSuccess(response.data.user));
+        navigate("/");
+      }
     }
 
     if (response?.status === 401 || response?.status === 404) {
