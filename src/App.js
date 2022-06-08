@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, BrowserRouter, Route, useLocation } from "react-router-dom";
 import AddEditpage from "./pages/AddEditpage";
-import Blogs from "./components/Blogs";
+
 import NotFoundPage from "./pages/NotFoundPage";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -24,8 +24,6 @@ import Dashboard from "./components/dashboard/Dashboard";
 import DashboardForm from "./components/dashboard/DashboardForm";
 import axios from "axios";
 
-// import { Layout } from "antd";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getApiDataSuccess } from "./redux/GetApiData";
 import Blog from "./pages/Blog";
@@ -35,7 +33,6 @@ import DashboardLandingPage from "./components/dashboard/DashboardLandingPage";
 import DashboardEditForm from "./components/dashboard/DashboardEditForm";
 import VerifyBlogs from "./components/dashboard/VerifyBlogs";
 import GetAllUser from "./components/dashboard/GetAllUser";
-// import { loadBlogsData } from "./service";
 
 function App() {
   const getData = useSelector((state) => state.createBlog);
@@ -44,9 +41,8 @@ function App() {
     (state) => state.getLoggedInUserDetail?.loggedinuserDetail
   );
   const { isSuccess } = getData;
-  // const userInfo = useSelector((state) => state.getToken.token);
+
   const pathname = window.location.pathname;
-  // const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -55,10 +51,6 @@ function App() {
   }, [isSuccess]);
 
   const loadBlogsData = async () => {
-    // const response = await axios.get("http://localhost:5000/blogs");
-    // console.log("response1", response.data);
-    // dispatch(getApiDataSuccess(response.data));
-
     const response2 = await axios.get(
       "https://flaskapi-sanjeev.herokuapp.com/posts"
     );
@@ -69,7 +61,6 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        {/* {JSON.stringify(pathname)} */}
         <ToastContainer
           position="top-right"
           autoClose={2000}
@@ -98,7 +89,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
 
-              {/* <Route path="/addBlog" element={<AddEditpage />} /> */}
               <Route path="/editblog/:id" element={<AddEditpage />} />
               <Route path="/blog/:id" element={<Blog />} />
               <Route path="/addblog" element={<About />} />

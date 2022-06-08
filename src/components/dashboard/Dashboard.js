@@ -106,24 +106,6 @@ const Dashboard = () => {
   return (
     <Layout hasSider>
       <>
-        {/* <Header
-          className="header"
-          style={{
-            position: "fixed",
-            zIndex: 1,
-            width: "100%",
-          }}
-        >
-          <div className="logo">
-            <Link to="/dashboard">
-              <img
-                src="images/moru.jpg"
-                alt="logo"
-                style={{ height: "37px" }}
-              ></img>
-            </Link>
-          </div>
-        </Header> */}
         <Sider
           collapsible
           collapsed={collapse}
@@ -201,11 +183,11 @@ const Dashboard = () => {
               <Outlet />
             </div>
           </Content>
-          <Footer
+          {/* <Footer
             style={{ textAlign: "center", position: "sticky", bottom: "0" }}
           >
             Ant Design ©2018 Created by Ant UED
-          </Footer>
+          </Footer> */}
         </Layout>
       </>
     </Layout>

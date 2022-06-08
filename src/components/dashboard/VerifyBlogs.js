@@ -163,13 +163,13 @@ const VerifyBlogs = () => {
           blogId={notVerifiedId}
         />
       )}
-
+      <h4>Unverified Blogs</h4>
       <Table
         columns={columns}
         // rowKey={(record) => record.login.uuid}
         dataSource={data}
         pagination={pagination}
-        loading={data.length === 0}
+        // loading={data.length === 0}
         onChange={handleTableChange}
       />
     </>

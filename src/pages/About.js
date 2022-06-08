@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import { createNewBlog } from "../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../redux/GetApiData";
+import BlogPostModal from "../components/Modal/BlogPostModal";
 
 const layout = {
   labelCol: {
@@ -21,6 +22,7 @@ const layout = {
 
 const { Option } = Select;
 const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
+
 const normFile = (e) => {
   // console.log("Upload event1:", e.file);
   if (Array.isArray(e)) {
@@ -54,10 +56,10 @@ const validateMessages = {
     range: "${label} must be between ${min} and ${max}",
   },
 };
-/* eslint-enable no-template-curly-in-string */
 
 const About = () => {
   const [loginLoading, setLoginLoading] = useState(false);
+  const [verifyModal, setVerifyModal] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -65,6 +67,10 @@ const About = () => {
   const { token } = userToken;
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+  const handleCancel = () => {
+    setVerifyModal(false);
+  };
 
   const loadBlogsData = async () => {
     const response2 = await axios.get(
@@ -75,12 +81,6 @@ const About = () => {
   };
 
   const onFinish = async (values) => {
-    // const nowDate = getDate();
-
-    // console.log(values.blog);
-    // console.log(values.title);
-    // console.log(values.category);
-
     setLoginLoading(true);
 
     const config = {
@@ -100,13 +100,9 @@ const About = () => {
     );
 
     if ((response.status = 201)) {
-      // dispatch(createNewBlog({
-
-      // }));
+      alert("your blog will be verified by Moru.Thankyou for your patience");
       loadBlogsData();
       setLoginLoading(false);
-      toast.success("Blog created successfully");
-
       navigate("/");
     } else {
       toast.error("Something went wrong");
@@ -115,6 +111,12 @@ const About = () => {
 
   return (
     <div className="pagecontainer">
+      {verifyModal && (
+        <BlogPostModal
+          isModalVisible={verifyModal}
+          handleCancel={handleCancel}
+        />
+      )}
       <Form
         {...layout}
         name="nest-messages"

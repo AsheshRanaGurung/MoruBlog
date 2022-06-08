@@ -32,7 +32,7 @@ const Login = () => {
       }
     );
 
-    if (response?.status === 200) {
+    if (response?.status === 200 || response?.status === 201) {
       toast.success("Registered Successfully");
       setLoginLoading(false);
       // dispatch(GetThisTokenSuccess(response.data.token));

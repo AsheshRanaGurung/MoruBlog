@@ -55,9 +55,9 @@ const Login = () => {
       navigate("/");
     }
 
-    if (response?.status === 401) {
-      console.log(response);
-      toast.error(response.message);
+    if (response?.status === 401 || response?.status === 404) {
+      setLoginLoading(false);
+      toast.error("Something's wromg");
     }
   };
 

@@ -14,6 +14,10 @@ const ProfileScreen = () => {
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
 
+  const userDetail = useSelector(
+    (state) => state.getLoggedInUserDetail.loggedinuserDetail
+  );
+
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
@@ -53,7 +57,8 @@ const ProfileScreen = () => {
               name="profile-form"
               className="profile-form"
               initialValues={{
-                remember: true,
+                email: userDetail?.username,
+                username: userDetail?.email,
               }}
               onFinish={onFinish}
             >

@@ -10,7 +10,7 @@ import LatestBlog from "../components/LatestBlog";
 import Category from "../components/Category";
 import PaginationThis from "../components/Pagination";
 import { toast } from "react-toastify";
-import { Spin, Button } from "antd";
+import { Spin, Button, Pagination } from "antd";
 import DownloadButton from "../components/DownloadButton";
 import Weather from "../components/Weather";
 import { getLatestDataSuccess } from "../redux/GetLatestBlog";
@@ -21,12 +21,26 @@ const Home = () => {
   const { blogs } = getData;
 
   const [allblogs, setAllblogs] = useState(blogs);
-  const [latestBlog, setLatestBlog] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage] = useState(6);
+  const [current, setCurrent] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [minIndex, setMinIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(0);
+  const pageSize = 6;
+
+  const handleChange = (page) => {
+    setCurrent(page);
+    setMinIndex((page - 1) * pageSize);
+    setMaxIndex(page * pageSize);
+  };
+
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [postPerPage] = useState(6);
 
   const [showBtn, setShowBtn] = useState(false);
 
+  const onChange = (page) => {
+    setCurrent(page);
+  };
   const dispatch = useDispatch();
 
   const showButton = () => {
@@ -46,17 +60,10 @@ const Home = () => {
     "Careers",
   ];
 
-  // useEffect(() => {
-  //   setAllblogs(blogs);
-  //   getUsers().then((data) => {
-  //     setAllblogs();
-  //   });
-  //   // fetchLatestBlog();
-  //   // return setAllblogs
-  // }, [blogs]);
-
   useEffect(() => {
     setAllblogs(blogs);
+    setTotalPage(blogs?.length / pageSize);
+    setMaxIndex(pageSize);
 
     fetchLatestBlog();
   }, [blogs]);
@@ -66,13 +73,12 @@ const Home = () => {
       `https://flaskapi-sanjeev.herokuapp.com/posts?page=1&perpage=4`
     );
     if (response.status === 200) {
-      // setLatestBlog(response.data.posts);
       dispatch(getLatestDataSuccess(response.data.posts));
     } else {
       toast.error("Something went wrong!");
     }
   };
-  // console.log(allblogs);
+
   const excerpt = (string) => {
     if (string?.length > 50) {
       string = string.substring(0, 50) + "...";
@@ -120,18 +126,15 @@ const Home = () => {
     // console.log(category);
   };
   //get curent posts
-  const indexOfLastPost = currentPage * postPerPage;
-  const indexofFirstPost = indexOfLastPost - postPerPage;
-  const currentPosts = allblogs.slice(indexofFirstPost, indexOfLastPost);
+  // const indexOfLastPost = currentPage * postPerPage;
+  // const indexofFirstPost = indexOfLastPost - postPerPage;
+  // const currentPosts = allblogs.slice(indexofFirstPost, indexOfLastPost);
 
   //changepage
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="pagecontainer">
-      {/* {JSON.stringify(weather)} */}
-      {/* {JSON.stringify(filteredBlog)} */}
-
       <MDBRow>
         <MDBCol>
           <>
@@ -155,33 +158,43 @@ const Home = () => {
                       Go back
                     </Button>
                   )}
-                  {allblogs &&
-                    currentPosts?.map((item, index) => (
-                      <MDBCol
-                        key={index}
-                        // lg={4}
-                        md={6}
-                        lg={4}
-                        sm={12}
-                        style={{ paddingBottom: "32px" }}
-                      >
-                        <Blogs
-                          id={item.id}
-                          title={item.title}
-                          date={item.created_at}
-                          // date={item.date}
-                          category={item.category}
-                          userIdWhoCreatedThisBLog={item.author.id}
-                          description={item.content}
-                          // description={item.blog}
-                          excerpt={excerpt}
-                        />
-                      </MDBCol>
-                    ))}
-                  <PaginationThis
+                  {/* {allblogs &&
+                    currentPosts?.map((item, index) => ( */}
+
+                  {allblogs?.map(
+                    (item, index) =>
+                      index >= minIndex &&
+                      index < maxIndex && (
+                        <MDBCol
+                          key={index}
+                          // lg={4}
+                          md={6}
+                          lg={4}
+                          sm={12}
+                          style={{ paddingBottom: "32px" }}
+                        >
+                          <Blogs
+                            id={item.id}
+                            title={item.title}
+                            date={item.created_at}
+                            category={item.category}
+                            userIdWhoCreatedThisBLog={item.author.id}
+                            description={item.content}
+                            excerpt={excerpt}
+                          />
+                        </MDBCol>
+                      )
+                  )}
+                  {/* <PaginationThis
                     postsPerPage={postPerPage}
                     totalPosts={allblogs.length}
                     paginate={paginate}
+                  /> */}
+                  <Pagination
+                    pageSize={pageSize}
+                    current={current}
+                    onChange={handleChange}
+                    total={allblogs.length}
                   />
                 </MDBRow>
               </>

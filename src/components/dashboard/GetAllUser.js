@@ -150,6 +150,7 @@ const GetAllUser = () => {
           handleCancel={handleCancel}
         />
       )}{" "}
+      <h4>User details</h4>
       <Table
         columns={columns}
         // rowKey={(record) => record.login.uuid}
