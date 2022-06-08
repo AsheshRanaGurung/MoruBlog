@@ -1,14 +1,11 @@
-// import { MDBCol, Row } from "antd";
 import { MDBRow, MDBCol } from "mdb-react-ui-kit";
 import axios from "axios";
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Blogs from "../components/Blogs";
 import Search from "../components/Search";
 import LatestBlog from "../components/LatestBlog";
 import Category from "../components/Category";
-import PaginationThis from "../components/Pagination";
 import { toast } from "react-toastify";
 import { Spin, Button, Pagination } from "antd";
 import DownloadButton from "../components/DownloadButton";
@@ -32,9 +29,6 @@ const Home = () => {
     setMinIndex((page - 1) * pageSize);
     setMaxIndex(page * pageSize);
   };
-
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [postPerPage] = useState(6);
 
   const [showBtn, setShowBtn] = useState(false);
 
@@ -98,14 +92,10 @@ const Home = () => {
     e.preventDefault();
 
     const response = await axios.get(
-      `http://localhost:5000/blogs?q=${searchValue}`
+      `https://flaskapi-sanjeev.herokuapp.com/posts?search=${searchValue}`
     );
     if (response?.status === 200) {
-      console.log("Search successful");
-
-      const filteredBlog = response?.data;
-      setAllblogs(filteredBlog);
-      // console.log(filteredBlog);
+      setAllblogs(response?.data?.posts);
     }
   };
 
@@ -123,15 +113,7 @@ const Home = () => {
     } else {
       toast.error("Something went wrong!");
     }
-    // console.log(category);
   };
-  //get curent posts
-  // const indexOfLastPost = currentPage * postPerPage;
-  // const indexofFirstPost = indexOfLastPost - postPerPage;
-  // const currentPosts = allblogs.slice(indexofFirstPost, indexOfLastPost);
-
-  //changepage
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="pagecontainer">
@@ -158,8 +140,6 @@ const Home = () => {
                       Go back
                     </Button>
                   )}
-                  {/* {allblogs &&
-                    currentPosts?.map((item, index) => ( */}
 
                   {allblogs?.map(
                     (item, index) =>
@@ -185,16 +165,13 @@ const Home = () => {
                         </MDBCol>
                       )
                   )}
-                  {/* <PaginationThis
-                    postsPerPage={postPerPage}
-                    totalPosts={allblogs.length}
-                    paginate={paginate}
-                  /> */}
+
                   <Pagination
                     pageSize={pageSize}
                     current={current}
                     onChange={handleChange}
                     total={allblogs.length}
+                    style={{ marginBottom: "20px" }}
                   />
                 </MDBRow>
               </>

@@ -29,7 +29,8 @@ const Blog = () => {
   const [commentId, setCommentId] = useState(null);
   const [commentMessage, setCommentMessage] = useState(null);
 
-  const [likeIcon, setLikeIcon] = useState(false);
+  const [likes, setLikes] = useState();
+  const [likeTrigger, setLikeTrigger] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -51,7 +52,7 @@ const Blog = () => {
   const userID = useSelector(
     (state) => state.getLoggedInUserDetail?.loggedinuserDetail
   );
-  const { id: userIDFromRedux, is_admin } = userID;
+  // const { id: userIDFromRedux, is_admin } = userID;
 
   const { id } = useParams();
 
@@ -68,6 +69,7 @@ const Blog = () => {
 
     if (response.status === 200 || relatedPostData.status === 200) {
       setBlog(response?.data?.post);
+      setLikes(response?.data?.post?.votes.length);
       //GetThisBlogSuccess is the redux store name for comments only
       dispatch(GetThisBlogSuccess(response?.data?.post?.comments));
       dispatch(GetThisBlogVote(response?.data?.post?.votes.length));
@@ -95,8 +97,9 @@ const Blog = () => {
       );
       if (response.status === 200) {
         toast.success("Voted succesfully");
-        response.hasVoted === true ? setLikeIcon(true) : setLikeIcon(false);
-        dispatch(GetThisBlogVote());
+        setLikeTrigger(!likeTrigger);
+        // response.hasVoted === true ? setLikeIcon(true) : setLikeIcon(false);
+        dispatch(GetThisBlogVote(1));
       }
     }
   };
@@ -122,7 +125,7 @@ const Blog = () => {
     if (id) {
       getSingleBlog();
     }
-  }, [id]);
+  }, [id, likeTrigger]);
   //i removed dependency array
 
   const styleInfo = {
@@ -181,22 +184,16 @@ const Blog = () => {
               </div>{" "}
             </div>
             <div style={{ textAlign: "right" }}>
-              <div style={{}}>{blogVote} Like(s)</div>
+              <div style={{}}>{likes} Like(s)</div>
               <div style={{ marginTop: "10px" }}>
                 If you Liked This Blog, Do Like it.{" "}
               </div>
-              {likeIcon === false ? (
-                <LikeOutlined
-                  onClick={() => hitLike()}
-                  style={{ fontSize: "40px" }}
-                />
-              ) : (
-                <LikeTwoTone
-                  onClick={() => hitLike()}
-                  className="likeButton"
-                  style={{ fontSize: "40px" }}
-                />
-              )}
+
+              <LikeTwoTone
+                onClick={() => hitLike()}
+                className="likeButton"
+                style={{ fontSize: "40px" }}
+              />
             </div>
             <div style={{ marginBottom: "5px" }}>
               <h4>Reviews and comments</h4>
@@ -246,7 +243,7 @@ const Blog = () => {
                     </MDBCardBody>
                   </MDBCol>
                   <MDBCol md={2}>
-                    {item.author.id === userID.id ? (
+                    {item.author.id === userID?.id ? (
                       <div key={index}>
                         <MDBIcon
                           // key={index}
