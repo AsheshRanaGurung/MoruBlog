@@ -79,6 +79,7 @@ const Dashboard = () => {
     dispatch(RemoveLoggedInUserDetailSuccess());
     localStorage.removeItem("LoginUser");
     toast.success("Logged out");
+    window.location.reload();
   };
 
   const getUnverifiedBlogs = async () => {

@@ -26,19 +26,18 @@ const Weather = () => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      axios
-        .request(options1)
-        .then(function (response) {
-          // console.log(response.data);
-          setWeather(response.data);
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    }, MINUTE_MS);
-
-    return () => clearInterval(interval);
+    // const interval = setInterval(() => {
+    //   axios
+    //     .request(options1)
+    //     .then(function (response) {
+    //       // console.log(response.data);
+    //       setWeather(response.data);
+    //     })
+    //     .catch(function (error) {
+    //       console.error(error);
+    //     });
+    // }, MINUTE_MS);
+    // return () => clearInterval(interval);
   }, []);
   return (
     <div style={{ marginBottom: "20px" }}>

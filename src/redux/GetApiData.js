@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   blogs: [],
@@ -15,19 +16,33 @@ export const GetApiData = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
     },
+    getApiDataFail: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+    },
     deleteThisBlog: (state, action) => {
       console.log(action.payload);
       state.blogs = state.blogs.filter((item) => item.id !== action.payload);
       // state.isSuccess = true;
     },
-    // GetThisBlog: (state, action) => {
-    //   console.log(action.payload);
-    //   state.blogs = state.blogs.filter((item) => item.id !== action.payload);
-    // },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { getApiDataSuccess, deleteThisBlog } = GetApiData.actions;
+export const { getApiDataSuccess, getApiDataFail, deleteThisBlog } =
+  GetApiData.actions;
 
 export default GetApiData.reducer;
+
+export function loadBlogsData() {
+  return async (dispatch) => {
+    try {
+      const response2 = await axios.get(
+        "https://flaskapi-sanjeev.herokuapp.com/posts"
+      );
+      dispatch(getApiDataSuccess(response2?.data?.posts));
+    } catch (error) {
+      dispatch(getApiDataFail());
+    }
+  };
+}

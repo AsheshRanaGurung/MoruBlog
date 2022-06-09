@@ -14,30 +14,27 @@ const Login = () => {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const onFinish = async (values) => {
-    // console.log("Received values of form: ", values);
-    console.log("name", values.username);
-    console.log("name", values.email);
-    console.log("name", values.password);
-
     setLoginLoading(true);
+    try {
+      const response = await axios.post(
+        "https://flaskapi-sanjeev.herokuapp.com/register",
 
-    const response = await axios.post(
-      "https://flaskapi-sanjeev.herokuapp.com/register",
+        {
+          username: values.username,
+          email: values.email,
+          password: values.password,
+          is_admin: "false",
+        }
+      );
 
-      {
-        username: values.username,
-        email: values.email,
-        password: values.password,
-        is_admin: "false",
+      if (response?.status === 200 || response?.status === 201) {
+        toast.success("Registered Successfully");
+        setLoginLoading(false);
+        navigate("/login");
       }
-    );
-
-    if (response?.status === 200 || response?.status === 201) {
-      toast.success("Registered Successfully");
+    } catch (error) {
       setLoginLoading(false);
-      // dispatch(GetThisTokenSuccess(response.data.token));
-
-      navigate("/");
+      toast.error(error.response.data.message);
     }
   };
 

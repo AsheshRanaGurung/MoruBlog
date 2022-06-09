@@ -51,42 +51,19 @@ const Blog = () => {
   const userID = useSelector(
     (state) => state.getLoggedInUserDetail?.loggedinuserDetail
   );
-  // const { id: userIDFromRedux, is_admin } = userID;
 
   const { id } = useParams();
-
-  const dispatch = useDispatch();
 
   const getSingleBlog = async () => {
     const response = await axios.get(
       `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`
     );
 
-    const relatedPostData = await axios.get(
-      `https://flaskapi-sanjeev.herokuapp.com/posts?category=${response.data.category}&_start=0&_end=3`
-    );
-
-    if (response.status === 200 || relatedPostData.status === 200) {
+    if (response.status === 200) {
       setBlog(response?.data?.post);
       setLikes(response?.data?.post?.votes.length);
-      //GetThisBlogSuccess is the redux store name for comments only
-      dispatch(GetThisBlogSuccess(response?.data?.post?.comments));
-      dispatch(GetThisBlogVote(response?.data?.post?.votes.length));
-
-      setRelatedPost(relatedPostData.data);
     } else {
       toast.error("Something is wrong!");
-    }
-  };
-
-  const fetchLatestBlog = async () => {
-    const response = await axios.get(
-      `https://flaskapi-sanjeev.herokuapp.com/posts?page=1&perpage=4`
-    );
-    if (response.status === 200) {
-      dispatch(getLatestDataSuccess(response.data.posts));
-    } else {
-      toast.error("Something went wrong!");
     }
   };
 
@@ -107,10 +84,7 @@ const Blog = () => {
         config
       );
       if (response.status === 200) {
-        toast.success("Voted succesfully");
         setLikeTrigger(!likeTrigger);
-        // response.hasVoted === true ? setLikeIcon(true) : setLikeIcon(false);
-        dispatch(GetThisBlogVote(1));
       }
     }
   };
@@ -135,10 +109,8 @@ const Blog = () => {
   useEffect(() => {
     if (id) {
       getSingleBlog();
-      fetchLatestBlog();
     }
   }, [id, likeTrigger]);
-  //i removed dependency array
 
   const styleInfo = {
     display: "inline",
@@ -149,7 +121,6 @@ const Blog = () => {
 
   return (
     <div className="pagecontainer">
-      {/* <div className="LoginPage"> */}
       <MDBRow>
         <MDBCol>
           <MDBContainer style={{ marginTop: "32px" }}>
@@ -238,10 +209,6 @@ const Blog = () => {
                       {item.author.username} says:
                     </MDBCardText>
 
-                    {/* <MDBCardText style={{ textAlign: "left" }}>
-                      {item.author.created_at}
-                    </MDBCardText> */}
-
                     <MDBCardBody
                       style={{
                         display: "flex",
@@ -258,7 +225,6 @@ const Blog = () => {
                     {item.author.id === userID?.id ? (
                       <div key={index}>
                         <MDBIcon
-                          // key={index}
                           fas
                           icon="trash"
                           style={{ color: "red", margin: "39px 10px 0 0" }}
@@ -266,7 +232,6 @@ const Blog = () => {
                           onClick={() => deleteThisComment(item.id)}
                         />
                         <MDBIcon
-                          // key={index}
                           fas
                           icon="edit"
                           style={{ color: "blue", margin: "39px 10px 0 0" }}

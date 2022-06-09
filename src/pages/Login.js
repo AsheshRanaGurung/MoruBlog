@@ -1,75 +1,31 @@
-import React, { useState } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
-
+import React, { useEffect } from "react";
+import { Form, Input, Button, Checkbox, Spin } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { GetThisTokenSuccess } from "../redux/TokenHandle";
-
-import { Spin } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
-import { GetLoggedInUserDetailSuccess } from "../redux/UserLoggedInDetails";
+import { login } from "../redux/UserLoggedInDetails";
 
 const Login = () => {
-  const [loginLoading, setLoginLoading] = useState(false);
+  const userInfo = useSelector((state) => state.getLoggedInUserDetail);
+  const { loggedinuserDetail, isLoading, isSuccess } = userInfo;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-  //   const redirect = location.search ? location.search.split("=")[1] : "/";
-  const onFinish = async (values) => {
-    // console.log("Received values of form: ", values);
-    setLoginLoading(true);
-
-    var credentials = btoa(values?.email + ":" + values?.password);
-
-    var basicAuth = "Basic " + credentials;
-
-    const config = {
-      headers: { Authorization: basicAuth },
-      auth: {
-        username: values.email,
-        password: values.password,
-      },
-    };
-
-    const response = await axios.post(
-      "https://flaskapi-sanjeev.herokuapp.com/login",
-      {},
-      config
-    );
-
-    if (response?.status === 200) {
-      if (response.data.user.is_admin === true) {
+  useEffect(() => {
+    if (loggedinuserDetail) {
+      if (loggedinuserDetail?.is_admin === true) {
         navigate("/dashboard");
-        localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
-        localStorage.setItem("LoginUser", JSON.stringify(response.data.user));
-        setLoginLoading(false);
-        toast.success("Logged In Successfully");
-
-        dispatch(GetThisTokenSuccess(response.data.token));
-        dispatch(GetLoggedInUserDetailSuccess(response.data.user));
       } else {
-        localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
-        localStorage.setItem("LoginUser", JSON.stringify(response.data.user));
-
-        setLoginLoading(false);
-        toast.success("Logged In Successfully");
-
-        dispatch(GetThisTokenSuccess(response.data.token));
-        dispatch(GetLoggedInUserDetailSuccess(response.data.user));
         navigate("/");
       }
     }
-
-    if (response?.status === 401 || response?.status === 404) {
-      setLoginLoading(false);
-      toast.error("Something's wromg");
-    }
+  }, [userInfo]);
+  const onFinish = async (values) => {
+    dispatch(login(values.email, values.password));
   };
 
   return (
@@ -138,7 +94,7 @@ const Login = () => {
                     htmlType="submit"
                     className="login-form-button"
                   >
-                    {loginLoading ? (
+                    {isLoading ? (
                       <Spin indicator={antIcon} style={{ color: "white" }} />
                     ) : (
                       "Log in"
