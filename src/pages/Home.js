@@ -76,7 +76,11 @@ const Home = () => {
       `https://flaskapi-sanjeev.herokuapp.com/posts?search=${searchValue}`
     );
     if (response?.status === 200) {
-      setAllblogs(response?.data?.posts);
+      if (response?.data?.posts.length === 0) {
+        toast.info("No search found");
+      } else {
+        setAllblogs(response?.data?.posts);
+      }
     }
   };
 
