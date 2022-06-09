@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ReviewForm from "../components/ReviewForm";
 import { GetThisBlogSuccess, GetThisBlogVote } from "../redux/GetThisBlog";
 import ModalDesign from "../components/Modal/Modal";
-import { getLatestDataSuccess } from "../redux/GetLatestBlog";
+import { fetchLatestBlog, getLatestDataSuccess } from "../redux/GetLatestBlog";
 
 const Blog = () => {
   const [blog, setBlog] = useState();
@@ -54,6 +54,8 @@ const Blog = () => {
 
   const { id } = useParams();
 
+  const dispatch = useDispatch();
+
   const getSingleBlog = async () => {
     const response = await axios.get(
       `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`
@@ -84,7 +86,9 @@ const Blog = () => {
         config
       );
       if (response.status === 200) {
+        // toast.success("Voted succesfully");
         setLikeTrigger(!likeTrigger);
+        // response.hasVoted === true ? setLikeIcon(true) : setLikeIcon(false);
       }
     }
   };
@@ -109,6 +113,7 @@ const Blog = () => {
   useEffect(() => {
     if (id) {
       getSingleBlog();
+      dispatch(fetchLatestBlog());
     }
   }, [id, likeTrigger]);
 
@@ -143,7 +148,6 @@ const Blog = () => {
               <div style={{ float: "left", margin: "7px 0 0 2px" }}>
                 Author:{blog && blog.author.username},
               </div>
-              {/* <CalendarOutlined style={{ float: "left", marginTop: "10px" }} /> */}
               <strong style={{ float: "left", margin: "7px 0 0 2px" }}>
                 {blog && blog.created_at.slice(0, 10)}
               </strong>
@@ -208,7 +212,6 @@ const Blog = () => {
                     >
                       {item.author.username} says:
                     </MDBCardText>
-
                     <MDBCardBody
                       style={{
                         display: "flex",

@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const initialState = {
   blogs: [],
@@ -15,10 +17,28 @@ export const GetLatestBlog = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
     },
+    getLatestDataFail: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { getLatestDataSuccess } = GetLatestBlog.actions;
+export const { getLatestDataSuccess, getLatestDataFail } =
+  GetLatestBlog.actions;
 
 export default GetLatestBlog.reducer;
+
+export function fetchLatestBlog() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `https://flaskapi-sanjeev.herokuapp.com/posts`
+      );
+      dispatch(getLatestDataSuccess(response?.data?.posts));
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+  };
+}
