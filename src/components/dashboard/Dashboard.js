@@ -1,73 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
 import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
   UserOutlined,
-  UploadOutlined,
-  VideoCameraOutlined,
   LogoutOutlined,
   CalendarOutlined,
 } from "@ant-design/icons";
-import { Route, Routes, Router, useLocation, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { DesktopOutlined, FileOutlined } from "@ant-design/icons";
-import DashboardForm from "./DashboardForm";
-import BlogDetails from "./BlogDetails";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { GetUserDetailssuccess } from "../../redux/GetAllUsers";
+import { getallUsers } from "../../redux/GetAllUsers";
 import { useDispatch, useSelector } from "react-redux";
-import { GetUnverifiedBlog } from "../../redux/GetUnverifiedBlogs";
+
 import { RemoveThisTokenSuccess } from "../../redux/TokenHandle";
 import { RemoveLoggedInUserDetailSuccess } from "../../redux/UserLoggedInDetails";
 import { toast } from "react-toastify";
+import { getunverified } from "../../redux/GetUnverifiedBlogs";
 
-const items1 = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
+const { Header, Content, Sider } = Layout;
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-
-const items2 = [
-  //   getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Blogs Details", "1", <FileOutlined />),
-  getItem("Add Blog", "2", <DesktopOutlined />),
-
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-];
-
-const { Header, Content, Footer, Sider } = Layout;
-const items = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  AppstoreOutlined,
-  TeamOutlined,
-  ShopOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: React.createElement(icon),
-  label: `nav ${index + 1}`,
-}));
 const Dashboard = () => {
   const [collapse, setCollapse] = useState(false);
+  const [getdata, setGetdata] = useState(false);
   const dispatch = useDispatch();
 
   const userToken = useSelector((state) => state.getToken);
@@ -81,33 +34,14 @@ const Dashboard = () => {
     toast.success("Logged out");
     window.location.reload();
   };
+  const getDatas = () => {
+    setGetdata(!getdata);
+  };
 
-  const getUnverifiedBlogs = async () => {
-    const config = {
-      headers: {
-        access_token: token,
-      },
-    };
-    const response = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/review_posts",
-      config
-    );
-    if (response.status === 200) {
-      dispatch(GetUnverifiedBlog(response.data.posts));
-    }
-  };
-  const getallUsers = async () => {
-    const response = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/account"
-    );
-    if (response.status === 200) {
-      dispatch(GetUserDetailssuccess(response.data.users));
-    }
-  };
   useEffect(() => {
-    getUnverifiedBlogs();
-    getallUsers();
-  }, []);
+    dispatch(getunverified(token));
+    dispatch(getallUsers());
+  }, [getdata]);
 
   return (
     <Layout hasSider>
@@ -127,13 +61,14 @@ const Dashboard = () => {
                 src="images/moru.jpg"
                 alt="logo"
                 style={{ height: "37px" }}
+                onClick={() => getDatas()}
               ></img>
             </Link>
           </div>
           <Menu
             mode="inline"
             theme="dark"
-            defaultSelectedKeys={["1"]}
+            // defaultSelectedKeys={["1"]}
             //   defaultOpenKeys={["sub1"]}
             style={{
               height: "100%",
@@ -167,6 +102,37 @@ const Dashboard = () => {
                 <span>User Details</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="6">
+              <Link to="allusers">
+                <FileOutlined />
+                <span>Ticket list</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="7">
+              <Link to="allusers">
+                <CalendarOutlined />
+
+                <span>Statics</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="8">
+              <Link to="allusers">
+                <FileOutlined />
+                <span>Trafics analytics</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="9">
+              <Link to="allusers">
+                <CalendarOutlined />
+                <span>Logs</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="10">
+              <Link to="allusers">
+                <UserOutlined />
+                <span>CSR</span>
+              </Link>
+            </Menu.Item>
 
             <Menu.Item key="4">
               <Link to="/" onClick={() => refreshPage()}>
@@ -189,16 +155,9 @@ const Dashboard = () => {
               <Outlet />
             </div>
           </Content>
-          {/* <Footer
-            style={{ textAlign: "center", position: "sticky", bottom: "0" }}
-          >
-            Ant Design ©2018 Created by Ant UED
-          </Footer> */}
         </Layout>
       </>
     </Layout>
-
-    // </div>
   );
 };
 

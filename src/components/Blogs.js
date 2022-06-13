@@ -84,7 +84,7 @@ const Blogs = ({
   };
 
   return (
-    <MDBCard className="h-100 " style={{ margin: "0 0px" }}>
+    <MDBCard className="h-100 blogCard " style={{ margin: "0 0px" }}>
       <Link to={`/blog/${id}`}>
         <MDBCardImage
           src="images/Tech1.jpg"
@@ -93,7 +93,8 @@ const Blogs = ({
           style={{ maxWidth: "100%", height: "180px" }}
         />
       </Link>
-      <MDBCardBody>
+
+      <MDBCardBody style={{ padding: "0.8rem 1.5rem 0.5rem" }}>
         <MDBCardText
           style={{
             display: "flex",
@@ -110,9 +111,19 @@ const Blogs = ({
         >
           {excerpt2(title)}
         </MDBCardTitle>
-        <MDBCardText style={{ display: "left", padding: "0" }}>
-          {excerpt(description)}
-          <Link to={`/blog/${id}`}> Read more</Link>
+        <MDBCardText>
+          <Link
+            to={`/blog/${id}`}
+            style={{
+              display: "flex",
+              color: "#d6d6d6",
+              padding: "0",
+              fontSize: "12px",
+            }}
+          >
+            {" "}
+            read more
+          </Link>
         </MDBCardText>
         {/* <DeleteOutlined style={{ fontSize: "22px", color: "red" }} />
         <EditOutlined style={{ fontSize: "22px", color: "green" }} /> */}

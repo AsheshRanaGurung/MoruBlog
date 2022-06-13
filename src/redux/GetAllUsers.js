@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   users: [],
@@ -15,6 +16,10 @@ export const GetUserDetails = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
     },
+    GetUserDetailsFail: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+    },
     deleteThisUser: (state, action) => {
       state.users = state.users.filter((item) => item.id !== action.payload);
       // state.isSuccess = true;
@@ -22,26 +27,20 @@ export const GetUserDetails = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { GetUserDetailssuccess, deleteThisUser } = GetUserDetails.actions;
+export const { GetUserDetailssuccess, GetUserDetailsFail, deleteThisUser } =
+  GetUserDetails.actions;
 
 export default GetUserDetails.reducer;
 
-// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
-// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-// export const taskApi = createApi({
-//   reducerPath: "tasksApi",
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: "https://flaskapi-sanjeev.herokuapp.com/",
-//   }),
-//   endpoints: (builder) => ({
-//     tasks: builder.query({
-//       query: () => "/account",
-//     }),
-//     addTask:(builder)=>({
-
-//     })
-//   }),
-// });
-// export const { useTasksQuery } = taskApi;
+export function getallUsers() {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        "https://flaskapi-sanjeev.herokuapp.com/account"
+      );
+      dispatch(GetUserDetailssuccess(response.data.users));
+    } catch (error) {
+      dispatch(GetUserDetailsFail());
+    }
+  };
+}

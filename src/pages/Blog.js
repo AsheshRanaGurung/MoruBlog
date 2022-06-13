@@ -118,10 +118,8 @@ const Blog = () => {
   }, [id, likeTrigger]);
 
   const styleInfo = {
-    display: "inline",
-    marginLeft: "5px",
-    float: "right",
-    marginTop: "7px",
+    float: "left",
+    margin: "7px 0 15px 7px",
   };
 
   return (
@@ -144,17 +142,17 @@ const Blog = () => {
               {blog && blog.title}
             </MDBTypography>
             <br />
-            <div style={{ height: "40px", background: "#f6f6f6" }}>
-              <div style={{ float: "left", margin: "7px 0 0 2px" }}>
-                Author:{blog && blog.author.username},
-              </div>
-              <strong style={{ float: "left", margin: "7px 0 0 2px" }}>
-                {blog && blog.created_at.slice(0, 10)}
-              </strong>
-              <ColorBadge styleInfo={styleInfo}>
-                {blog && blog.category}
-              </ColorBadge>
+
+            <div style={{ float: "left", margin: "7px 0 7px 7px" }}>
+              by {blog && blog.author.username} |
             </div>
+            <div style={{ float: "left", margin: "7px 0 7px 7px" }}>
+              {blog && blog.created_at.slice(0, 10)} |
+            </div>
+            <ColorBadge styleInfo={styleInfo}>
+              {blog && blog.category}
+            </ColorBadge>
+
             <img
               className="img-fluid rounded"
               style={{ width: "100%", maxHeight: "600px" }}

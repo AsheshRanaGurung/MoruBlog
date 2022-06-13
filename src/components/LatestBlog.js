@@ -13,7 +13,15 @@ const LatestBlog = ({ id, title, created_at }) => {
             borderTopRadius: "8px",
           }}
         >
-          <MDBCardImage src="../images/food.jpg" alt={title}></MDBCardImage>
+          <MDBCardImage
+            src="../images/food.jpg"
+            alt={title}
+            style={{
+              borderTopLeftRadius: "8px",
+              borderTopRightRadius: "8px",
+              marginBottom: "8px",
+            }}
+          ></MDBCardImage>
 
           {/* <MDBCardText>{created_at}</MDBCardText> */}
           <MDBCardTitle>{title}</MDBCardTitle>

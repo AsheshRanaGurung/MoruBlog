@@ -13,6 +13,9 @@ import MembersRoute from "./components/MemberRoute";
 function App() {
   const getData = useSelector((state) => state.createBlog);
   const { isSuccess } = getData;
+  const getunverifiedBlog = useSelector((state) => state.getUnverifiedBlog);
+  const { isSuccess: newVerifiedBlog } = getunverifiedBlog;
+
   const adminUser = useSelector(
     (state) => state.getLoggedInUserDetail?.loggedinuserDetail?.is_admin
   );
@@ -20,7 +23,7 @@ function App() {
 
   useEffect(() => {
     dispatch(loadBlogsData());
-  }, [isSuccess]);
+  }, [isSuccess, newVerifiedBlog]);
 
   return (
     <BrowserRouter>

@@ -10,6 +10,10 @@
   transform: scale(1.2);
   transition: all 1s ease;
 }
+.blogCard:hover{
+  transform: scale(1.04);
+  transition: all 1s ease;
+}
 /* dashboard */
 #components-layout-demo-top-side-2 .logo {
   float: left;

@@ -8,7 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { createNewBlog } from "../../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../../redux/GetApiData";
-import { GetUnverifiedBlog } from "../../redux/GetUnverifiedBlogs";
+import {
+  getunverified,
+  GetUnverifiedBlog,
+  GetUnverifiedBlogSuccess,
+} from "../../redux/GetUnverifiedBlogs";
 
 const layout = {
   labelCol: {
@@ -76,20 +80,6 @@ const DashboardForm = () => {
     dispatch(getApiDataSuccess(response2?.data?.posts));
   };
 
-  const getUnverifiedBlogs = async () => {
-    const config = {
-      headers: {
-        access_token: token,
-      },
-    };
-    const response = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/review_posts",
-      config
-    );
-    if (response.status === 200) {
-      dispatch(GetUnverifiedBlog(response.data.posts));
-    }
-  };
   const onFinish = async (values) => {
     setLoginLoading(true);
 
@@ -110,31 +100,16 @@ const DashboardForm = () => {
     );
 
     if ((response.status = 201)) {
-      // dispatch(createNewBlog({
-
-      // }));
-
       loadBlogsData();
       setLoginLoading(false);
       toast.success("Blog created successfully");
-      getUnverifiedBlogs();
-
+      dispatch(getunverified(token));
       navigate("/dashboard/verify-blogs");
     } else {
       toast.error("Something went wrong");
     }
   };
 
-  const getDate = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0");
-    let yyyy = today.getFullYear();
-    today = yyyy + "/" + mm + "/" + dd;
-    // console.log(today);
-
-    return today;
-  };
   return (
     <>
       Add New Blog
