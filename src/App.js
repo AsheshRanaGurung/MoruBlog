@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { loadBlogsData } from "./redux/GetApiData";
 import MembersRoute from "./components/MemberRoute";
+import SecondaryHeader from "./components/SecondaryHeader";
 
 function App() {
   const getData = useSelector((state) => state.createBlog);
@@ -35,6 +36,7 @@ function App() {
           closeOnClick
           rtl={false}
         />
+        {adminUser === true ? null : <SecondaryHeader />}
         {adminUser === true ? null : <Header />}
         <MembersRoute />
         {adminUser === true ? null : <Footer />}
