@@ -19,33 +19,18 @@ const layout = {
   },
 };
 /* eslint-disable no-template-curly-in-string */
+const formData = new FormData();
 
 const { Option } = Select;
 const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
 
 const normFile = (e) => {
-  // console.log("Upload event1:", e.file);
+  // console.log("file:", e.file);
+  // console.log("Filelist:", e.fileList);
   if (Array.isArray(e)) {
-    const formData = new FormData();
-    formData.append("file", e.file);
-    return formData;
+    return e.file;
   }
-  // const formData = new FormData();
-  // formData.append("file", e.file);
 
-  // formData.append("upload_preset", "s8l9wkk3");
-
-  // fetch("  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
-  //   method: "post",
-  //   body: formData,
-  // })
-  //   .then((resp) => {
-  //     toast.info("Image Uploaded successfully!");
-  //     // console.log(resp);
-  //   })
-  //   .catch((error) => {
-  //     toast.error("Something went wrong");
-  //   });
   return e.fileList;
 };
 
@@ -85,32 +70,34 @@ const About = () => {
 
   const onFinish = async (values) => {
     console.log(values);
-    // setLoginLoading(true);
+    setLoginLoading(true);
 
-    // const config = {
-    //   headers: {
-    //     access_token: token,
-    //   },
-    // };
+    formData.append("image", values.upload[0]);
+    formData.append("content", values.blog);
+    formData.append("title", values.title);
+    formData.append("category", values.category.replace(/\s/g, ""));
+    // console.log(formData);
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        access_token: token,
+      },
+    };
 
-    // const response = await axios.post(
-    //   "https://flaskapi-sanjeev.herokuapp.com/posts/new",
-    //   {
-    //     content: values.blog,
-    //     title: values.title,
-    //     category: values.category.replace(/\s/g, ""),
-    //   },
-    //   config
-    // );
+    const response = await axios.post(
+      "https://flaskapi-sanjeev.herokuapp.com/posts/new",
+      formData,
+      config
+    );
 
-    // if ((response.status = 201)) {
-    //   alert("your blog will be verified by Moru.Thankyou for your patience");
-    //   loadBlogsData();
-    //   setLoginLoading(false);
-    //   navigate("/");
-    // } else {
-    //   toast.error("Something went wrong");
-    // }
+    if ((response.status = 201)) {
+      alert("your blog will be verified by Moru.Thankyou for your patience");
+      loadBlogsData();
+      setLoginLoading(false);
+      navigate("/");
+    } else {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -187,7 +174,7 @@ const About = () => {
                 maxLength={10000}
               ></Input.TextArea>
             </Form.Item>
-            <div>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <button className="submitBtn" type="primary">
                 {loginLoading ? (
                   <Spin
@@ -198,7 +185,7 @@ const About = () => {
                   <div style={{ margin: "auto", color: "white" }}>Submit</div>
                 )}
               </button>
-            </div>
+            </Form.Item>
           </MDBCol>
         </MDBRow>
       </Form>
