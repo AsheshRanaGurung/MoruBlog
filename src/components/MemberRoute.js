@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import About from "../pages/About";
+import About from "../pages/AddBlog";
 import AddEditpage from "../pages/AddEditpage";
 import Blog from "../pages/Blog";
 import CommitteePage from "../pages/CommitteePage";

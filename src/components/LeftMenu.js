@@ -2,13 +2,14 @@ import React from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 const LeftMenu = () => {
   const userInfo = useSelector((state) => state.getToken.token);
-
+  const navigate = useNavigate();
   return (
     <Menu mode="horizontal">
       <Menu.Item key="mail">
@@ -35,30 +36,30 @@ const LeftMenu = () => {
         style={{ fontSize: "19px" }}
       >
         <MenuItemGroup>
-          <Link to="/companyprofile" style={{ color: "black" }}>
-            <Menu.Item key="settings:5">Company Profile</Menu.Item>
-          </Link>
+          <Menu.Item
+            key="settings:5"
+            onClick={() => navigate("/companyprofile")}
+          >
+            Company Profile
+          </Menu.Item>
+          <Menu.Item key="mantra" onClick={() => navigate("/mantra")}>
+            Mantra
+          </Menu.Item>
 
-          <Link to="/mantra">
-            <Menu.Item key="settings:7" style={{ color: "black" }}>
-              Mantra
-            </Menu.Item>
-          </Link>
-          <Link to="/objectives">
-            <Menu.Item key="settings:8" style={{ color: "black" }}>
-              Strategic Objectives
-            </Menu.Item>
-          </Link>
-          <Link to="/ourgovernance">
-            <Menu.Item key="settings:9" style={{ color: "black" }}>
-              Corporate Governance
-            </Menu.Item>
-          </Link>
-          <Link to="/committee">
-            <Menu.Item key="settings:10" style={{ color: "black" }}>
-              Committees formed by Board
-            </Menu.Item>
-          </Link>
+          <Menu.Item key="objective" onClick={() => navigate("/objectives")}>
+            Strategic Objectives
+          </Menu.Item>
+
+          <Menu.Item
+            key="governance"
+            onClick={() => navigate("/ourgovernance")}
+          >
+            Corporate Governance
+          </Menu.Item>
+
+          <Menu.Item key="commitee" onClick={() => navigate("/committee")}>
+            Committees formed by Board
+          </Menu.Item>
         </MenuItemGroup>
       </SubMenu>
     </Menu>

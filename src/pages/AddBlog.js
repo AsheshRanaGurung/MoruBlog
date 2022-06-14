@@ -30,19 +30,19 @@ const normFile = (e) => {
   }
   const formData = new FormData();
   formData.append("file", e.file);
-  formData.append("upload_preset", "s8l9wkk3");
+  // formData.append("upload_preset", "s8l9wkk3");
 
-  fetch("  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
-    method: "post",
-    body: formData,
-  })
-    .then((resp) => {
-      toast.info("Image Uploaded successfully!");
-      // console.log(resp);
-    })
-    .catch((error) => {
-      toast.error("Something went wrong");
-    });
+  // fetch("  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
+  //   method: "post",
+  //   body: formData,
+  // })
+  //   .then((resp) => {
+  //     toast.info("Image Uploaded successfully!");
+  //     // console.log(resp);
+  //   })
+  //   .catch((error) => {
+  //     toast.error("Something went wrong");
+  //   });
   return e.fileList;
 };
 
@@ -81,32 +81,33 @@ const About = () => {
   };
 
   const onFinish = async (values) => {
-    setLoginLoading(true);
+    console.log(values.upload);
+    // setLoginLoading(true);
 
-    const config = {
-      headers: {
-        access_token: token,
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     access_token: token,
+    //   },
+    // };
 
-    const response = await axios.post(
-      "https://flaskapi-sanjeev.herokuapp.com/posts/new",
-      {
-        content: values.blog,
-        title: values.title,
-        category: values.category.replace(/\s/g, ""),
-      },
-      config
-    );
+    // const response = await axios.post(
+    //   "https://flaskapi-sanjeev.herokuapp.com/posts/new",
+    //   {
+    //     content: values.blog,
+    //     title: values.title,
+    //     category: values.category.replace(/\s/g, ""),
+    //   },
+    //   config
+    // );
 
-    if ((response.status = 201)) {
-      alert("your blog will be verified by Moru.Thankyou for your patience");
-      loadBlogsData();
-      setLoginLoading(false);
-      navigate("/");
-    } else {
-      toast.error("Something went wrong");
-    }
+    // if ((response.status = 201)) {
+    //   alert("your blog will be verified by Moru.Thankyou for your patience");
+    //   loadBlogsData();
+    //   setLoginLoading(false);
+    //   navigate("/");
+    // } else {
+    //   toast.error("Something went wrong");
+    // }
   };
 
   return (
@@ -183,7 +184,7 @@ const About = () => {
                 maxLength={10000}
               ></Input.TextArea>
             </Form.Item>
-            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <div>
               <button className="submitBtn" type="primary">
                 {loginLoading ? (
                   <Spin
@@ -194,7 +195,7 @@ const About = () => {
                   <div style={{ margin: "auto", color: "white" }}>Submit</div>
                 )}
               </button>
-            </Form.Item>
+            </div>
           </MDBCol>
         </MDBRow>
       </Form>

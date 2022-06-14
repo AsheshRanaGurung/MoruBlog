@@ -160,7 +160,13 @@ const Blog = () => {
               src="/images/Blog.jpg"
             ></img>
             <div style={{ marginTop: "20px" }}>
-              <div style={{ marginBottom: "20px", textAlign: "justify" }}>
+              <div
+                style={{
+                  marginBottom: "20px",
+                  textAlign: "justify",
+                  fontFamily: "Open Sans",
+                }}
+              >
                 {!blog?.content ? (
                   <Spin size="medium" style={{ display: "block" }} />
                 ) : (

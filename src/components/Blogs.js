@@ -34,8 +34,23 @@ const Blogs = ({
   const user = useSelector(
     (state) => state.getLoggedInUserDetail?.loggedinuserDetail
   );
-
-  // const { id: userIDFromRedux, is_admin } = userID;
+  // const getMonthNameDateString = (date) => {
+  //   monthNamelist = [
+  //     "January",
+  //     "February",
+  //     "March",
+  //     "April",
+  //     "May",
+  //     "June",
+  //     "July",
+  //     "August",
+  //     "September",
+  //     "October",
+  //     "November",
+  //     "December",
+  //   ];
+  //   return console.log(monthNamelist[date.getMonth()]);
+  // };
 
   const dispatch = useDispatch();
 
@@ -85,6 +100,7 @@ const Blogs = ({
 
   return (
     <MDBCard className="h-100 blogCard " style={{ margin: "0 0px" }}>
+      {/* {getMonthNameDateString()} */}
       <Link to={`/blog/${id}`}>
         <MDBCardImage
           src="images/Tech1.jpg"
