@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { GetThisBlogSuccess } from "../redux/GetThisBlog";
 
-const ReviewForm = ({ id }) => {
+const ReviewForm = ({ id, LikeTrigger }) => {
   const [form] = Form.useForm();
   const [loginLoading, setLoginLoading] = useState(false);
 
@@ -22,7 +22,7 @@ const ReviewForm = ({ id }) => {
     );
 
     if (response.status === 200) {
-      dispatch(GetThisBlogSuccess(response?.data?.post?.comments));
+      dispatch(GetThisBlogSuccess([response?.data?.post]));
     }
   };
 

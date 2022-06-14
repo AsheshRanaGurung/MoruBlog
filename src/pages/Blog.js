@@ -46,7 +46,7 @@ const Blog = () => {
   const latestBlog2 = useSelector((state) => state.getLatestBLog);
   const { blogs } = latestBlog2;
 
-  const comments = useSelector((state) => state.getBlogdetail?.blog);
+  const reduxBlog = useSelector((state) => state.getBlogdetail?.blog);
 
   const userID = useSelector(
     (state) => state.getLoggedInUserDetail?.loggedinuserDetail
@@ -64,6 +64,7 @@ const Blog = () => {
     if (response.status === 200) {
       setBlog(response?.data?.post);
       setLikes(response?.data?.post?.votes.length);
+      dispatch(GetThisBlogSuccess([response.data.post]));
     } else {
       toast.error("Something is wrong!");
     }
@@ -101,7 +102,7 @@ const Blog = () => {
 
     if (response.status === 200) {
       toast.success("Comment deleted succesfully");
-      getSingleBlog();
+      setLikeTrigger(!likeTrigger);
     }
   };
 
@@ -132,6 +133,7 @@ const Blog = () => {
               handleCancel={handleCancel}
               commentId={commentId}
               commentMessage={commentMessage}
+              LikeTrigger={likeTrigger}
             />
 
             <MDBTypography
@@ -188,10 +190,10 @@ const Blog = () => {
             </div>
             <div style={{ marginBottom: "5px" }}>
               <h4>Reviews and comments</h4>
-              {comments?.length === 0 && (
+              {reduxBlog[0]?.comments?.length === 0 && (
                 <Message type="info">No comments.</Message>
               )}
-              {comments?.map((item, index) => (
+              {reduxBlog[0]?.comments?.map((item, index) => (
                 <MDBRow key={index}>
                   <MDBCol md={1}>
                     <img

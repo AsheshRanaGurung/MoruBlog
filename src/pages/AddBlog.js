@@ -26,10 +26,13 @@ const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
 const normFile = (e) => {
   // console.log("Upload event1:", e.file);
   if (Array.isArray(e)) {
-    return e;
+    const formData = new FormData();
+    formData.append("file", e.file);
+    return formData;
   }
-  const formData = new FormData();
-  formData.append("file", e.file);
+  // const formData = new FormData();
+  // formData.append("file", e.file);
+
   // formData.append("upload_preset", "s8l9wkk3");
 
   // fetch("  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
@@ -81,7 +84,7 @@ const About = () => {
   };
 
   const onFinish = async (values) => {
-    console.log(values.upload);
+    console.log(values);
     // setLoginLoading(true);
 
     // const config = {

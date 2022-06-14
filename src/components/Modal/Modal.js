@@ -29,7 +29,7 @@ const ModalDesign = ({
     );
 
     if (response.status === 200) {
-      dispatch(GetThisBlogSuccess(response?.data?.post?.comments));
+      dispatch(GetThisBlogSuccess([response?.data?.post]));
     }
   };
 
