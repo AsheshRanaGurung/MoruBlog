@@ -9,7 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../redux/GetApiData";
 import BlogPostModal from "../components/Modal/BlogPostModal";
-
+import loadBlogsData from "../redux/GetApiData";
+import FormData from "form-data";
 const layout = {
   labelCol: {
     span: 8,
@@ -19,20 +20,9 @@ const layout = {
   },
 };
 /* eslint-disable no-template-curly-in-string */
-const formData = new FormData();
 
 const { Option } = Select;
 const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
-
-const normFile = (e) => {
-  // console.log("file:", e.file);
-  // console.log("Filelist:", e.fileList);
-  if (Array.isArray(e)) {
-    return e.file;
-  }
-
-  return e.fileList;
-};
 
 const validateMessages = {
   required: "${label} is required!",
@@ -49,6 +39,8 @@ const About = () => {
   const [loginLoading, setLoginLoading] = useState(false);
   const [verifyModal, setVerifyModal] = useState(false);
 
+  const [image, setImage] = useState(null);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.getToken);
@@ -59,40 +51,53 @@ const About = () => {
   const handleCancel = () => {
     setVerifyModal(false);
   };
+  const normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
 
-  const loadBlogsData = async () => {
-    const response2 = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/posts"
-    );
-    // console.log("response2", response2?.data?.posts);
-    dispatch(getApiDataSuccess(response2?.data?.posts));
+    return e.fileList;
+  };
+
+  const filechanged = (e) => {
+    setImage(e);
   };
 
   const onFinish = async (values) => {
-    console.log(values);
     setLoginLoading(true);
 
-    formData.append("image", values.upload[0]);
+    let formData = new FormData();
+
+    formData.append("file", image, image.name);
     formData.append("content", values.blog);
     formData.append("title", values.title);
     formData.append("category", values.category.replace(/\s/g, ""));
-    // console.log(formData);
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        access_token: token,
-      },
-    };
 
-    const response = await axios.post(
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + "= " + pair[1]);
+    }
+
+    // const response = await axios.post(
+    //   "https://flaskapi-sanjeev.herokuapp.com/posts/new",
+    //   formData,
+    //   config
+    // );
+
+    const response = await fetch(
       "https://flaskapi-sanjeev.herokuapp.com/posts/new",
-      formData,
-      config
+      {
+        method: "POST",
+        body: formData,
+        headers: {
+          "Content-type": "multipart/form-data",
+          access_token: token,
+        },
+      }
     );
 
     if ((response.status = 201)) {
       alert("your blog will be verified by Moru.Thankyou for your patience");
-      loadBlogsData();
+      dispatch(loadBlogsData());
       setLoginLoading(false);
       navigate("/");
     } else {
@@ -149,13 +154,16 @@ const About = () => {
               name="upload"
               label="Image"
               valuePropName="fileList"
+              onChange={(e) => filechanged(e.target.files[0])}
               getValueFromEvent={normFile}
+              type="file"
             >
               <Upload
                 name="logo"
                 // action={"http://localhost:3000/"}
                 beforeUpload={() => false}
                 listType="picture"
+                // name="logo" action="/upload.do" listType="picture"
               >
                 <Button icon={<UploadOutlined />}>Click to upload</Button>
               </Upload>

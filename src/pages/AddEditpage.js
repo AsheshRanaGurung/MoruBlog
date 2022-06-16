@@ -1,13 +1,12 @@
 // //s8l9wkk3
 
-import React, { useEffect, useState } from "react";
-import { Form, Input, Upload, Button, Select, Spin } from "antd";
-import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
+import { Form, Input, Select, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { createNewBlog } from "../redux/CreateBlog";
+import { useSelector } from "react-redux";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 
 const layout = {
@@ -21,28 +20,6 @@ const layout = {
 
 const { Option } = Select;
 const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
-
-const normFile = (e) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  const formData = new FormData();
-  formData.append("file", e.file);
-  formData.append("upload_preset", "s8l9wkk3");
-
-  fetch("  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
-    method: "post",
-    body: formData,
-  })
-    .then((resp) => {
-      toast.info("Image Uploaded successfully!");
-      // console.log(resp);
-    })
-    .catch((error) => {
-      toast.error("Something went wrong");
-    });
-  return e.fileList;
-};
 
 const validateMessages = {
   required: "${label} is required!",
@@ -145,7 +122,7 @@ const AddEditpage = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item
+            {/* <Form.Item
               name="upload"
               label="Image"
               valuePropName="fileList"
@@ -159,7 +136,7 @@ const AddEditpage = () => {
               >
                 <Button icon={<UploadOutlined />}>Click to upload</Button>
               </Upload>
-            </Form.Item>
+            </Form.Item> */}
           </MDBCol>
           <MDBCol md={8}>
             <Form.Item

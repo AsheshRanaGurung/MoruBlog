@@ -150,7 +150,7 @@ const DashboardEditForm = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item
+            {/* <Form.Item
               name="upload"
               label="Image"
               valuePropName="fileList"
@@ -164,7 +164,7 @@ const DashboardEditForm = () => {
               >
                 <Button icon={<UploadOutlined />}>Click to upload</Button>
               </Upload>
-            </Form.Item>
+            </Form.Item> */}
           </MDBCol>
           <MDBCol md={8}>
             <Form.Item

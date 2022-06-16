@@ -104,7 +104,7 @@ const BlogDetails = () => {
         },
       };
       const response = await axios.delete(
-        `https://flaskapi-sanjeev.herokuapp.com/posts/${record.id}/delete`,
+        `https://flaskapi-sanjeev.herokuapp.com/posts/${record.id}`,
 
         config
       );

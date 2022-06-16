@@ -14,6 +14,7 @@
     "antd": "^4.20.1",
     "axios": "^0.27.1",
     "canvasjs-react-charts": "^1.0.5",
+    "form-data": "^4.0.0",
     "mdb-react-ui-kit": "^3.0.0",
     "react": "^18.0.0",
     "react-countup": "^6.2.0",
@@ -30,7 +31,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-   
   },
   "eslintConfig": {
     "extends": [
