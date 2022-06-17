@@ -8,11 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createNewBlog } from "../../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../../redux/GetApiData";
-import {
-  getunverified,
-  GetUnverifiedBlog,
-  GetUnverifiedBlogSuccess,
-} from "../../redux/GetUnverifiedBlogs";
+import { getunverified } from "../../redux/GetUnverifiedBlogs";
 
 const layout = {
   labelCol: {
@@ -26,29 +22,6 @@ const layout = {
 
 const { Option } = Select;
 const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
-
-const normFile = (e) => {
-  // console.log("Upload event1:", e.file);
-  if (Array.isArray(e)) {
-    return e;
-  }
-  const formData = new FormData();
-  formData.append("file", e.file);
-  formData.append("upload_preset", "s8l9wkk3");
-
-  fetch("  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
-    method: "post",
-    body: formData,
-  })
-    .then((resp) => {
-      toast.info("Image Uploaded successfully!");
-      // console.log(resp);
-    })
-    .catch((error) => {
-      toast.error("Something went wrong");
-    });
-  return e.fileList;
-};
 
 const validateMessages = {
   required: "${label} is required!",
@@ -64,6 +37,7 @@ const validateMessages = {
 
 const DashboardForm = () => {
   const [loginLoading, setLoginLoading] = useState(false);
+  const [image, setImage] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -71,6 +45,17 @@ const DashboardForm = () => {
   const { token } = userToken;
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+  const normFile = (e) => {
+    if (Array.isArray(e)) {
+      return e.file;
+    }
+
+    return e.fileList;
+  };
+  const filechanged = (e) => {
+    setImage(e);
+  };
 
   const loadBlogsData = async () => {
     const response2 = await axios.get(
@@ -82,29 +67,31 @@ const DashboardForm = () => {
 
   const onFinish = async (values) => {
     setLoginLoading(true);
+    let formData = new FormData();
 
-    const config = {
-      headers: {
-        access_token: token,
-      },
-    };
+    formData.append("image", image, image.name);
+    formData.append("content", values.blog);
+    formData.append("title", values.title);
+    formData.append("category", values.category.replace(/\s/g, ""));
 
-    const response = await axios.post(
+    const response = await fetch(
       "https://flaskapi-sanjeev.herokuapp.com/posts/new",
       {
-        content: values.blog,
-        title: values.title,
-        category: values.category.replace(/\s/g, ""),
-      },
-      config
+        method: "POST",
+        body: formData,
+        headers: {
+          // "Content-type": "multipart/form-data",
+          access_token: token,
+        },
+      }
     );
 
-    if ((response.status = 201)) {
+    if (response.status === 201) {
       loadBlogsData();
       setLoginLoading(false);
       toast.success("Blog created successfully");
       dispatch(getunverified(token));
-      navigate("/dashboard/verify-blogs");
+      navigate("/dashboard");
     } else {
       toast.error("Something went wrong");
     }
@@ -154,6 +141,7 @@ const DashboardForm = () => {
               name="upload"
               label="Image"
               valuePropName="fileList"
+              onChange={(e) => filechanged(e.target.files[0])}
               getValueFromEvent={normFile}
             >
               <Upload

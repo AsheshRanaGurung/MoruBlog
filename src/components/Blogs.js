@@ -25,6 +25,7 @@ const Blogs = ({
   category,
   description,
   id,
+  image,
   excerpt,
   userIdWhoCreatedThisBLog,
 }) => {
@@ -103,7 +104,7 @@ const Blogs = ({
       {/* {getMonthNameDateString()} */}
       <Link to={`/blog/${id}`}>
         <MDBCardImage
-          src="images/Tech1.jpg"
+          src={image}
           alt={title}
           position="top"
           style={{ maxWidth: "100%", height: "180px" }}
@@ -111,7 +112,7 @@ const Blogs = ({
       </Link>
 
       <MDBCardBody style={{ padding: "0.8rem 1.5rem 0.5rem" }}>
-        <MDBCardText
+        <div
           style={{
             display: "flex",
             marginBottom: "0px",
@@ -121,7 +122,7 @@ const Blogs = ({
         >
           {date?.slice(0, 10)}
           <ColorBadge>{category}</ColorBadge>
-        </MDBCardText>
+        </div>
         <MDBCardTitle
           style={{ fontSize: "23px", display: "flex", padding: "0" }}
         >

@@ -145,6 +145,7 @@ const Home = () => {
                             category={item.category}
                             userIdWhoCreatedThisBLog={item.author.id}
                             description={item.content}
+                            image={item.image}
                             excerpt={excerpt}
                           />
                         </MDBCol>

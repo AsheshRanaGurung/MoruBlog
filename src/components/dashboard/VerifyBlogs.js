@@ -42,20 +42,6 @@ const VerifyBlogs = () => {
 
   const dispatch = useDispatch();
 
-  // const getUnverifiedBlogs = async () => {
-  //   const config = {
-  //     headers: {
-  //       access_token: token,
-  //     },
-  //   };
-  //   const response = await axios.get(
-  //     "https://flaskapi-sanjeev.herokuapp.com/review_posts",
-  //     config
-  //   );
-  //   if (response.status === 200) {
-  //     dispatch(GetUnverifiedBlog(response.data.posts));
-  //   }
-  // };
   const editThisBlog = (record) => {
     setid(record.id);
     setTitle(record.title);

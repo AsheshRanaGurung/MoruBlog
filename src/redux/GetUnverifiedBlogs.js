@@ -42,7 +42,6 @@ export default GetUnverifiedBlogs.reducer;
 export function getunverified(token) {
   return async (dispatch) => {
     try {
-      console.log("alsdasdalsdlasdll");
       const config = {
         headers: {
           access_token: token,

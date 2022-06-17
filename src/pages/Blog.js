@@ -159,7 +159,7 @@ const Blog = () => {
               className="img-fluid rounded"
               style={{ width: "100%", maxHeight: "600px" }}
               alt="This is blog"
-              src="/images/Blog.jpg"
+              src={blog?.image}
             ></img>
             <div style={{ marginTop: "20px" }}>
               <div

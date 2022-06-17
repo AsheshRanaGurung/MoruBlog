@@ -68,20 +68,14 @@ const About = () => {
 
     let formData = new FormData();
 
-    formData.append("file", image, image.name);
+    formData.append("image", image, image.name);
     formData.append("content", values.blog);
     formData.append("title", values.title);
     formData.append("category", values.category.replace(/\s/g, ""));
 
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + "= " + pair[1]);
-    }
-
-    // const response = await axios.post(
-    //   "https://flaskapi-sanjeev.herokuapp.com/posts/new",
-    //   formData,
-    //   config
-    // );
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + "= " + pair[1]);
+    // }
 
     const response = await fetch(
       "https://flaskapi-sanjeev.herokuapp.com/posts/new",
@@ -89,17 +83,18 @@ const About = () => {
         method: "POST",
         body: formData,
         headers: {
-          "Content-type": "multipart/form-data",
+          // "Content-type": "multipart/form-data",
           access_token: token,
         },
       }
     );
 
-    if ((response.status = 201)) {
-      alert("your blog will be verified by Moru.Thankyou for your patience");
-      dispatch(loadBlogsData());
+    if (response.status === 201) {
+      console.log("asjkdaksjcnjaksnc");
+      // dispatch(loadBlogsData());
       setLoginLoading(false);
       navigate("/");
+      alert("your blog will be verified by Moru.Thankyou for your patience");
     } else {
       toast.error("Something went wrong");
     }

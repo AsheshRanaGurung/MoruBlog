@@ -113,12 +113,12 @@ const Header = () => {
                     style={{ color: "black" }}
                     onClick={onClose}
                   >
-                    <Menu.Item key="settings:5">Company Profile</Menu.Item>
+                    <Menu.Item key="companyprofile">Company Profile</Menu.Item>
                   </Link>
 
                   <Link to="/mantra">
                     <Menu.Item
-                      key="settings:7"
+                      key="mantra"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -127,7 +127,7 @@ const Header = () => {
                   </Link>
                   <Link to="/objectives">
                     <Menu.Item
-                      key="settings:8"
+                      key="objectives"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -136,7 +136,7 @@ const Header = () => {
                   </Link>
                   <Link to="/ourgovernance">
                     <Menu.Item
-                      key="settings:9"
+                      key="ourgovernance"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -145,7 +145,7 @@ const Header = () => {
                   </Link>
                   <Link to="/committee">
                     <Menu.Item
-                      key="settings:10"
+                      key="committe"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -157,23 +157,23 @@ const Header = () => {
 
               {userInfo ? (
                 <SubMenu
-                  key="SubMenu4444"
+                  key="userInfo"
                   title={user ? user.username : "Profile"}
                   style={{ fontSize: "19px" }}
                 >
                   <MenuItemGroup>
-                    <Menu.Item key="setting:21">
+                    <Menu.Item key="profilepage">
                       <Link to="/profilepage" onClick={onClose}>
                         Profile page
                       </Link>
                     </Menu.Item>
-                    <Menu.Item key="setting:22" onClick={() => logOut()}>
+                    <Menu.Item key="logout" onClick={() => logOut()}>
                       Log Out
                     </Menu.Item>
                   </MenuItemGroup>
                 </SubMenu>
               ) : (
-                <Menu.Item key="mail22">
+                <Menu.Item key="signin">
                   <Link
                     to="/login"
                     style={{ fontSize: "19px" }}
