@@ -9,6 +9,8 @@ import { createNewBlog } from "../../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../../redux/GetApiData";
 import { getunverified } from "../../redux/GetUnverifiedBlogs";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const layout = {
   labelCol: {
@@ -56,7 +58,7 @@ const DashboardForm = () => {
   const filechanged = (e) => {
     setImage(e);
   };
-
+  var data;
   const loadBlogsData = async () => {
     const response2 = await axios.get(
       "https://flaskapi-sanjeev.herokuapp.com/posts"
@@ -70,7 +72,7 @@ const DashboardForm = () => {
     let formData = new FormData();
 
     formData.append("image", image, image.name);
-    formData.append("content", values.blog);
+    formData.append("content", data);
     formData.append("title", values.title);
     formData.append("category", values.category.replace(/\s/g, ""));
 
@@ -155,18 +157,17 @@ const DashboardForm = () => {
             </Form.Item>
           </MDBCol>
           <MDBCol md={8}>
-            <Form.Item
-              name="blog"
-              label="Blog"
-              rules={[{ required: true, message: "Please write a blog" }]}
-            >
-              <Input.TextArea
-                rows={18}
-                cols={22}
-                showCount
-                maxLength={10000}
-              ></Input.TextArea>
-            </Form.Item>
+            <CKEditor
+              editor={ClassicEditor}
+              data="Write your blogs here"
+              onReady={(editor) => {
+                // You can store the "editor" and use when it is needed.
+                console.log("Editor is ready to use!", editor);
+              }}
+              onChange={(event, editor) => {
+                data = editor.getData();
+              }}
+            />
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <button className="submitBtn" type="primary">
                 {loginLoading ? (

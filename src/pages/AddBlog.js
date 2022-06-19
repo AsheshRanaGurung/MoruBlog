@@ -2,22 +2,12 @@ import React, { useState } from "react";
 import { Form, Input, Upload, Button, Select, Spin } from "antd";
 import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { createNewBlog } from "../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
-import { getApiDataSuccess } from "../redux/GetApiData";
 import BlogPostModal from "../components/Modal/BlogPostModal";
-import loadBlogsData from "../redux/GetApiData";
-
-// import { Editor } from "react-draft-wysiwyg";
-// import { EditorState } from "draft-js";
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-// import ReactHtmlParser from "react-html-parser";
-
 import FormData from "form-data";
 const layout = {
   labelCol: {
@@ -79,7 +69,6 @@ const About = () => {
 
   const onFinish = async (values) => {
     setLoginLoading(true);
-    console.log("yo mero data ho", data);
 
     let formData = new FormData();
 
