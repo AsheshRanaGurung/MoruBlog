@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MDBCard, MDBCardImage, MDBCardTitle } from "mdb-react-ui-kit";
 
-const LatestBlog = ({ id, title, created_at }) => {
+const LatestBlog = ({ id, title, image }) => {
   return (
     <div>
       <Link to={`/blog/${id}`}>
@@ -14,7 +14,7 @@ const LatestBlog = ({ id, title, created_at }) => {
           }}
         >
           <MDBCardImage
-            src="../images/food.jpg"
+            src={image}
             alt={title}
             style={{
               borderTopLeftRadius: "8px",

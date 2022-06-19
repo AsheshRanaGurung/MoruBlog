@@ -124,7 +124,7 @@ const Blogs = ({
           <ColorBadge>{category}</ColorBadge>
         </div>
         <MDBCardTitle
-          style={{ fontSize: "23px", display: "flex", padding: "0" }}
+          style={{ fontSize: "18px", display: "flex", padding: "0" }}
         >
           {excerpt2(title)}
         </MDBCardTitle>

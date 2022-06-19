@@ -22,6 +22,7 @@ import ReviewForm from "../components/ReviewForm";
 import { GetThisBlogSuccess, GetThisBlogVote } from "../redux/GetThisBlog";
 import ModalDesign from "../components/Modal/Modal";
 import { fetchLatestBlog, getLatestDataSuccess } from "../redux/GetLatestBlog";
+import ReactHtmlParser from "react-html-parser";
 
 const Blog = () => {
   const [blog, setBlog] = useState();
@@ -172,7 +173,8 @@ const Blog = () => {
                 {!blog?.content ? (
                   <Spin size="medium" style={{ display: "block" }} />
                 ) : (
-                  blog?.content
+                  ReactHtmlParser(blog?.content)
+                  // blog?.content
                 )}
               </div>{" "}
             </div>

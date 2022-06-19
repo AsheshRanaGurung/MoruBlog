@@ -8,7 +8,7 @@ const SecondaryHeader = () => {
         <div
           style={{
             display: "flex",
-            marginLeft: "24px",
+            marginLeft: "6px",
             justifyContent: "space-between",
           }}
         >

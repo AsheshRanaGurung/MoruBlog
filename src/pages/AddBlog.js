@@ -10,6 +10,14 @@ import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../redux/GetApiData";
 import BlogPostModal from "../components/Modal/BlogPostModal";
 import loadBlogsData from "../redux/GetApiData";
+
+// import { Editor } from "react-draft-wysiwyg";
+// import { EditorState } from "draft-js";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import ReactHtmlParser from "react-html-parser";
+
 import FormData from "form-data";
 const layout = {
   labelCol: {
@@ -40,12 +48,18 @@ const About = () => {
   const [verifyModal, setVerifyModal] = useState(false);
 
   const [image, setImage] = useState(null);
+  // const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
 
+  const onChange = (content) => {
+    console.log("onChange", content);
+  };
+
+  var data;
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const handleCancel = () => {
@@ -65,17 +79,18 @@ const About = () => {
 
   const onFinish = async (values) => {
     setLoginLoading(true);
+    console.log("yo mero data ho", data);
 
     let formData = new FormData();
 
     formData.append("image", image, image.name);
-    formData.append("content", values.blog);
+    formData.append("content", data);
     formData.append("title", values.title);
     formData.append("category", values.category.replace(/\s/g, ""));
 
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + "= " + pair[1]);
-    // }
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + "= " + pair[1]);
+    }
 
     const response = await fetch(
       "https://flaskapi-sanjeev.herokuapp.com/posts/new",
@@ -94,7 +109,7 @@ const About = () => {
       // dispatch(loadBlogsData());
       setLoginLoading(false);
       navigate("/");
-      alert("your blog will be verified by Moru.Thankyou for your patience");
+      toast.success("your blog will be verified by Moru");
     } else {
       toast.error("Something went wrong");
     }
@@ -165,7 +180,7 @@ const About = () => {
             </Form.Item>
           </MDBCol>
           <MDBCol md={8}>
-            <Form.Item
+            {/* <Form.Item
               name="blog"
               label="Blog"
               rules={[{ required: true, message: "Please write a blog" }]}
@@ -176,7 +191,23 @@ const About = () => {
                 showCount
                 maxLength={10000}
               ></Input.TextArea>
-            </Form.Item>
+            </Form.Item> */}
+            {/* <Editor
+              editorState={editorState}
+              onEditorStateChange={onEditorStateChange}
+            /> */}
+            <CKEditor
+              editor={ClassicEditor}
+              data="Write your blogs here"
+              onReady={(editor) => {
+                // You can store the "editor" and use when it is needed.
+                console.log("Editor is ready to use!", editor);
+              }}
+              onChange={(event, editor) => {
+                data = editor.getData();
+              }}
+            />
+
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <button className="submitBtn" type="primary">
                 {loginLoading ? (
