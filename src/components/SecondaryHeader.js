@@ -1,4 +1,3 @@
-import { MailOutlined, MobileOutlined, PhoneOutlined } from "@ant-design/icons";
 import React from "react";
 
 const SecondaryHeader = () => {
@@ -18,7 +17,7 @@ const SecondaryHeader = () => {
               16600114888
             </div> */}
             <div className="textColor">
-              <MobileOutlined style={{ marginTop: "-9px" }} />
+              <i className="fa fa-phone" aria-hidden="true"></i>
               +977 9801035348
             </div>
           </div>
@@ -27,7 +26,7 @@ const SecondaryHeader = () => {
           </div>
           <div className="PhoneNo">
             <div className="textColor">
-              <MailOutlined /> info@moru.com.np
+              <i className="fas fa-envelope"></i> info@moru.com.np
             </div>
           </div>
         </div>
