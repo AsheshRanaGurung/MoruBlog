@@ -3,10 +3,11 @@ import { Form, Input, Modal, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { GetUserDetailssuccess } from "../../redux/GetAllUsers";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { deleteThisBlog } from "../../redux/GetUnverifiedBlogs";
+import { loadBlogsData } from "../../redux/GetApiData";
+import ReactHtmlParser from "react-html-parser";
 
 const VerifyBlogModal = ({
   blogId,
@@ -60,6 +61,7 @@ const VerifyBlogModal = ({
     if (response.status === 200) {
       setVerifyBlog(false);
       dispatch(deleteThisBlog(blogId));
+      dispatch(loadBlogsData());
 
       handleCancel();
       toast.success("Blog verified successfully");
@@ -88,7 +90,7 @@ const VerifyBlogModal = ({
             title: title,
 
             category: category,
-            content: message,
+            content: ReactHtmlParser(message),
           }}
           validateMessages={validateMessages}
         >
