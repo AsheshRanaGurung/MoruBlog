@@ -127,7 +127,7 @@ const Blog = () => {
     <div className="pagecontainer">
       <MDBRow>
         <MDBCol>
-          <MDBContainer style={{ marginTop: "32px" }}>
+          <MDBContainer style={{ marginTop: "15px" }}>
             <ModalDesign
               isModalVisible={isModalVisible}
               handleCancel={handleCancel}

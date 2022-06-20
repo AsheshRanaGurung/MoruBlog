@@ -105,7 +105,7 @@ const Home = () => {
       <MDBRow>
         <MDBCol>
           <>
-            <div className="LoginPage" style={{ paddingTop: "30px" }}>
+            <div className="LoginPage" style={{ paddingTop: "15px" }}>
               <>
                 <MDBRow>
                   <Search
@@ -165,7 +165,7 @@ const Home = () => {
           </>
         </MDBCol>
         <MDBCol xl={3}>
-          <div style={{ marginTop: "40px" }}>
+          <div style={{ marginTop: "30px" }}>
             <Weather />
 
             <Category options={options} handleCategory={handleCategory} />
