@@ -1,7 +1,6 @@
 import React from "react";
 import "./Footer.css";
 import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
-import DownloadButton from "./DownloadButton";
 
 function Footer() {
   return (

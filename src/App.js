@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     dispatch(loadBlogsData());
-  }, [isSuccess, newVerifiedBlog]);
+  }, [isSuccess, newVerifiedBlog, dispatch]);
 
   return (
     <BrowserRouter>

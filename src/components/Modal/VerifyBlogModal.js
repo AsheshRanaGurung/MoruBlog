@@ -7,8 +7,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { deleteThisBlog } from "../../redux/GetUnverifiedBlogs";
 import { loadBlogsData } from "../../redux/GetApiData";
-import ReactHtmlParser from "react-html-parser";
-
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const VerifyBlogModal = ({
   blogId,
   title,
@@ -18,7 +18,6 @@ const VerifyBlogModal = ({
   handleCancel,
 }) => {
   const [verifyblog, setVerifyBlog] = useState(false);
-  const [discardblog, setDiscardBlog] = useState(false);
 
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
@@ -27,7 +26,7 @@ const VerifyBlogModal = ({
 
   const dispatch = useDispatch();
   const { id } = useParams();
-
+  var data;
   const getUnverifiedBlogs = async () => {
     const config = {
       headers: {
@@ -88,9 +87,7 @@ const VerifyBlogModal = ({
           onFinish={onFinish}
           initialValues={{
             title: title,
-
             category: category,
-            content: ReactHtmlParser(message),
           }}
           validateMessages={validateMessages}
         >
@@ -109,18 +106,17 @@ const VerifyBlogModal = ({
           >
             <Input></Input>
           </Form.Item>
-          <Form.Item
-            name="content"
-            label="Content"
-            rules={[{ required: true, message: "Please enter your Content" }]}
-          >
-            <Input.TextArea
-              rows={18}
-              cols={22}
-              showCount
-              maxLength={10000}
-            ></Input.TextArea>
-          </Form.Item>
+          <CKEditor
+            editor={ClassicEditor}
+            data={message}
+            onReady={(editor) => {
+              // You can store the "editor" and use when it is needed.
+              console.log("Editor is ready to use!", editor);
+            }}
+            onChange={(event, editor) => {
+              data = editor.getData();
+            }}
+          />
 
           <div style={{ display: "flex", justifyContent: "right" }}>
             <button className="submitBtn" type="primary">

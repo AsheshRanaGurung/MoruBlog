@@ -8,7 +8,7 @@ import { login } from "../redux/UserLoggedInDetails";
 
 const Login = () => {
   const userInfo = useSelector((state) => state.getLoggedInUserDetail);
-  const { loggedinuserDetail, isLoading, isSuccess } = userInfo;
+  const { loggedinuserDetail, isLoading } = userInfo;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const Login = () => {
         navigate("/");
       }
     }
-  }, [userInfo]);
+  }, [loggedinuserDetail, userInfo, navigate]);
   const onFinish = async (values) => {
     dispatch(login(values.email, values.password));
   };

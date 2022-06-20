@@ -3,7 +3,7 @@ import { Form, Input, Upload, Button, Select, Spin } from "antd";
 import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import BlogPostModal from "../components/Modal/BlogPostModal";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -38,16 +38,10 @@ const About = () => {
   const [verifyModal, setVerifyModal] = useState(false);
 
   const [image, setImage] = useState(null);
-  // const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
-
-  const onChange = (content) => {
-    console.log("onChange", content);
-  };
 
   var data;
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;

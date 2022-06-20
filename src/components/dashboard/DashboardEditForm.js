@@ -5,10 +5,10 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../../redux/GetApiData";
-
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const layout = {
   labelCol: {
     span: 8,
@@ -17,33 +17,9 @@ const layout = {
     span: 24,
   },
 };
-/* eslint-disable no-template-curly-in-string */
 
 const { Option } = Select;
 const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
-
-const normFile = (e) => {
-  // console.log("Upload event1:", e.file);
-  if (Array.isArray(e)) {
-    return e;
-  }
-  const formData = new FormData();
-  formData.append("file", e.file);
-  formData.append("upload_preset", "s8l9wkk3");
-
-  fetch("  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
-    method: "post",
-    body: formData,
-  })
-    .then((resp) => {
-      toast.info("Image Uploaded successfully!");
-      // console.log(resp);
-    })
-    .catch((error) => {
-      toast.error("Something went wrong");
-    });
-  return e.fileList;
-};
 
 const validateMessages = {
   required: "${label} is required!",
@@ -70,7 +46,7 @@ const DashboardEditForm = () => {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const { id } = useParams();
-
+  var data;
   const loadBlogsData = async () => {
     const response2 = await axios.get(
       "https://flaskapi-sanjeev.herokuapp.com/posts"
@@ -91,7 +67,7 @@ const DashboardEditForm = () => {
       `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
       {
         title: values.title,
-        content: values.blog,
+        content: data,
         category: values.category.replace(/\s/g, ""),
       },
       config
@@ -117,7 +93,10 @@ const DashboardEditForm = () => {
         name="nest-messages"
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ title: blog?.title, blog: blog?.description }}
+        initialValues={{
+          title: blog?.title,
+          // blog: ReactHtmlParser(blog?.description),
+        }}
         validateMessages={validateMessages}
         style={{ marginTop: "50px" }}
       >
@@ -167,18 +146,17 @@ const DashboardEditForm = () => {
             </Form.Item> */}
           </MDBCol>
           <MDBCol md={8}>
-            <Form.Item
-              name="blog"
-              label="Blog"
-              rules={[{ required: true, message: "Please write a blog" }]}
-            >
-              <Input.TextArea
-                rows={18}
-                cols={22}
-                showCount
-                maxLength={10000}
-              ></Input.TextArea>
-            </Form.Item>
+            <CKEditor
+              editor={ClassicEditor}
+              data={blog?.description}
+              onReady={(editor) => {
+                // You can store the "editor" and use when it is needed.
+                console.log("Editor is ready to use!", editor);
+              }}
+              onChange={(event, editor) => {
+                data = editor.getData();
+              }}
+            />
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <button className="submitBtn" type="primary">
                 {updateLoading ? (

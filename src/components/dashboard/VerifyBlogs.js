@@ -1,7 +1,6 @@
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteThisUser, GetUserDetailssuccess } from "../../redux/GetAllUsers";
+import { useSelector } from "react-redux";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 // import { GetUnverifiedBlog } from "../../redux/GetUnverifiedBlogs";
@@ -18,7 +17,7 @@ const VerifyBlogs = () => {
     },
     loading: false,
   });
-  const { data, pagination, loading } = unverifiedBlogs;
+  const { data, pagination } = unverifiedBlogs;
   const [notVerifiedId, setNotVerifiedId] = useState("");
 
   const [id, setid] = useState("");
@@ -39,8 +38,6 @@ const VerifyBlogs = () => {
 
   const getUnverifiedBlog = useSelector((state) => state.getUnverifiedBlog);
   const { blogs } = getUnverifiedBlog;
-
-  const dispatch = useDispatch();
 
   const editThisBlog = (record) => {
     setid(record.id);

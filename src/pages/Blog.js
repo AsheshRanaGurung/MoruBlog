@@ -19,14 +19,13 @@ import { Spin } from "antd";
 import Message from "../components/Message";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewForm from "../components/ReviewForm";
-import { GetThisBlogSuccess, GetThisBlogVote } from "../redux/GetThisBlog";
+import { GetThisBlogSuccess } from "../redux/GetThisBlog";
 import ModalDesign from "../components/Modal/Modal";
-import { fetchLatestBlog, getLatestDataSuccess } from "../redux/GetLatestBlog";
+import { fetchLatestBlog } from "../redux/GetLatestBlog";
 import ReactHtmlParser from "react-html-parser";
 
 const Blog = () => {
   const [blog, setBlog] = useState();
-  const [relatedPost, setRelatedPost] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [commentId, setCommentId] = useState(null);
   const [commentMessage, setCommentMessage] = useState(null);
@@ -117,7 +116,7 @@ const Blog = () => {
       getSingleBlog();
       dispatch(fetchLatestBlog());
     }
-  }, [id, likeTrigger]);
+  }, [id, dispatch, likeTrigger]);
 
   const styleInfo = {
     float: "left",

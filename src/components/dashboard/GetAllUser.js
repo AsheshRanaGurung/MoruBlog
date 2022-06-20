@@ -2,9 +2,8 @@ import axios from "axios";
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteThisUser, GetUserDetailssuccess } from "../../redux/GetAllUsers";
+import { deleteThisUser } from "../../redux/GetAllUsers";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import EditModal from "../Modal/EditModal";
 // import { useTasksQuery } from "../../redux/GetAllUsers";
@@ -19,7 +18,7 @@ const GetAllUser = () => {
     },
     loading: false,
   });
-  const { data, pagination, loading } = user;
+  const { data, pagination } = user;
   const [id, setid] = useState("");
   const [title, setTitle] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -30,10 +29,6 @@ const GetAllUser = () => {
   const { token } = userToken;
 
   const dispatch = useDispatch();
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -138,7 +133,6 @@ const GetAllUser = () => {
     });
   };
   useEffect(() => {
-    // getallUsers();
     fetch();
   }, [getallusers]);
   return (
