@@ -38,18 +38,21 @@ const GetAllUser = () => {
       title: "ID",
       sorter: (a, b) => a.id - b.id,
       dataIndex: "id",
-      width: "5%",
+      width: "2%",
+      fixed: "left",
     },
     {
       title: "Name",
       dataIndex: "username",
       render: (name) => `${name}`,
-      width: "10%",
+      width: "6%",
+      key: "1",
     },
     {
       title: "Email",
       dataIndex: "email",
-      width: "15%",
+      width: "10%",
+      key: "2",
     },
     {
       sorter: (a, b) => a.date - b.date,
@@ -57,11 +60,13 @@ const GetAllUser = () => {
       dataIndex: "created_at",
       width: "10%",
       render: (record) => <>{record.slice(0, 10)}</>,
+      key: "3",
     },
     {
       title: "Is Admin",
       dataIndex: "is_admin",
       width: "10%",
+      key: "4",
       render: (record) => <>{record === true ? "True" : "False"}</>,
     },
 
@@ -79,7 +84,8 @@ const GetAllUser = () => {
           />
         </>
       ),
-      width: "10%",
+      width: "3%",
+      fixed: "right",
     },
   ];
   const onDelete = async (record) => {
@@ -148,6 +154,7 @@ const GetAllUser = () => {
       <Table
         columns={columns}
         // rowKey={(record) => record.login.uuid}
+        scroll={{ x: 1300 }}
         dataSource={data}
         pagination={pagination}
         loading={data.length === 0}

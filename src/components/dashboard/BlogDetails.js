@@ -39,36 +39,43 @@ const BlogDetails = () => {
       sorter: (a, b) => a.id - b.id,
       dataIndex: "id",
       width: "2%",
+      fixed: "left",
     },
     {
       title: "Title",
       dataIndex: "title",
       render: (name) => `${name}`,
-      width: "15%",
+      width: "6%",
     },
+
     {
       title: "Category",
       dataIndex: "category",
+      key: "1",
       width: "5%",
     },
     {
       sorter: (a, b) => a.date - b.date,
       title: "Date",
       dataIndex: "created_at",
-      width: "10%",
+      width: "6%",
+      key: "2",
+
       render: (record) => <>{record.slice(0, 10)}</>,
     },
     {
       title: "Author",
       dataIndex: "author",
       width: "10%",
+      key: "3",
+
       render: (record) => <>{record.username}</>,
     },
 
     {
       title: "Action",
       dataIndex: "",
-      key: "x",
+      key: "operation",
       render: (record) => (
         <>
           <Link
@@ -83,7 +90,8 @@ const BlogDetails = () => {
           />
         </>
       ),
-      width: "10%",
+      width: "2%",
+      fixed: "right",
     },
   ];
 
@@ -150,6 +158,7 @@ const BlogDetails = () => {
       columns={columns}
       // rowKey={(record) => record.login.uuid}
       dataSource={data}
+      scroll={{ x: 1300 }}
       pagination={pagination}
       // loading={data.length === 0}
       onChange={handleTableChange}

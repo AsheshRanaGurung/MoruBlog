@@ -57,29 +57,33 @@ const VerifyBlogs = () => {
       sorter: (a, b) => a.id - b.id,
       dataIndex: "id",
       width: "2%",
-      // render: (record) => <>{record.id}</>,
+      fixed: "left",
     },
     {
       title: "Title",
       dataIndex: "title",
-      width: "10%",
+      width: "6%",
+      key: "1",
     },
     {
       title: "Category",
       dataIndex: "category",
       width: "5%",
+      key: "2",
     },
     {
       title: "Author",
       dataIndex: "author",
       render: (record) => <>{record.username}</>,
       width: "5%",
+      key: "3",
     },
     {
       title: "Email",
       dataIndex: "author",
       render: (record) => <>{record.email}</>,
       width: "10%",
+      key: "4",
     },
 
     {
@@ -96,7 +100,8 @@ const VerifyBlogs = () => {
           />
         </>
       ),
-      width: "10%",
+      width: "2%",
+      fixed: "right",
     },
   ];
 
@@ -152,7 +157,7 @@ const VerifyBlogs = () => {
         // rowKey={(record) => record.login.uuid}
         dataSource={data}
         pagination={pagination}
-        // loading={data.length === 0}
+        scroll={{ x: 1300 }}
         onChange={handleTableChange}
       />
     </>
