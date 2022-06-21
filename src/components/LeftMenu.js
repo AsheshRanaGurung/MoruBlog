@@ -11,7 +11,7 @@ const LeftMenu = () => {
   const userInfo = useSelector((state) => state.getToken.token);
   const navigate = useNavigate();
   return (
-    <Menu mode="horizontal">
+    <Menu mode="horizontal" className="bgColor">
       <Menu.Item key="mail">
         <Link to="/" style={{ fontSize: "19px" }}>
           Home

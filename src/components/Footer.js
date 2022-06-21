@@ -9,7 +9,7 @@ function Footer() {
         <button className="top">Back to top</button>
       </a>
       <div className="Webcontainer">
-        <MDBRow>
+        <MDBRow style={{ marginRight: "0px" }}>
           <MDBCol md="3">
             <h5 className="title">Moru Digital wallet</h5>
             <p className="footer-intro" style={{ textAlign: "justify" }}>

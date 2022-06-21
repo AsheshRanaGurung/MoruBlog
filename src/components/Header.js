@@ -73,7 +73,7 @@ const Header = () => {
             <span className="barsBtn"></span>
           </button>
           <Drawer
-            title="Basic Drawer"
+            title="Moru Drawer"
             placement="right"
             closable={false}
             onClose={onClose}
@@ -82,12 +82,12 @@ const Header = () => {
             <Menu>
               <Menu.Item key="mail2">
                 <Link to="/" style={{ fontSize: "19px" }} onClick={onClose}>
-                  Home
+                  <i className="fa fa-home" aria-hidden="true"></i> Home
                 </Link>
               </Menu.Item>
               <Menu.Item key="load">
                 <a href="https://moru.com.np/" style={{ fontSize: "19px" }}>
-                  Load Fund
+                  <i className="fa fa-wallet" aria-hidden="true"></i> Load Fund
                 </a>
               </Menu.Item>
 
@@ -98,13 +98,19 @@ const Header = () => {
                     style={{ fontSize: "19px" }}
                     onClick={onClose}
                   >
-                    Create Blog
+                    <i className="fa fa-plus" aria-hidden="true"></i> Create
+                    Blog
                   </Link>
                 </Menu.Item>
               )}
               <SubMenu
                 key="SubMenu2"
-                title={<span>About Us</span>}
+                title={
+                  <span>
+                    {" "}
+                    <i className="fa fa-user" aria-hidden="true"></i> About Us
+                  </span>
+                }
                 style={{ fontSize: "19px" }}
               >
                 <MenuItemGroup>
@@ -180,7 +186,7 @@ const Header = () => {
                     onClick={onClose}
                   >
                     {/* <UserAddOutlined style={{ fontSize: "18px" }} /> */}
-                    SignIn
+                    <i className="fa fa-user" aria-hidden="true"></i> SignIn
                   </Link>
                 </Menu.Item>
               )}

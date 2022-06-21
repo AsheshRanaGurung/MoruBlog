@@ -166,7 +166,7 @@ const Home = () => {
         </MDBCol>
         <MDBCol xl={3}>
           <div style={{ marginTop: "30px" }}>
-            <Weather />
+            {/* <Weather /> */}
 
             <Category options={options} handleCategory={handleCategory} />
             <DownloadButton />

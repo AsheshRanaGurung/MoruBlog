@@ -31,7 +31,7 @@ const RightMenu = () => {
     localStorage.removeItem("LoginUser");
   };
   return (
-    <Menu mode="horizontal">
+    <Menu mode="horizontal" className="bgColor">
       {userInfo ? (
         <SubMenu
           key="SubMenu2"

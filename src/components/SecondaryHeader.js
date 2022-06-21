@@ -4,18 +4,8 @@ const SecondaryHeader = () => {
   return (
     <nav className="menuBar2" style={{ backgroundColor: "#c70039" }}>
       <div className="Webcontainer2">
-        <div
-          style={{
-            display: "flex",
-            marginLeft: "6px",
-            justifyContent: "space-between",
-          }}
-        >
+        <div className="secHeadDesign">
           <div className="PhoneNo">
-            {/* <div className="textColor">
-              <PhoneOutlined style={{ marginTop: "-9px" }} />
-              16600114888
-            </div> */}
             <div className="textColor">
               <i className="fa fa-phone" aria-hidden="true"></i>
               +977 9801035348

@@ -8,6 +8,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const layout = {
   labelCol: {
@@ -37,7 +39,7 @@ const AddEditpage = () => {
   const navigate = useNavigate();
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
-
+  var data;
   const getData = useSelector((state) => state?.getBlogdetail);
   const { blog } = getData;
 
@@ -57,7 +59,7 @@ const AddEditpage = () => {
       `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
       {
         title: values.title,
-        content: values.blog,
+        content: data,
         category: values.category.replace(/\s/g, ""),
       },
       config
@@ -75,19 +77,13 @@ const AddEditpage = () => {
     }
   };
 
-  const editThisId = async () => {
-    const response = await axios.put(`http://localhost:5000/blogs/${id}`);
-    // console.log(response.data);
-    // dispatch(getApiDataSuccess(response.data));
-  };
-
   return (
     <div className="pagecontainer">
       <Form
         {...layout}
         name="nest-messages"
         layout="vertical"
-        initialValues={{ title: blog?.title, blog: blog?.description }}
+        initialValues={{ title: blog?.title }}
         onFinish={onFinish}
         validateMessages={validateMessages}
         style={{ marginTop: "50px" }}
@@ -121,36 +117,19 @@ const AddEditpage = () => {
                 ))}
               </Select>
             </Form.Item>
-
-            {/* <Form.Item
-              name="upload"
-              label="Image"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-            >
-              <Upload
-                name="logo"
-                // action={"http://localhost:3000/"}
-                beforeUpload={() => false}
-                listType="picture"
-              >
-                <Button icon={<UploadOutlined />}>Click to upload</Button>
-              </Upload>
-            </Form.Item> */}
           </MDBCol>
           <MDBCol md={8}>
-            <Form.Item
-              name="blog"
-              label="Blog"
-              rules={[{ required: true, message: "Please write a blog" }]}
-            >
-              <Input.TextArea
-                rows={18}
-                cols={22}
-                showCount
-                maxLength={10000}
-              ></Input.TextArea>
-            </Form.Item>
+            <CKEditor
+              editor={ClassicEditor}
+              data={blog?.description}
+              onReady={(editor) => {
+                // You can store the "editor" and use when it is needed.
+                console.log("Editor is ready to use!", editor);
+              }}
+              onChange={(event, editor) => {
+                data = editor.getData();
+              }}
+            />
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
               <button className="submitBtn" type="primary">
                 {updateLoading ? (

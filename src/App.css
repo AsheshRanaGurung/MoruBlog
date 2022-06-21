@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  --main-bg-color: white;
+  background-color: var(--main-bg-color);
 }
 
 
@@ -130,11 +132,10 @@ height:500px;
   margin-top:38px;
   border-bottom: solid 1px #e8e8e8;
   overflow: auto;
-  /* box-shadow: 0 0 30px #f3f1f1; */
+  background-color: var(--main-bg-color);
   position: fixed;
   z-index: 99;
   width: 100%;
-  background-color: white;
 }
 .menuBar2 {
   padding: 6px 20px;
@@ -143,6 +144,11 @@ height:500px;
   z-index: 99;
   width: 100%;
   background-color: white;
+}
+.secHeadDesign{
+  display: flex;
+            margin-left: 6px;
+            justify-content: space-between;
 }
 
 .logo {
@@ -241,6 +247,9 @@ height:500px;
 .ant-drawer-body .ant-menu-horizontal>.ant-menu-item:hover {
   border-bottom-color: transparent;
 }
+.bgColor{
+  background-color: var(--main-bg-color);
+}
 
 @media (max-width: 1124px) {
   /* @media (max-width: 1049px) { */
@@ -307,4 +316,9 @@ height:500px;
     .PhoneNo{
       display:none
      }
+     .secHeadDesign{
+      display: flex;
+                margin-left: 6px;
+                justify-content: center;
+    }
 }

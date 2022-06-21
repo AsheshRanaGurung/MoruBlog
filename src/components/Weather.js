@@ -14,31 +14,17 @@ const Weather = () => {
   const MINUTE_MS = 300000;
 
   useEffect(() => {
-    axios
-      .request(options1)
-      .then(function (response) {
-        // console.log(response.data);
-        setWeather(response.data);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    // axios
+    //   .request(options1)
+    //   .then(function (response) {
+    //     // console.log(response.data);
+    //     setWeather(response.data);
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error);
+    //   });
   }, []);
 
-  useEffect(() => {
-    // const interval = setInterval(() => {
-    //   axios
-    //     .request(options1)
-    //     .then(function (response) {
-    //       // console.log(response.data);
-    //       setWeather(response.data);
-    //     })
-    //     .catch(function (error) {
-    //       console.error(error);
-    //     });
-    // }, MINUTE_MS);
-    // return () => clearInterval(interval);
-  }, []);
   return (
     <div style={{ marginBottom: "20px" }}>
       <h4>Weather status</h4>

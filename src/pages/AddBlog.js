@@ -71,9 +71,9 @@ const About = () => {
     formData.append("title", values.title);
     formData.append("category", values.category.replace(/\s/g, ""));
 
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + "= " + pair[1]);
-    }
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + "= " + pair[1]);
+    // }
 
     const response = await fetch(
       "https://flaskapi-sanjeev.herokuapp.com/posts/new",
@@ -88,8 +88,6 @@ const About = () => {
     );
 
     if (response.status === 201) {
-      console.log("asjkdaksjcnjaksnc");
-      // dispatch(loadBlogsData());
       setLoginLoading(false);
       navigate("/");
       toast.success("your blog will be verified by Moru");
