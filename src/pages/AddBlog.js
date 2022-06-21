@@ -36,7 +36,7 @@ const validateMessages = {
 const About = () => {
   const [loginLoading, setLoginLoading] = useState(false);
   const [verifyModal, setVerifyModal] = useState(false);
-
+  const [datas, setDatas] = useState("");
   const [image, setImage] = useState(null);
 
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ const About = () => {
     let formData = new FormData();
 
     formData.append("image", image, image.name);
-    formData.append("content", data);
+    formData.append("content", datas);
     formData.append("title", values.title);
     formData.append("category", values.category.replace(/\s/g, ""));
 
@@ -180,11 +180,12 @@ const About = () => {
             <CKEditor
               editor={ClassicEditor}
               data="Write your blogs here"
-              onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
-                console.log("Editor is ready to use!", editor);
-              }}
+              // onReady={(editor) => {
+              //   // You can store the "editor" and use when it is needed.
+              //   console.log("Editor is ready to use!", editor);
+              // }}
               onChange={(event, editor) => {
+                setDatas(editor.getData());
                 data = editor.getData();
               }}
             />

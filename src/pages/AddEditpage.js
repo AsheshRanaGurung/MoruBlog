@@ -40,8 +40,10 @@ const AddEditpage = () => {
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
   var data;
+
   const getData = useSelector((state) => state?.getBlogdetail);
   const { blog } = getData;
+  const [datas, setDatas] = useState(blog?.description);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -59,7 +61,7 @@ const AddEditpage = () => {
       `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
       {
         title: values.title,
-        content: data,
+        content: datas,
         category: values.category.replace(/\s/g, ""),
       },
       config
@@ -121,12 +123,9 @@ const AddEditpage = () => {
           <MDBCol md={8}>
             <CKEditor
               editor={ClassicEditor}
-              data={blog?.description}
-              onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
-                console.log("Editor is ready to use!", editor);
-              }}
+              data={datas}
               onChange={(event, editor) => {
+                setDatas(editor.getData());
                 data = editor.getData();
               }}
             />

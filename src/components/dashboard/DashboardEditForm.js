@@ -42,6 +42,7 @@ const DashboardEditForm = () => {
   const { token } = userToken;
   const getData = useSelector((state) => state?.getBlogdetail);
   const { blog } = getData;
+  const [datas, setDatas] = useState(blog?.description);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -67,7 +68,7 @@ const DashboardEditForm = () => {
       `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
       {
         title: values.title,
-        content: data,
+        content: datas,
         category: values.category.replace(/\s/g, ""),
       },
       config
@@ -148,12 +149,13 @@ const DashboardEditForm = () => {
           <MDBCol md={8}>
             <CKEditor
               editor={ClassicEditor}
-              data={blog?.description}
+              data={datas}
               onReady={(editor) => {
                 // You can store the "editor" and use when it is needed.
                 console.log("Editor is ready to use!", editor);
               }}
               onChange={(event, editor) => {
+                setDatas(editor.getData());
                 data = editor.getData();
               }}
             />

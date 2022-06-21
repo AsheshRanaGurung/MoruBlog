@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewBlog } from "../../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../../redux/GetApiData";
 import { getunverified } from "../../redux/GetUnverifiedBlogs";
@@ -40,6 +39,7 @@ const validateMessages = {
 const DashboardForm = () => {
   const [loginLoading, setLoginLoading] = useState(false);
   const [image, setImage] = useState(null);
+  const [datas, setDatas] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ const DashboardForm = () => {
     let formData = new FormData();
 
     formData.append("image", image, image.name);
-    formData.append("content", data);
+    formData.append("content", datas);
     formData.append("title", values.title);
     formData.append("category", values.category.replace(/\s/g, ""));
 
@@ -160,11 +160,8 @@ const DashboardForm = () => {
             <CKEditor
               editor={ClassicEditor}
               data="Write your blogs here"
-              onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
-                console.log("Editor is ready to use!", editor);
-              }}
               onChange={(event, editor) => {
+                setDatas(editor.getData());
                 data = editor.getData();
               }}
             />
