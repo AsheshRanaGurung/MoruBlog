@@ -24,6 +24,7 @@ const VerifyBlogs = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [message, setMessage] = useState("");
+  const [image, setimage] = useState("");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [discardModalVisible, setDiscardModalVisible] = useState(false);
@@ -44,6 +45,7 @@ const VerifyBlogs = () => {
     setTitle(record.title);
     setCategory(record.category);
     setMessage(record.content);
+    setimage(record.image);
     setIsModalVisible(true);
   };
 
@@ -140,6 +142,7 @@ const VerifyBlogs = () => {
           handleCancel={handleCancel}
           blogId={id}
           title={title}
+          image={image}
           category={category}
           message={message}
         />

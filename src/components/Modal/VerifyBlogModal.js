@@ -12,6 +12,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const VerifyBlogModal = ({
   blogId,
   title,
+  image,
   category,
   message,
   isModalVisible,
@@ -81,6 +82,7 @@ const VerifyBlogModal = ({
         onCancel={handleCancel}
         footer={null}
       >
+        <img src={image} style={{ width: "100%" }} />
         <Form
           name="nest-messages"
           layout="vertical"

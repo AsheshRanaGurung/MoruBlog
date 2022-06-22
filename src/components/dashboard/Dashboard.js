@@ -58,7 +58,8 @@ const Dashboard = () => {
           <div className="dashboard-logo" style={{ marginTop: "10px" }}>
             <Link to="/dashboard">
               <img
-                src="images/moru.jpg"
+                // src="images/moru.jpg"
+                src="http://res.cloudinary.com/dpnxzofqd/image/upload/v1655885402/Moru-preset/paiqyssfbpizi8drdjsq.png "
                 alt="logo"
                 style={{ height: "37px" }}
                 onClick={() => getDatas()}
@@ -144,9 +145,11 @@ const Dashboard = () => {
         </Sider>
         <Layout
           className="site-layout"
-          style={{ marginLeft: collapse ? 80 : 200 }}
+          style={{
+            transition: "all 0.4s ease",
+            marginLeft: collapse ? 80 : 200,
+          }}
         >
-          {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
             <div
               className="site-layout-background"

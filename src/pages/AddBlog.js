@@ -9,6 +9,7 @@ import BlogPostModal from "../components/Modal/BlogPostModal";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import FormData from "form-data";
+import axios from "axios";
 const layout = {
   labelCol: {
     span: 8,
@@ -36,7 +37,7 @@ const validateMessages = {
 const About = () => {
   const [loginLoading, setLoginLoading] = useState(false);
   const [verifyModal, setVerifyModal] = useState(false);
-
+  const [datas, setDatas] = useState("");
   const [image, setImage] = useState(null);
 
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const About = () => {
   const handleCancel = () => {
     setVerifyModal(false);
   };
+
   const normFile = (e) => {
     if (Array.isArray(e)) {
       return e.file;
@@ -63,37 +65,56 @@ const About = () => {
 
   const onFinish = async (values) => {
     setLoginLoading(true);
-
     let formData = new FormData();
-
-    formData.append("image", image, image.name);
-    formData.append("content", data);
-    formData.append("title", values.title);
-    formData.append("category", values.category.replace(/\s/g, ""));
-
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + "= " + pair[1]);
-    // }
-
-    const response = await fetch(
-      "https://flaskapi-sanjeev.herokuapp.com/posts/new",
+    let images = new FormData();
+    images.append("file", image);
+    images.append("upload_preset", "Moru-preset");
+    const address = fetch(
+      "  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/",
       {
+        method: "post",
+        body: images,
+      }
+    )
+      .then((resp) =>
+        resp.json().then((val) => {
+          return val.url;
+        })
+      )
+      .catch((error) => {
+        console.error(error);
+      });
+
+    const sendFormData = async () => {
+      const a = await address;
+
+      formData.append("image", a);
+      formData.append("content", datas);
+      formData.append("title", values.title);
+      formData.append("category", values.category.replace(/\s/g, ""));
+      // for (var pair of formData.entries()) {
+      //   console.log(pair[0] + "= " + pair[1]);
+      // }
+
+      fetch("https://flaskapi-sanjeev.herokuapp.com/posts/new", {
         method: "POST",
         body: formData,
         headers: {
           // "Content-type": "multipart/form-data",
           access_token: token,
         },
-      }
-    );
+      }).then((res) => {
+        if (res.status === 201) {
+          setLoginLoading(false);
+          navigate("/");
+          toast.success("your blog will be verified by Moru");
+        } else {
+          toast.error("Something went wrong");
+        }
+      });
+    };
 
-    if (response.status === 201) {
-      setLoginLoading(false);
-      navigate("/");
-      toast.success("your blog will be verified by Moru");
-    } else {
-      toast.error("Something went wrong");
-    }
+    sendFormData();
   };
 
   return (
@@ -151,8 +172,12 @@ const About = () => {
             >
               <Upload
                 name="logo"
-                // action={"http://localhost:3000/"}
-                beforeUpload={() => false}
+                // action={
+                //   "https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/"
+                // }
+                beforeUpload={() => {
+                  return false;
+                }}
                 listType="picture"
                 // name="logo" action="/upload.do" listType="picture"
               >
@@ -180,11 +205,12 @@ const About = () => {
             <CKEditor
               editor={ClassicEditor}
               data="Write your blogs here"
-              onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
-                console.log("Editor is ready to use!", editor);
-              }}
+              // onReady={(editor) => {
+              //   // You can store the "editor" and use when it is needed.
+              //   console.log("Editor is ready to use!", editor);
+              // }}
               onChange={(event, editor) => {
+                setDatas(editor.getData());
                 data = editor.getData();
               }}
             />

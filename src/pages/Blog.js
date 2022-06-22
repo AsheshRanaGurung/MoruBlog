@@ -22,7 +22,8 @@ import ReviewForm from "../components/ReviewForm";
 import { GetThisBlogSuccess } from "../redux/GetThisBlog";
 import ModalDesign from "../components/Modal/Modal";
 import { fetchLatestBlog } from "../redux/GetLatestBlog";
-import ReactHtmlParser from "react-html-parser";
+// import ReactHtmlParser from "react-html-parser";
+import { Markup } from "interweave";
 
 const Blog = () => {
   const [blog, setBlog] = useState();
@@ -172,7 +173,9 @@ const Blog = () => {
                 {!blog?.content ? (
                   <Spin size="medium" style={{ display: "block" }} />
                 ) : (
-                  ReactHtmlParser(blog?.content)
+                  // ReactHtmlParser(blog?.content)
+                  <Markup content={blog?.content} />
+
                   // blog?.content
                 )}
               </div>{" "}

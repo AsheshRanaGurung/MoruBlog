@@ -70,33 +70,57 @@ const DashboardForm = () => {
   const onFinish = async (values) => {
     setLoginLoading(true);
     let formData = new FormData();
-
-    formData.append("image", image, image.name);
-    formData.append("content", data);
-    formData.append("title", values.title);
-    formData.append("category", values.category.replace(/\s/g, ""));
-
-    const response = await fetch(
-      "https://flaskapi-sanjeev.herokuapp.com/posts/new",
+    let images = new FormData();
+    images.append("file", image);
+    images.append("upload_preset", "Moru-preset");
+    const address = fetch(
+      "  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/",
       {
+        method: "post",
+        body: images,
+      }
+    )
+      .then((resp) =>
+        resp.json().then((val) => {
+          return val.url;
+        })
+      )
+      .catch((error) => {
+        console.error(error);
+      });
+
+    const sendFormData = async () => {
+      const a = await address;
+
+      formData.append("image", a);
+      formData.append("content", data);
+      formData.append("title", values.title);
+      formData.append("category", values.category.replace(/\s/g, ""));
+      // for (var pair of formData.entries()) {
+      //   console.log(pair[0] + "= " + pair[1]);
+      // }
+
+      fetch("https://flaskapi-sanjeev.herokuapp.com/posts/new", {
         method: "POST",
         body: formData,
         headers: {
           // "Content-type": "multipart/form-data",
           access_token: token,
         },
-      }
-    );
+      }).then((res) => {
+        if (res.status === 201) {
+          loadBlogsData();
+          setLoginLoading(false);
+          toast.success("Blog created successfully");
+          dispatch(getunverified(token));
+          navigate("/dashboard");
+        } else {
+          toast.error("Something went wrong");
+        }
+      });
+    };
 
-    if (response.status === 201) {
-      loadBlogsData();
-      setLoginLoading(false);
-      toast.success("Blog created successfully");
-      dispatch(getunverified(token));
-      navigate("/dashboard");
-    } else {
-      toast.error("Something went wrong");
-    }
+    sendFormData();
   };
 
   return (

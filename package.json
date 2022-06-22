@@ -19,6 +19,7 @@
     "draft-js": "^0.11.7",
     "font-awesome": "^4.7.0",
     "form-data": "^4.0.0",
+    "interweave": "^13.0.0",
     "mdb-react-ui-kit": "^3.0.0",
     "react": "^18.0.0",
     "react-countup": "^6.2.0",

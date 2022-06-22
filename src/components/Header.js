@@ -51,7 +51,8 @@ const Header = () => {
           ></img> */}
           <Link to="/" style={{ padding: "0px" }}>
             <img
-              src="images/moru.jpg"
+              // src="images/moru.jpg"
+              src="http://res.cloudinary.com/dpnxzofqd/image/upload/v1655885402/Moru-preset/paiqyssfbpizi8drdjsq.png "
               alt="logo"
               style={{ height: "37px" }}
             ></img>
