@@ -113,9 +113,7 @@ const Home = () => {
                     onInputChange={onInputChange}
                     handleSearch={handleSearch}
                   />
-                  {allblogs?.length === 0 && (
-                    <Spin size="large" style={{ display: "block" }} />
-                  )}
+
                   {showBtn && (
                     <Button
                       style={{ marginBottom: "20px" }}
@@ -124,6 +122,10 @@ const Home = () => {
                     >
                       Go back
                     </Button>
+                  )}
+                  {allblogs?.length === 0 && (
+                    // <Spin size="large" style={{ display: "block" }} />
+                    <p>No data</p>
                   )}
 
                   {allblogs?.map(

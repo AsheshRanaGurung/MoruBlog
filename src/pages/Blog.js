@@ -199,7 +199,7 @@ const Blog = () => {
               )}
               {reduxBlog[0]?.comments?.map((item, index) => (
                 <MDBRow key={index}>
-                  <MDBCol md={1}>
+                  <MDBCol md={1} style={{ display: "flex" }}>
                     <img
                       src="../images/user.jpg
       "
