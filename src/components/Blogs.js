@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { Card, Avatar, Col } from "antd";
 import {
   MDBCard,
   MDBCardTitle,
@@ -18,7 +17,6 @@ import { GetThisBlogSuccess } from "../redux/GetThisBlog";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// const Blogs = ({ title, date, category, description, id, excerpt }) => {
 const Blogs = ({
   title,
   date,
@@ -26,7 +24,7 @@ const Blogs = ({
   description,
   id,
   image,
-  excerpt,
+
   userIdWhoCreatedThisBLog,
 }) => {
   const userToken = useSelector((state) => state.getToken);
@@ -35,23 +33,6 @@ const Blogs = ({
   const user = useSelector(
     (state) => state.getLoggedInUserDetail?.loggedinuserDetail
   );
-  // const getMonthNameDateString = (date) => {
-  //   monthNamelist = [
-  //     "January",
-  //     "February",
-  //     "March",
-  //     "April",
-  //     "May",
-  //     "June",
-  //     "July",
-  //     "August",
-  //     "September",
-  //     "October",
-  //     "November",
-  //     "December",
-  //   ];
-  //   return console.log(monthNamelist[date.getMonth()]);
-  // };
 
   const dispatch = useDispatch();
 
@@ -85,10 +66,7 @@ const Blogs = ({
       if (response.status === 200) {
         dispatch(deleteThisBlog(id));
         loadBlogsData();
-
         toast.success("Blog deleted successfully");
-        // console.log(response.data);
-        // dispatch(getApiDataSuccess(response.data));
       } else {
         toast.error("Something went wrong!");
       }
@@ -101,7 +79,6 @@ const Blogs = ({
 
   return (
     <MDBCard className="h-100 blogCard " style={{ margin: "0 0px" }}>
-      {/* {getMonthNameDateString()} */}
       <Link to={`/blog/${id}`}>
         <MDBCardImage
           src={image}
@@ -111,7 +88,9 @@ const Blogs = ({
         />
       </Link>
 
-      <MDBCardBody style={{ padding: "0.8rem 1.5rem 0.5rem" }}>
+      <MDBCardBody
+        style={{ padding: "0.8rem 1.5rem 0.5rem", backgroundColor: "#f5f5f4" }}
+      >
         <div
           style={{
             display: "flex",

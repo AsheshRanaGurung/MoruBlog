@@ -20,11 +20,8 @@ const RightMenu = () => {
 
   const removeToken = () => {
     toast.success("Logged out Successfully!");
-
     navigate("/");
-
-    window.location.reload();
-
+    // window.location.reload();
     localStorage.removeItem("MoruToken");
     dispatch(RemoveThisTokenSuccess());
     dispatch(RemoveLoggedInUserDetailSuccess());

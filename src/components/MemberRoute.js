@@ -22,6 +22,7 @@ import VerifyBlogs from "./dashboard/VerifyBlogs";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../pages/Home";
 import Register from "../pages/Register";
+import UserOverviewPage from "../pages/UserOverviewPage";
 
 export default function MembersRoute() {
   const adminUser = useSelector(
@@ -94,6 +95,7 @@ export default function MembersRoute() {
       <Route path="/login" element={<Login />} />
       <Route path="/profilepage" element={<ProfileScreen />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/user_profile" element={<UserOverviewPage />} />
       <Route path="/companyprofile" element={<CompanyProfile />} />
       <Route path="/team" element={<Team />} />
       <Route path="/mantra" element={<Mantra />} />

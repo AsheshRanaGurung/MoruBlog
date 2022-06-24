@@ -32,7 +32,7 @@ const Dashboard = () => {
     dispatch(RemoveLoggedInUserDetailSuccess());
     localStorage.removeItem("LoginUser");
     toast.success("Logged out");
-    window.location.reload();
+    // window.location.reload();
   };
   const getDatas = () => {
     setGetdata(!getdata);

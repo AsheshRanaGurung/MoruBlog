@@ -66,6 +66,10 @@ const VerifyBlogModal = ({
       handleCancel();
       toast.success("Blog verified successfully");
     }
+
+    if (response.status === 500) {
+      setVerifyBlog(false);
+    }
   };
   const validateMessages = {
     required: "${label} is required!",

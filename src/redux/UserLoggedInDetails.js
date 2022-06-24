@@ -33,7 +33,7 @@ export const GetLoggedInUserDetail = createSlice({
       state.error = action.payload;
     },
     RemoveLoggedInUserDetailSuccess: (state, action) => {
-      state.loggedinuserDetail = [];
+      state.loggedinuserDetail = null;
       state.isLoading = false;
       state.isSuccess = true;
     },

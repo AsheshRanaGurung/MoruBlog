@@ -1,14 +1,21 @@
 import React from "react";
 import "./Footer.css";
 import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
+import { ArrowUpOutlined, UpOutlined } from "@ant-design/icons";
 
 function Footer() {
   return (
     <div className="footer">
-      <a href="#">
-        <button className="top">Back to top</button>
-      </a>
-      <div className="Webcontainer">
+      <div style={{ position: "absolute", right: "3%", marginTop: "13px" }}>
+        <a href="#">
+          <button className="footerBtn">
+            <ArrowUpOutlined
+              style={{ paddingBottom: "10px", color: "#00a859" }}
+            />
+          </button>
+        </a>
+      </div>
+      <div className="Webcontainer" style={{ paddingTop: "17px" }}>
         <MDBRow style={{ marginRight: "0px" }}>
           <MDBCol md="3">
             <h5 className="title">Moru Digital wallet</h5>

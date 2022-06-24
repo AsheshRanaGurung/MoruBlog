@@ -13,6 +13,16 @@
   transition: all 1s ease;
 }
 .blogCard:hover{
+  transform: scale(1.1);
+  transition: all 1s ease;
+}
+.footerBtn{
+  height: 41px;
+  width: 41px;
+  border-radius: 50%;
+  border: 1px solid #00a859;
+}
+.footerBtn:hover{
   transform: scale(1.04);
   transition: all 1s ease;
 }

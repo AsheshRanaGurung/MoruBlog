@@ -42,6 +42,7 @@ const DashboardEditForm = () => {
   const { token } = userToken;
   const getData = useSelector((state) => state?.getBlogdetail);
   const { blog } = getData;
+  const [contentMessage, setContentMesasge] = useState(blog?.description);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -67,7 +68,7 @@ const DashboardEditForm = () => {
       `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
       {
         title: values.title,
-        content: data,
+        content: data ? data : contentMessage,
         category: values.category.replace(/\s/g, ""),
       },
       config
@@ -76,13 +77,10 @@ const DashboardEditForm = () => {
     if (response.status === 200) {
       setUpdateLoading(false);
       loadBlogsData();
-
       toast.success("Blog edited successfully");
-      //   console.log(response.data);
-
       navigate("/dashboard");
     } else {
-      toast.error("Something went wrong");
+      toast.error(response.data.message.content[0]);
     }
   };
   return (
@@ -150,8 +148,7 @@ const DashboardEditForm = () => {
               editor={ClassicEditor}
               data={blog?.description}
               onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
-                console.log("Editor is ready to use!", editor);
+                data = editor.getData();
               }}
               onChange={(event, editor) => {
                 data = editor.getData();
