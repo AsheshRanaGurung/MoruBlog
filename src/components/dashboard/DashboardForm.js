@@ -39,6 +39,7 @@ const validateMessages = {
 
 const DashboardForm = () => {
   const [loginLoading, setLoginLoading] = useState(false);
+  const [datas, setDatas] = useState("");
   const [image, setImage] = useState(null);
 
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ const DashboardForm = () => {
       const a = await address;
 
       formData.append("image", a);
-      formData.append("content", data);
+      formData.append("content", datas);
       formData.append("title", values.title);
       formData.append("category", values.category.replace(/\s/g, ""));
       // for (var pair of formData.entries()) {
@@ -189,6 +190,7 @@ const DashboardForm = () => {
                 console.log("Editor is ready to use!", editor);
               }}
               onChange={(event, editor) => {
+                setDatas(editor.getData());
                 data = editor.getData();
               }}
             />
