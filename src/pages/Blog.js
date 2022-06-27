@@ -119,14 +119,14 @@ const Blog = () => {
 
   const styleInfo = {
     float: "left",
-    margin: "7px 0 15px 7px",
+    margin: "5px 0 10px 7px",
   };
 
   return (
     <div className="pagecontainer">
       <MDBRow>
         <MDBCol>
-          <MDBContainer style={{ marginTop: "15px" }}>
+          <MDBContainer style={{ marginTop: "15px", paddingLeft: "0px" }}>
             <ModalDesign
               isModalVisible={isModalVisible}
               handleCancel={handleCancel}
@@ -137,17 +137,17 @@ const Blog = () => {
 
             <MDBTypography
               tag="h2"
-              className="text-muted mt-2"
-              style={{ display: "inline-block" }}
+              className="text-muted"
+              style={{ display: "contents" }}
             >
               {blog && blog.title}
             </MDBTypography>
             <br />
 
-            <div style={{ float: "left", margin: "7px 0 7px 7px" }}>
+            <div style={{ float: "left", margin: "5px 0 7px 7px" }}>
               by {blog && blog.author.username} |
             </div>
-            <div style={{ float: "left", margin: "7px 0 7px 7px" }}>
+            <div style={{ float: "left", margin: "5px 0 7px 7px" }}>
               {blog && blog.created_at.slice(0, 10)} |
             </div>
             <ColorBadge styleInfo={styleInfo}>
@@ -156,7 +156,7 @@ const Blog = () => {
 
             <img
               className="img-fluid rounded"
-              style={{ width: "100%", maxHeight: "600px" }}
+              // style={{ width: "100%", maxHeight: "450px" }}
               alt="This is blog"
               src={blog?.image}
             ></img>
