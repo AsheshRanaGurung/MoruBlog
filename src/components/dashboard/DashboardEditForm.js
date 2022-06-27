@@ -49,11 +49,11 @@ const DashboardEditForm = () => {
   const { id } = useParams();
   var data;
   const loadBlogsData = async () => {
-    const response2 = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/posts"
-    );
-
-    dispatch(getApiDataSuccess(response2?.data?.posts));
+    await axios
+      .get("https://flaskapi-sanjeev.herokuapp.com/posts")
+      .then((res) => {
+        dispatch(getApiDataSuccess(res?.data?.posts));
+      });
   };
   const onFinish = async (values) => {
     setUpdateLoading(true);
@@ -64,24 +64,25 @@ const DashboardEditForm = () => {
       },
     };
 
-    const response = await axios.put(
-      `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
-      {
-        title: values.title,
-        content: data ? data : contentMessage,
-        category: values.category.replace(/\s/g, ""),
-      },
-      config
-    );
-
-    if (response.status === 200) {
-      setUpdateLoading(false);
-      loadBlogsData();
-      toast.success("Blog edited successfully");
-      navigate("/dashboard");
-    } else {
-      toast.error(response.data.message.content[0]);
-    }
+    const response = await axios
+      .put(
+        `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
+        {
+          title: values.title,
+          content: data ? data : contentMessage,
+          category: values.category.replace(/\s/g, ""),
+        },
+        config
+      )
+      .then((res) => {
+        setUpdateLoading(false);
+        loadBlogsData();
+        toast.success("Blog edited successfully");
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        toast.error(response.data.message.content[0]);
+      });
   };
   return (
     <>

@@ -52,7 +52,6 @@ const AddEditpage = () => {
   const dispatch = useDispatch();
 
   const onFinish = async (values) => {
-    console.log("onfinish data", data);
     setUpdateLoading(true);
     const config = {
       headers: {
@@ -60,27 +59,37 @@ const AddEditpage = () => {
       },
     };
 
-    const response = await axios.put(
-      `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
-      {
-        title: values.title,
-        content: data ? data : contentMessage,
-        category: values.category.replace(/\s/g, ""),
-      },
-      config
-    );
-    // dispatch(createNewBlog(response.data));
+    const response = await axios
+      .put(
+        `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
+        {
+          title: values.title,
+          content: data ? data : contentMessage,
+          category: values.category.replace(/\s/g, ""),
+        },
+        config
+      )
+      .then((res) => {
+        setUpdateLoading(false);
+        toast.success("Blog edited successfully");
+        navigate("/");
+        dispatch(loadBlogsData());
+      })
+      .catch((err) => {
+        setUpdateLoading(false);
+        toast.error(err.data.message.content[0]);
+      });
 
-    if (response.status === 200) {
-      setUpdateLoading(false);
-      toast.success("Blog edited successfully");
-      navigate("/");
-      dispatch(loadBlogsData());
-    } else {
-      setUpdateLoading(false);
+    // if (response.status === 200) {
+    //   setUpdateLoading(false);
+    //   toast.success("Blog edited successfully");
+    //   navigate("/");
+    //   dispatch(loadBlogsData());
+    // } else {
+    //   setUpdateLoading(false);
 
-      toast.error(response.data.message.content[0]);
-    }
+    //   toast.error(response.data.message.content[0]);
+    // }
   };
 
   return (
@@ -105,9 +114,6 @@ const AddEditpage = () => {
                 },
               ]}
             >
-              {/* {JSON.stringify(titles)}
-              {JSON.stringify(desc)} */}
-
               <Input />
             </Form.Item>
             <Form.Item
@@ -129,7 +135,6 @@ const AddEditpage = () => {
               editor={ClassicEditor}
               data={blog?.description}
               onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
                 data = editor.getData();
               }}
               onChange={(event, editor) => {
@@ -151,23 +156,6 @@ const AddEditpage = () => {
           </MDBCol>
         </MDBRow>
       </Form>
-
-      {/* 
-       <form>
-        title:
-        <input value={titles} onChange={(e) => setTitle(e.target.value)} />
-        <br />
-        blog:
-        <br />
-        <br />
-        <textarea
-          rows="50"
-          col="1000"
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
-        />
-      </form>
-      */}
     </div>
   );
 };

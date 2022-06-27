@@ -5,7 +5,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { GetLoggedInUserUpdateSuccess } from "../redux/UserLoggedInDetails";
 
 const ProfileScreen = () => {
   const [updateloading, setUpdateloading] = useState(false);
@@ -13,7 +14,7 @@ const ProfileScreen = () => {
 
   const userToken = useSelector((state) => state.getToken);
   const { token } = userToken;
-
+  const dispatch = useDispatch();
   const userDetail = useSelector(
     (state) => state.getLoggedInUserDetail.loggedinuserDetail
   );
@@ -29,23 +30,26 @@ const ProfileScreen = () => {
       },
     };
 
-    const response = await axios.put(
-      `https://flaskapi-sanjeev.herokuapp.com/update_user`,
-      {
-        username: values.email,
-      },
-      config
-    );
+    await axios
+      .put(
+        `https://flaskapi-sanjeev.herokuapp.com/user/${userDetail.id}`,
+        {
+          username: values.email,
+        },
+        config
+      )
+      .then((res) => {
+        console.log(res.data.credentials.username);
+        setUpdateloading(false);
+        dispatch(GetLoggedInUserUpdateSuccess(res.data.credentials.username));
+        navigate("/");
+        toast.success("User updated successfully");
+      })
+      .catch((err) => {
+        setUpdateloading(false);
 
-    if (response.status === 200 || response.status === 201) {
-      setUpdateloading(false);
-      navigate("/");
-      toast.success("User updated successfully");
-    } else {
-      setUpdateloading(false);
-
-      toast.error("Something went wrong");
-    }
+        console.log(err);
+      });
   };
   return (
     <div className="LoginPage">

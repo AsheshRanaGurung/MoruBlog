@@ -103,15 +103,15 @@ const About = () => {
           // "Content-type": "multipart/form-data",
           access_token: token,
         },
-      }).then((res) => {
-        if (res.status === 201) {
+      })
+        .then((res) => {
           setLoginLoading(false);
           navigate("/");
           toast.success("your blog will be verified by Moru");
-        } else {
-          toast.error("Something went wrong");
-        }
-      });
+        })
+        .catch((err) => {
+          toast.error(err.data.message.content[0]);
+        });
     };
 
     sendFormData();
@@ -144,8 +144,6 @@ const About = () => {
                 },
               ]}
             >
-              {/* {JSON.stringify(desc)} */}
-
               <Input />
             </Form.Item>
             <Form.Item
@@ -172,36 +170,16 @@ const About = () => {
             >
               <Upload
                 name="logo"
-                // action={
-                //   "https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/"
-                // }
                 beforeUpload={() => {
                   return false;
                 }}
                 listType="picture"
-                // name="logo" action="/upload.do" listType="picture"
               >
                 <Button icon={<UploadOutlined />}>Click to upload</Button>
               </Upload>
             </Form.Item>
           </MDBCol>
           <MDBCol md={8}>
-            {/* <Form.Item
-              name="blog"
-              label="Blog"
-              rules={[{ required: true, message: "Please write a blog" }]}
-            >
-              <Input.TextArea
-                rows={18}
-                cols={22}
-                showCount
-                maxLength={10000}
-              ></Input.TextArea>
-            </Form.Item> */}
-            {/* <Editor
-              editorState={editorState}
-              onEditorStateChange={onEditorStateChange}
-            /> */}
             <CKEditor
               editor={ClassicEditor}
               data="Write your blogs here"

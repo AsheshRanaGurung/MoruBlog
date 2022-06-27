@@ -95,18 +95,19 @@ const GetAllUser = () => {
           access_token: token,
         },
       };
-      const response = await axios.delete(
-        `https://flaskapi-sanjeev.herokuapp.com/delete_user/${record.id}`,
+      await axios
+        .delete(
+          `https://flaskapi-sanjeev.herokuapp.com/delete_user/${record.id}`,
 
-        config
-      );
-      if (response.status === 200) {
-        dispatch(deleteThisUser(record.id));
-
-        toast.success("User deleted successfully");
-      } else {
-        toast.error("Something went wrong!");
-      }
+          config
+        )
+        .then((res) => {
+          dispatch(deleteThisUser(record.id));
+          toast.success("User deleted successfully");
+        })
+        .catch((err) => {
+          toast.error("Something went wrong!");
+        });
     }
   };
 
@@ -146,6 +147,7 @@ const GetAllUser = () => {
       {isModalVisible && (
         <EditModal
           name={title}
+          id={id}
           isModalVisible={isModalVisible}
           handleCancel={handleCancel}
         />

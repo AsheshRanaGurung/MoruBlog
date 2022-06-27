@@ -37,6 +37,16 @@ export const GetLoggedInUserDetail = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
     },
+    GetLoggedInUserUpdateSuccess: (state, action) => {
+      let username = action.payload;
+
+      state.loggedinuserDetail = {
+        ...state.loggedinuserDetail,
+        username: username,
+      };
+      state.isLoading = false;
+      state.isSuccess = true;
+    },
   },
 });
 
@@ -45,6 +55,7 @@ export const {
   GetLoggedInUser,
   GetLoggedInUserDetailSuccess,
   GetLoggedInUserDetailFail,
+  GetLoggedInUserUpdateSuccess,
   RemoveLoggedInUserDetailSuccess,
 } = GetLoggedInUserDetail.actions;
 

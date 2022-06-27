@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { Form, Input, Modal, Button, Select, Spin } from "antd";
+import { Form, Input, Modal, Spin } from "antd";
 import axios from "axios";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { GetThisBlogSuccess } from "../../redux/GetThisBlog";
-import { useParams } from "react-router-dom";
+
 import { GetUserDetailssuccess } from "../../redux/GetAllUsers";
 
-const EditModal = ({ name, isModalVisible, handleCancel }) => {
+const EditModal = ({ name, id, isModalVisible, handleCancel }) => {
   const [loginLoading, setLoginLoading] = useState(false);
 
   const userToken = useSelector((state) => state.getToken);
@@ -17,24 +16,13 @@ const EditModal = ({ name, isModalVisible, handleCancel }) => {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const dispatch = useDispatch();
-  const { id } = useParams();
 
-  //   const updateComments = async () => {
-  //     const response = await axios.get(
-  //       `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`
-  //     );
-
-  //     if (response.status === 200) {
-  //       dispatch(GetThisBlogSuccess(response?.data?.post?.comments));
-  //     }
-  //   };
   const getallUsers = async () => {
-    const response = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/account"
-    );
-    if (response.status === 200) {
-      dispatch(GetUserDetailssuccess(response.data.users));
-    }
+    await axios
+      .get("https://flaskapi-sanjeev.herokuapp.com/users")
+      .then((res) => {
+        dispatch(GetUserDetailssuccess(res.data.users));
+      });
   };
 
   const onFinish = async (values) => {
@@ -46,24 +34,25 @@ const EditModal = ({ name, isModalVisible, handleCancel }) => {
       },
     };
 
-    const response = await axios.put(
-      `https://flaskapi-sanjeev.herokuapp.com/update_user`,
-      {
-        username: values.review,
-      },
-      config
-    );
+    await axios
+      .put(
+        `https://flaskapi-sanjeev.herokuapp.com/user/${id}`,
+        {
+          username: values.review,
+        },
+        config
+      )
+      .then((res) => {
+        setLoginLoading(false);
+        getallUsers();
+        toast.success("User updated successfully");
+        handleCancel();
+      })
+      .catch((err) => {
+        setLoginLoading(false);
 
-    if (response.status === 200 || response.status === 201) {
-      setLoginLoading(false);
-      getallUsers();
-      toast.success("User updated successfully");
-      handleCancel();
-    } else {
-      setLoginLoading(false);
-
-      toast.error("Something went wrong");
-    }
+        toast.error(err.response.data);
+      });
   };
   const validateMessages = {
     required: "${label} is required!",
@@ -78,6 +67,7 @@ const EditModal = ({ name, isModalVisible, handleCancel }) => {
         onCancel={handleCancel}
         footer={null}
       >
+        {JSON.stringify(id)}
         <Form
           name="nest-messages"
           layout="vertical"

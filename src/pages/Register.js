@@ -15,8 +15,9 @@ const Login = () => {
 
   const onFinish = async (values) => {
     setLoginLoading(true);
-    try {
-      const response = await axios.post(
+
+    await axios
+      .post(
         "https://flaskapi-sanjeev.herokuapp.com/register",
 
         {
@@ -25,17 +26,16 @@ const Login = () => {
           password: values.password,
           is_admin: "false",
         }
-      );
-
-      if (response?.status === 200 || response?.status === 201) {
+      )
+      .then((res) => {
         toast.success("Registered Successfully");
         setLoginLoading(false);
         navigate("/login");
-      }
-    } catch (error) {
-      setLoginLoading(false);
-      toast.error(error.response.data.message);
-    }
+      })
+      .catch((err) => {
+        setLoginLoading(false);
+        toast.error(err.response.data.message);
+      });
   };
 
   return (

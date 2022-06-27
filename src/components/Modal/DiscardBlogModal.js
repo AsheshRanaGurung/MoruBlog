@@ -22,13 +22,11 @@ const DiscardBlogModal = ({ blogId, discardModalVisible, handleCancel }) => {
         access_token: token,
       },
     };
-    const response = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/review_posts",
-      config
-    );
-    if (response.status === 200) {
-      dispatch(getUnverifiedBlogs(response.data.posts));
-    }
+    await axios
+      .get("https://flaskapi-sanjeev.herokuapp.com/review_posts", config)
+      .then((res) => {
+        dispatch(getUnverifiedBlogs(res.data.posts));
+      });
   };
 
   const onFinish = async (values) => {
@@ -39,21 +37,22 @@ const DiscardBlogModal = ({ blogId, discardModalVisible, handleCancel }) => {
         access_token: token,
       },
     };
-    const response = await axios.put(
-      `https://flaskapi-sanjeev.herokuapp.com/update_post_status/${blogId}`,
-      {
-        is_accepted: false,
-        rejected_reason: values.title,
-      },
-      config
-    );
-    if (response.status === 200) {
-      setDiscardBlog(false);
-      dispatch(deleteThisBlog(blogId));
+    await axios
+      .put(
+        `https://flaskapi-sanjeev.herokuapp.com/update_post_status/${blogId}`,
+        {
+          is_accepted: false,
+          rejected_reason: values.title,
+        },
+        config
+      )
+      .then((res) => {
+        setDiscardBlog(false);
+        dispatch(deleteThisBlog(blogId));
 
-      handleCancel();
-      toast.success("Blog discarded successfully");
-    }
+        handleCancel();
+        toast.success("Blog discarded successfully");
+      });
   };
   const validateMessages = {
     required: "${label} is required!",

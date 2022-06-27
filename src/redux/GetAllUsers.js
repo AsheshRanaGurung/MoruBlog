@@ -36,7 +36,7 @@ export function getallUsers() {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        "https://flaskapi-sanjeev.herokuapp.com/account"
+        "https://flaskapi-sanjeev.herokuapp.com/users"
       );
       dispatch(GetUserDetailssuccess(response.data.users));
     } catch (error) {

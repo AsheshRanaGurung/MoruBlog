@@ -58,17 +58,16 @@ const Blog = () => {
   const dispatch = useDispatch();
 
   const getSingleBlog = async () => {
-    const response = await axios.get(
-      `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`
-    );
-
-    if (response.status === 200) {
-      setBlog(response?.data?.post);
-      setLikes(response?.data?.post?.votes.length);
-      dispatch(GetThisBlogSuccess([response.data.post]));
-    } else {
-      toast.error("Something is wrong!");
-    }
+    await axios
+      .get(`https://flaskapi-sanjeev.herokuapp.com/posts/${id}`)
+      .then((res) => {
+        setBlog(res?.data?.post);
+        setLikes(res?.data?.post?.votes.length);
+        dispatch(GetThisBlogSuccess([res.data.post]));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message[0]);
+      });
   };
 
   const config = {
@@ -81,30 +80,29 @@ const Blog = () => {
     if (!token) {
       alert("Login to Like the post !!!");
     } else {
-      const response = await axios.post(
-        `https://flaskapi-sanjeev.herokuapp.com/vote/${id}`,
-        {},
+      await axios
+        .post(
+          `https://flaskapi-sanjeev.herokuapp.com/vote/${id}`,
+          {},
 
-        config
-      );
-      if (response.status === 200) {
-        // toast.success("Voted succesfully");
-        setLikeTrigger(!likeTrigger);
-        // response.hasVoted === true ? setLikeIcon(true) : setLikeIcon(false);
-      }
+          config
+        )
+        .then((res) => {
+          setLikeTrigger(!likeTrigger);
+        });
     }
   };
   const deleteThisComment = async (id) => {
-    const response = await axios.delete(
-      `https://flaskapi-sanjeev.herokuapp.com/comments/${id}`,
+    await axios
+      .delete(
+        `https://flaskapi-sanjeev.herokuapp.com/comments/${id}`,
 
-      config
-    );
-
-    if (response.status === 200) {
-      toast.success("Comment deleted succesfully");
-      setLikeTrigger(!likeTrigger);
-    }
+        config
+      )
+      .then((res) => {
+        toast.success("Comment deleted succesfully");
+        setLikeTrigger(!likeTrigger);
+      });
   };
 
   const editThisComment = (id, message) => {

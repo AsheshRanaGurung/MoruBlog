@@ -60,11 +60,11 @@ const DashboardForm = () => {
   };
   var data;
   const loadBlogsData = async () => {
-    const response2 = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/posts"
-    );
-    // console.log("response2", response2?.data?.posts);
-    dispatch(getApiDataSuccess(response2?.data?.posts));
+    await axios
+      .get("https://flaskapi-sanjeev.herokuapp.com/posts")
+      .then((res) => {
+        dispatch(getApiDataSuccess(res?.data?.posts));
+      });
   };
 
   const onFinish = async (values) => {
@@ -125,7 +125,7 @@ const DashboardForm = () => {
 
   return (
     <>
-      Add New Blog
+      <h4>Add New Blog</h4>
       <Form
         {...layout}
         name="nest-messages"

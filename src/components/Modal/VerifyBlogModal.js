@@ -34,13 +34,11 @@ const VerifyBlogModal = ({
         access_token: token,
       },
     };
-    const response = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/review_posts",
-      config
-    );
-    if (response.status === 200) {
-      dispatch(getUnverifiedBlogs(response.data.posts));
-    }
+    await axios
+      .get("https://flaskapi-sanjeev.herokuapp.com/review_posts", config)
+      .then((res) => {
+        dispatch(getUnverifiedBlogs(res.data.posts));
+      });
   };
 
   const onFinish = async (values) => {
@@ -51,25 +49,24 @@ const VerifyBlogModal = ({
         access_token: token,
       },
     };
-    const response = await axios.put(
-      `https://flaskapi-sanjeev.herokuapp.com/update_post_status/${blogId}`,
-      {
-        is_accepted: true,
-      },
-      config
-    );
-    if (response.status === 200) {
-      setVerifyBlog(false);
-      dispatch(deleteThisBlog(blogId));
-      dispatch(loadBlogsData());
-
-      handleCancel();
-      toast.success("Blog verified successfully");
-    }
-
-    if (response.status === 500) {
-      setVerifyBlog(false);
-    }
+    await axios
+      .put(
+        `https://flaskapi-sanjeev.herokuapp.com/update_post_status/${blogId}`,
+        {
+          is_accepted: true,
+        },
+        config
+      )
+      .then((res) => {
+        setVerifyBlog(false);
+        dispatch(deleteThisBlog(blogId));
+        dispatch(loadBlogsData());
+        handleCancel();
+        toast.success("Blog verified successfully");
+      })
+      .catch((err) => {
+        setVerifyBlog(false);
+      });
   };
   const validateMessages = {
     required: "${label} is required!",

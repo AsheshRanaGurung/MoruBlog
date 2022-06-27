@@ -24,13 +24,14 @@ const ModalDesign = ({
   const { id } = useParams();
 
   const updateComments = async () => {
-    const response = await axios.get(
-      `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`
-    );
-
-    if (response.status === 200) {
-      dispatch(GetThisBlogSuccess([response?.data?.post]));
-    }
+    await axios
+      .get(`https://flaskapi-sanjeev.herokuapp.com/posts/${id}`)
+      .then((res) => {
+        dispatch(GetThisBlogSuccess([res?.data?.post]));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message[0]);
+      });
   };
 
   const onFinish = async (values) => {
@@ -42,24 +43,25 @@ const ModalDesign = ({
       },
     };
 
-    const response = await axios.put(
-      `https://flaskapi-sanjeev.herokuapp.com/comments/${commentId}`,
-      {
-        message: values.review,
-      },
-      config
-    );
+    await axios
+      .put(
+        `https://flaskapi-sanjeev.herokuapp.com/comments/${commentId}`,
+        {
+          message: values.review,
+        },
+        config
+      )
+      .then((res) => {
+        setLoginLoading(false);
+        updateComments();
+        toast.success("Comment updated successfully");
+        handleCancel();
+      })
+      .catch((err) => {
+        setLoginLoading(false);
 
-    if (response.status === 200 || response.status === 201) {
-      setLoginLoading(false);
-      updateComments();
-      toast.success("Comment updated successfully");
-      handleCancel();
-    } else {
-      setLoginLoading(false);
-
-      toast.error("Something went wrong");
-    }
+        toast.error(err.response.data.message[0]);
+      });
   };
   const validateMessages = {
     required: "${label} is required!",

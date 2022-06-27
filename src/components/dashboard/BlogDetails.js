@@ -111,18 +111,19 @@ const BlogDetails = () => {
           access_token: token,
         },
       };
-      const response = await axios.delete(
-        `https://flaskapi-sanjeev.herokuapp.com/posts/${record.id}`,
+      await axios
+        .delete(
+          `https://flaskapi-sanjeev.herokuapp.com/posts/${record.id}`,
 
-        config
-      );
-      if (response.status === 200) {
-        dispatch(deleteThisBlog(record.id));
-
-        toast.success("Blog deleted successfully");
-      } else {
-        toast.error("Something went wrong!");
-      }
+          config
+        )
+        .then((res) => {
+          dispatch(deleteThisBlog(record.id));
+          toast.success("Blog deleted successfully");
+        })
+        .catch((err) => {
+          toast.error("Something went wrong!");
+        });
     }
   };
 
