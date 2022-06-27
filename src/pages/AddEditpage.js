@@ -79,17 +79,6 @@ const AddEditpage = () => {
         setUpdateLoading(false);
         toast.error(err.data.message.content[0]);
       });
-
-    // if (response.status === 200) {
-    //   setUpdateLoading(false);
-    //   toast.success("Blog edited successfully");
-    //   navigate("/");
-    //   dispatch(loadBlogsData());
-    // } else {
-    //   setUpdateLoading(false);
-
-    //   toast.error(response.data.message.content[0]);
-    // }
   };
 
   return (

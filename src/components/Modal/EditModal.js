@@ -4,7 +4,6 @@ import axios from "axios";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
 import { GetUserDetailssuccess } from "../../redux/GetAllUsers";
 
 const EditModal = ({ name, id, isModalVisible, handleCancel }) => {
