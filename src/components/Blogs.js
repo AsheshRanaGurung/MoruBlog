@@ -44,11 +44,11 @@ const Blogs = ({
   };
 
   const loadBlogsData = async () => {
-    const response2 = await axios.get(
-      "https://flaskapi-sanjeev.herokuapp.com/posts"
-    );
-    console.log("response2", response2?.data?.posts);
-    dispatch(getApiDataSuccess(response2?.data?.posts));
+    await axios
+      .get("https://flaskapi-sanjeev.herokuapp.com/posts")
+      .then((res) => {
+        dispatch(getApiDataSuccess(res?.data?.posts));
+      });
   };
 
   const deleteThisId = async (id) => {
@@ -58,18 +58,20 @@ const Blogs = ({
           access_token: token,
         },
       };
-      const response = await axios.delete(
-        `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
+      await axios
+        .delete(
+          `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
 
-        config
-      );
-      if (response.status === 200) {
-        dispatch(deleteThisBlog(id));
-        loadBlogsData();
-        toast.success("Blog deleted successfully");
-      } else {
-        toast.error("Something went wrong!");
-      }
+          config
+        )
+        .then((res) => {
+          dispatch(deleteThisBlog(id));
+          loadBlogsData();
+          toast.success("Blog deleted successfully");
+        })
+        .catch((err) => {
+          toast.error("Something went wrong!");
+        });
     }
   };
 
@@ -121,8 +123,7 @@ const Blogs = ({
             read more
           </Link>
         </MDBCardText>
-        {/* <DeleteOutlined style={{ fontSize: "22px", color: "red" }} />
-        <EditOutlined style={{ fontSize: "22px", color: "green" }} /> */}
+
         {(user?.is_admin || userIdWhoCreatedThisBLog === user?.id) && (
           <>
             <MDBBtn

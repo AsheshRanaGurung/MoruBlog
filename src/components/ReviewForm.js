@@ -17,13 +17,11 @@ const ReviewForm = ({ id, LikeTrigger }) => {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const updateComments = async () => {
-    const response = await axios.get(
-      `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`
-    );
-
-    if (response.status === 200) {
-      dispatch(GetThisBlogSuccess([response?.data?.post]));
-    }
+    await axios
+      .get(`https://flaskapi-sanjeev.herokuapp.com/posts/${id}`)
+      .then((response) => {
+        dispatch(GetThisBlogSuccess([response?.data?.post]));
+      });
   };
 
   const onFinish = async (values) => {
@@ -36,24 +34,24 @@ const ReviewForm = ({ id, LikeTrigger }) => {
       },
     };
 
-    const response = await axios.post(
-      `https://flaskapi-sanjeev.herokuapp.com/comments/${id}`,
-      {
-        message: values.review,
-      },
-      config
-    );
-
-    if (response.status === 200 || response.status === 201) {
-      setLoginLoading(false);
-      updateComments();
-      toast.success("Comment added successfully");
-      form.resetFields();
-    } else {
-      setLoginLoading(false);
-
-      toast.error("Something went wrong");
-    }
+    await axios
+      .post(
+        `https://flaskapi-sanjeev.herokuapp.com/comments/${id}`,
+        {
+          message: values.review,
+        },
+        config
+      )
+      .then((response) => {
+        setLoginLoading(false);
+        updateComments();
+        toast.success("Comment added successfully");
+        form.resetFields();
+      })
+      .catch((err) => {
+        setLoginLoading(false);
+        toast.error("Something went wrong");
+      });
   };
   const validateMessages = {
     required: "${label} is required!",

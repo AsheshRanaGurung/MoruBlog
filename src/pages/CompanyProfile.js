@@ -3,17 +3,9 @@ import { Typography } from "antd";
 const { Paragraph, Title } = Typography;
 
 function CompanyProfile() {
-  // const [ellipsis, setEllipsis] = React.useState(true);
   return (
     <div className="LoginPage">
       <div className="pagecontainer">
-        {/* <Switch
-          // checked={ellipsis}
-          // onChange={() => {
-          //   setEllipsis(!ellipsis);
-          // }}
-        /> */}
-
         <Title level={2} style={{ display: "flex", color: "#c61e2e" }}>
           Company Profile
         </Title>

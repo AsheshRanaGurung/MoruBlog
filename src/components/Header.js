@@ -32,7 +32,6 @@ const Header = () => {
     onClose();
     toast.success("Logged out Successfully!");
     navigate("/");
-    // window.location.reload();
     localStorage.removeItem("MoruToken");
     dispatch(RemoveThisTokenSuccess());
     dispatch(RemoveLoggedInUserDetailSuccess());
@@ -44,14 +43,8 @@ const Header = () => {
     <nav className="menuBar">
       <div className="Webcontainer">
         <div className="logo">
-          {/* <img
-            src="images/moru.jpg"
-            alt="logo"
-            style={{ height: "37px" }}
-          ></img> */}
           <Link to="/" style={{ padding: "0px" }}>
             <img
-              // src="images/moru.jpg"
               src="http://res.cloudinary.com/dpnxzofqd/image/upload/v1655885402/Moru-preset/paiqyssfbpizi8drdjsq.png "
               alt="logo"
               style={{ height: "37px" }}
@@ -65,12 +58,7 @@ const Header = () => {
           <div className="rightMenu">
             <RightMenu />
           </div>
-          <button
-            className="barsMenu"
-            type="primary"
-            // style={{ display: "none" }}
-            onClick={showDrawer}
-          >
+          <button className="barsMenu" type="primary" onClick={showDrawer}>
             <span className="barsBtn"></span>
           </button>
           <Drawer

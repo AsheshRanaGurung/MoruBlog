@@ -35,28 +35,14 @@ const AllBlogs = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    const response = await axios.get(
-      `http://localhost:5000/blogs?q=${searchValue}`
-    );
-    if (response?.status === 200) {
-      console.log("Search successful");
-
-      const filteredBlog = response?.data;
-      setAllblogs(filteredBlog);
-      // console.log(filteredBlog);
-    }
+    await axios
+      .get(`http://localhost:5000/blogs?q=${searchValue}`)
+      .then((res) => {
+        console.log("Search successful");
+        const filteredBlog = res.data;
+        setAllblogs(filteredBlog);
+      });
   };
-  //   const handleCategory = async (category) => {
-  //     const response = await axios.get(
-  //       `http://localhost:5000/blogs?category=${category}`
-  //     );
-  //     if (response.status === 200) {
-  //       setAllblogs(response.data);
-  //     } else {
-  //       toast.error("Something went wrong!");
-  //     }
-  //     // console.log(category);
-  //   };
 
   useEffect(() => {
     setAllblogs(blogs);

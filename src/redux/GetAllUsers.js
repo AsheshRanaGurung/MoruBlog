@@ -22,7 +22,6 @@ export const GetUserDetails = createSlice({
     },
     deleteThisUser: (state, action) => {
       state.users = state.users.filter((item) => item.id !== action.payload);
-      // state.isSuccess = true;
     },
   },
 });

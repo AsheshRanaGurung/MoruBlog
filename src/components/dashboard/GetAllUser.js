@@ -6,10 +6,8 @@ import { deleteThisUser } from "../../redux/GetAllUsers";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import EditModal from "../Modal/EditModal";
-// import { useTasksQuery } from "../../redux/GetAllUsers";
 
 const GetAllUser = () => {
-  // const { data } = useTasksQuery();
   const [user, setUser] = useState({
     data: [],
     pagination: {

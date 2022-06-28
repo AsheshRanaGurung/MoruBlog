@@ -21,7 +21,6 @@ const RightMenu = () => {
   const removeToken = () => {
     toast.success("Logged out Successfully!");
     navigate("/");
-    // window.location.reload();
     localStorage.removeItem("MoruToken");
     dispatch(RemoveThisTokenSuccess());
     dispatch(RemoveLoggedInUserDetailSuccess());
@@ -47,17 +46,10 @@ const RightMenu = () => {
       ) : (
         <Menu.Item key="mail2">
           <Link to="/login" style={{ fontSize: "19px" }}>
-            {/* <UserAddOutlined style={{ fontSize: "18px" }} /> */}
             <i className="fas fa-user"></i> Log In
           </Link>
         </Menu.Item>
       )}
-
-      {/* <Menu.Item key="app">
-          <Link to="/register" style={{ fontSize: "19px" }}>
-            Signup
-          </Link>
-        </Menu.Item> */}
     </Menu>
   );
 };

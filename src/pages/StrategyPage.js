@@ -6,13 +6,6 @@ function StrategyPage() {
   return (
     <div className="LoginPage">
       <div className="pagecontainer">
-        {/* <Switch
-  // checked={ellipsis}
-  // onChange={() => {
-  //   setEllipsis(!ellipsis);
-  // }}
-/> */}
-
         <Title level={2} style={{ color: "#c61e2e" }}>
           Strategic Objectives
         </Title>

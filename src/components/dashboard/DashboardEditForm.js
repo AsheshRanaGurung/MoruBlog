@@ -31,7 +31,6 @@ const validateMessages = {
     range: "${label} must be between ${min} and ${max}",
   },
 };
-/* eslint-enable no-template-curly-in-string */
 
 const DashboardEditForm = () => {
   const [updateLoading, setUpdateLoading] = useState(false);
@@ -81,7 +80,7 @@ const DashboardEditForm = () => {
         navigate("/dashboard");
       })
       .catch((err) => {
-        toast.error(response.data.message.content[0]);
+        toast.error(err.data.message.content[0]);
       });
   };
   return (
@@ -94,7 +93,6 @@ const DashboardEditForm = () => {
         onFinish={onFinish}
         initialValues={{
           title: blog?.title,
-          // blog: ReactHtmlParser(blog?.description),
         }}
         validateMessages={validateMessages}
         style={{ marginTop: "50px" }}
@@ -110,8 +108,6 @@ const DashboardEditForm = () => {
                 },
               ]}
             >
-              {/* {JSON.stringify(desc)} */}
-
               <Input />
             </Form.Item>
             <Form.Item
@@ -127,22 +123,6 @@ const DashboardEditForm = () => {
                 ))}
               </Select>
             </Form.Item>
-
-            {/* <Form.Item
-              name="upload"
-              label="Image"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-            >
-              <Upload
-                name="logo"
-                // action={"http://localhost:3000/"}
-                beforeUpload={() => false}
-                listType="picture"
-              >
-                <Button icon={<UploadOutlined />}>Click to upload</Button>
-              </Upload>
-            </Form.Item> */}
           </MDBCol>
           <MDBCol md={8}>
             <CKEditor

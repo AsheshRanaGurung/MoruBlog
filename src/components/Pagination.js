@@ -1,11 +1,4 @@
 import React from "react";
-import { Pagination } from "antd";
-import {
-  MDBPagination,
-  MDBPaginationItem,
-  MDBPaginationLink,
-  MDBBtn,
-} from "mdb-react-ui-kit";
 
 const PaginationThis = ({ postsPerPage, totalPosts, paginate }) => {
   const pageNumber = [];
@@ -14,9 +7,6 @@ const PaginationThis = ({ postsPerPage, totalPosts, paginate }) => {
   }
 
   return (
-    // <div style={{ marginBottom: "20px" }}>
-    //   <Pagination defaultCurrent={1} total={500} />
-    // </div>
     <nav>
       <ul className="pagination">
         {pageNumber.map((number) => (

@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewBlog } from "../../redux/CreateBlog";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { getApiDataSuccess } from "../../redux/GetApiData";
 import { getunverified } from "../../redux/GetUnverifiedBlogs";
@@ -20,7 +19,6 @@ const layout = {
     span: 24,
   },
 };
-/* eslint-disable no-template-curly-in-string */
 
 const { Option } = Select;
 const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
@@ -35,7 +33,6 @@ const validateMessages = {
     range: "${label} must be between ${min} and ${max}",
   },
 };
-/* eslint-enable no-template-curly-in-string */
 
 const DashboardForm = () => {
   const [loginLoading, setLoginLoading] = useState(false);
@@ -146,8 +143,6 @@ const DashboardForm = () => {
                 },
               ]}
             >
-              {/* {JSON.stringify(desc)} */}
-
               <Input />
             </Form.Item>
             <Form.Item
@@ -171,12 +166,7 @@ const DashboardForm = () => {
               onChange={(e) => filechanged(e.target.files[0])}
               getValueFromEvent={normFile}
             >
-              <Upload
-                name="logo"
-                // action={"http://localhost:3000/"}
-                beforeUpload={() => false}
-                listType="picture"
-              >
+              <Upload name="logo" beforeUpload={() => false} listType="picture">
                 <Button icon={<UploadOutlined />}>Click to upload</Button>
               </Upload>
             </Form.Item>
@@ -185,10 +175,6 @@ const DashboardForm = () => {
             <CKEditor
               editor={ClassicEditor}
               data="Write your blogs here"
-              onReady={(editor) => {
-                // You can store the "editor" and use when it is needed.
-                console.log("Editor is ready to use!", editor);
-              }}
               onChange={(event, editor) => {
                 setDatas(editor.getData());
                 data = editor.getData();

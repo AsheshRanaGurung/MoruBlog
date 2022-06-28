@@ -9,7 +9,7 @@ import BlogPostModal from "../components/Modal/BlogPostModal";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import FormData from "form-data";
-import axios from "axios";
+
 const layout = {
   labelCol: {
     span: 8,
@@ -18,7 +18,6 @@ const layout = {
     span: 24,
   },
 };
-/* eslint-disable no-template-curly-in-string */
 
 const { Option } = Select;
 const options = ["Latest Offer", "Trending", "New Event", "Stories", "Careers"];
@@ -183,11 +182,7 @@ const About = () => {
             <CKEditor
               editor={ClassicEditor}
               data="Write your blogs here"
-              // onReady={(editor) => {
-              //   // You can store the "editor" and use when it is needed.
-              //   console.log("Editor is ready to use!", editor);
-              // }}
-              onChange={(event, editor) => {
+              onChange={(editor) => {
                 setDatas(editor.getData());
                 data = editor.getData();
               }}

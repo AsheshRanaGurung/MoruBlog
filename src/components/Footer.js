@@ -1,7 +1,7 @@
 import React from "react";
 import "./Footer.css";
 import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
-import { ArrowUpOutlined, UpOutlined } from "@ant-design/icons";
+import { ArrowUpOutlined } from "@ant-design/icons";
 
 function Footer() {
   return (
@@ -84,23 +84,6 @@ function Footer() {
                 {" "}
                 <i className="fas fa-envelope-open"></i> info@moru.com.np
               </li>
-              {/* <li className="list-unstyled">
-                <i
-                  className="fab fa-facebook"
-                  style={{ marginLeft: "4px" }}
-                ></i>
-                <i
-                  className="fab fa-instagram"
-                  style={{ marginLeft: "4px" }}
-                ></i>
-
-                <i
-                  className="fab fa-linkedin-in"
-                  style={{ marginLeft: "4px" }}
-                ></i>
-                <i className="fab fa-twitter" style={{ marginLeft: "4px" }}></i>
-                <i className="fab fa-youtube" style={{ marginLeft: "4px" }}></i>
-              </li> */}
             </ul>
           </MDBCol>
         </MDBRow>

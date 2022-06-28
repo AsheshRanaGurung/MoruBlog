@@ -25,16 +25,6 @@ function CommitteePage() {
               DIGITAL SECURITY COMMITTEE
             </li>
           </ul>
-
-          {/* <Text strong>AUDIT AND RISK COMMITTEE</Text>
-          <br />
-          <Text strong>
-            DISPUTE RESOLUTION AND GRIEVANCE REHEARSAL COMMITTEE
-          </Text>
-          <br />
-          <Text strong>INDUSTRY RELATIONS COMMITTEE</Text>
-          <br />
-          <Text strong>DIGITAL SECURITY COMMITTEE</Text> */}
         </div>
       </div>
     </div>

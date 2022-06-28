@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import {
   MDBCardBody,
   MDBCardText,
@@ -22,7 +21,6 @@ import ReviewForm from "../components/ReviewForm";
 import { GetThisBlogSuccess } from "../redux/GetThisBlog";
 import ModalDesign from "../components/Modal/Modal";
 import { fetchLatestBlog } from "../redux/GetLatestBlog";
-// import ReactHtmlParser from "react-html-parser";
 import { Markup } from "interweave";
 
 const Blog = () => {
@@ -171,10 +169,7 @@ const Blog = () => {
                 {!blog?.content ? (
                   <Spin size="medium" style={{ display: "block" }} />
                 ) : (
-                  // ReactHtmlParser(blog?.content)
                   <Markup content={blog?.content} />
-
-                  // blog?.content
                 )}
               </div>{" "}
             </div>

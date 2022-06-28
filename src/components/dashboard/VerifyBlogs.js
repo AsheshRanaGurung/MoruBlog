@@ -131,7 +131,6 @@ const VerifyBlogs = () => {
   };
 
   useEffect(() => {
-    // getUnverifiedBlogs();
     fetch();
   }, [blogs]);
   return (
@@ -157,7 +156,6 @@ const VerifyBlogs = () => {
       <h4>Unverified Blogs</h4>
       <Table
         columns={columns}
-        // rowKey={(record) => record.login.uuid}
         dataSource={data}
         pagination={pagination}
         scroll={{ x: 1300 }}

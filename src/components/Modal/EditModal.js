@@ -66,7 +66,6 @@ const EditModal = ({ name, id, isModalVisible, handleCancel }) => {
         onCancel={handleCancel}
         footer={null}
       >
-        {JSON.stringify(id)}
         <Form
           name="nest-messages"
           layout="vertical"

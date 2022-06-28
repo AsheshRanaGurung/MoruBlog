@@ -4,12 +4,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Blogs from "../components/Blogs";
 import Search from "../components/Search";
-
 import Category from "../components/Category";
 import { toast } from "react-toastify";
-import { Spin, Button, Pagination } from "antd";
+import { Button, Pagination } from "antd";
 import DownloadButton from "../components/DownloadButton";
 import Weather from "../components/Weather";
+import Carousel from "../components/Carousel";
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -21,7 +21,7 @@ const Home = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
-  const pageSize = 6;
+  const pageSize = 9;
 
   const handleChange = (page) => {
     setCurrent(page);
@@ -72,32 +72,35 @@ const Home = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    const response = await axios.get(
-      `https://flaskapi-sanjeev.herokuapp.com/posts?search=${searchValue}`
-    );
-    if (response?.status === 200) {
-      if (response?.data?.posts.length === 0) {
-        toast.info("No search found");
-      } else {
-        setAllblogs(response?.data?.posts);
-      }
-    }
+    await axios
+      .get(`https://flaskapi-sanjeev.herokuapp.com/posts?search=${searchValue}`)
+      .then((res) => {
+        if (res?.data?.posts.length === 0) {
+          toast.info("No search found");
+        } else {
+          setAllblogs(res?.data?.posts);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleCategory = async (category) => {
-    const response = await axios.get(
-      `https://flaskapi-sanjeev.herokuapp.com/posts?category=${category.replace(
-        /\s/g,
-        ""
-      )}`
-    );
-    if (response.status === 200) {
-      setAllblogs(response.data.posts);
-
-      showButton();
-    } else {
-      toast.error("Something went wrong!");
-    }
+    await axios
+      .get(
+        `https://flaskapi-sanjeev.herokuapp.com/posts?category=${category.replace(
+          /\s/g,
+          ""
+        )}`
+      )
+      .then((res) => {
+        setAllblogs(res.data.posts);
+        showButton();
+      })
+      .catch((err) => {
+        toast.error("Something went wrong!");
+      });
   };
 
   return (
@@ -127,14 +130,14 @@ const Home = () => {
                     // <Spin size="large" style={{ display: "block" }} />
                     <p>No data</p>
                   )}
+                  <Carousel />
 
-                  {allblogs?.map(
+                  {allblogs?.slice(3).map(
                     (item, index) =>
                       index >= minIndex &&
                       index < maxIndex && (
                         <MDBCol
                           key={index}
-                          // lg={4}
                           md={6}
                           lg={4}
                           sm={12}

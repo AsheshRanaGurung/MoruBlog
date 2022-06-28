@@ -23,7 +23,6 @@ export const GetApiData = createSlice({
     deleteThisBlog: (state, action) => {
       console.log(action.payload);
       state.blogs = state.blogs.filter((item) => item.id !== action.payload);
-      // state.isSuccess = true;
     },
   },
 });

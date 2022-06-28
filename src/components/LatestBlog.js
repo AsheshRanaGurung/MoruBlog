@@ -22,8 +22,6 @@ const LatestBlog = ({ id, title, image }) => {
               marginBottom: "8px",
             }}
           ></MDBCardImage>
-
-          {/* <MDBCardText>{created_at}</MDBCardText> */}
           <MDBCardTitle>{title}</MDBCardTitle>
         </MDBCard>
       </Link>

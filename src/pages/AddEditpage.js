@@ -59,7 +59,7 @@ const AddEditpage = () => {
       },
     };
 
-    const response = await axios
+    await axios
       .put(
         `https://flaskapi-sanjeev.herokuapp.com/posts/${id}`,
         {
