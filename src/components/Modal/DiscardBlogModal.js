@@ -23,7 +23,7 @@ const DiscardBlogModal = ({ blogId, discardModalVisible, handleCancel }) => {
       },
     };
     await axios
-      .get("https://flaskapi-sanjeev.herokuapp.com/review_posts", config)
+      .get("https://flaskapi-sanjeev.herokuapp.com/posts/review", config)
       .then((res) => {
         dispatch(getUnverifiedBlogs(res.data.posts));
       });
@@ -39,7 +39,7 @@ const DiscardBlogModal = ({ blogId, discardModalVisible, handleCancel }) => {
     };
     await axios
       .put(
-        `https://flaskapi-sanjeev.herokuapp.com/update_post_status/${blogId}`,
+        `https://flaskapi-sanjeev.herokuapp.com/posts/review/${blogId}`,
         {
           is_accepted: false,
           rejected_reason: values.title,

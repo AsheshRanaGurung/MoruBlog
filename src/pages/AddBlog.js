@@ -69,7 +69,7 @@ const About = () => {
     images.append("file", image);
     images.append("upload_preset", "Moru-preset");
     const address = fetch(
-      "  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/",
+      "https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/",
       {
         method: "post",
         body: images,
@@ -182,7 +182,7 @@ const About = () => {
             <CKEditor
               editor={ClassicEditor}
               data="Write your blogs here"
-              onChange={(editor) => {
+              onChange={(event, editor) => {
                 setDatas(editor.getData());
                 data = editor.getData();
               }}

@@ -48,7 +48,7 @@ export function getunverified(token) {
       };
 
       const response = await axios.get(
-        "https://flaskapi-sanjeev.herokuapp.com/review_posts",
+        "https://flaskapi-sanjeev.herokuapp.com/posts/review",
         config
       );
 

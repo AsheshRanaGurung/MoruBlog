@@ -16,7 +16,12 @@ const BlogCarousel = () => {
   const { blogs } = getData;
 
   return (
-    <MDBCarousel showControls style={{ marginBottom: "20px" }}>
+    <MDBCarousel
+      showIndicators
+      dark
+      showControls
+      style={{ marginBottom: "20px" }}
+    >
       <MDBCarouselInner>
         {blogs &&
           blogs.slice(0, 1).map((item, index) => (
@@ -48,7 +53,8 @@ const BlogCarousel = () => {
                           <strong>{item.title}</strong>
                         </h2>
                       </div>
-
+                      <br />
+                      <br />
                       <div style={{ float: "left" }}>
                         By: {item.author.username} |
                       </div>
@@ -113,6 +119,8 @@ const BlogCarousel = () => {
                           <strong>{item.title}</strong>
                         </h2>
                       </div>
+                      <br />
+                      <br />
 
                       <div style={{ float: "left" }}>
                         By: {item.author.username} |

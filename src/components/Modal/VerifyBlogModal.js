@@ -35,7 +35,7 @@ const VerifyBlogModal = ({
       },
     };
     await axios
-      .get("https://flaskapi-sanjeev.herokuapp.com/review_posts", config)
+      .get("https://flaskapi-sanjeev.herokuapp.com/posts/review", config)
       .then((res) => {
         dispatch(getUnverifiedBlogs(res.data.posts));
       });
@@ -51,7 +51,7 @@ const VerifyBlogModal = ({
     };
     await axios
       .put(
-        `https://flaskapi-sanjeev.herokuapp.com/update_post_status/${blogId}`,
+        `https://flaskapi-sanjeev.herokuapp.com/post/review/${blogId}`,
         {
           is_accepted: true,
         },
