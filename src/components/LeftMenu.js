@@ -31,7 +31,7 @@ const LeftMenu = () => {
         </Menu.Item>
       )}
       <SubMenu
-        key="SubMenu2"
+        key="SubMenu4"
         title={<span>About Us</span>}
         style={{ fontSize: "19px" }}
       >

@@ -49,7 +49,7 @@ const About = () => {
   const handleCancel = () => {
     setVerifyModal(false);
   };
-
+  let address;
   const normFile = (e) => {
     if (Array.isArray(e)) {
       return e.file;
@@ -59,30 +59,25 @@ const About = () => {
   };
 
   const filechanged = (e) => {
-    setImage(e);
+    let images = new FormData();
+    images.append("file", e);
+    images.append("upload_preset", "Moru-preset");
+    address = fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
+      method: "post",
+      body: images,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const imageApi = data;
+        address = imageApi.url;
+        toast.success("Image uploaded Successfully");
+      })
+      .catch((err) => console.error(err));
   };
 
   const onFinish = async (values) => {
     setLoginLoading(true);
     let formData = new FormData();
-    let images = new FormData();
-    images.append("file", image);
-    images.append("upload_preset", "Moru-preset");
-    const address = fetch(
-      "https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/",
-      {
-        method: "post",
-        body: images,
-      }
-    )
-      .then((resp) =>
-        resp.json().then((val) => {
-          return val.url;
-        })
-      )
-      .catch((error) => {
-        console.error(error);
-      });
 
     const sendFormData = async () => {
       const a = await address;
@@ -109,6 +104,7 @@ const About = () => {
           toast.success("your blog will be verified by Moru");
         })
         .catch((err) => {
+          setLoginLoading(false);
           toast.error(err.data.message.content[0]);
         });
     };

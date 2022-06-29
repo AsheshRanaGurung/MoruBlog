@@ -30,7 +30,7 @@ const RightMenu = () => {
     <Menu mode="horizontal" className="bgColor">
       {userInfo ? (
         <SubMenu
-          key="SubMenu2"
+          key="SubMenu3"
           title={user ? user.username : "Profile"}
           style={{ fontSize: "19px" }}
         >
