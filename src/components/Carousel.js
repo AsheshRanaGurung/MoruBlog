@@ -30,6 +30,7 @@ const BlogCarousel = () => {
                 <MDBCol md={6} lg={6} sm={12} style={{ paddingRight: "0px" }}>
                   <Link to={`/blog/${item.id}`}>
                     <MDBCarouselElement
+                      style={{ height: "235px" }}
                       src={item.image}
                       alt="image"
                     ></MDBCarouselElement>
@@ -96,6 +97,7 @@ const BlogCarousel = () => {
                 <MDBCol md={6} lg={6} sm={12} style={{ paddingRight: "0px" }}>
                   <Link to={`/blog/${item.id}`}>
                     <MDBCarouselElement
+                      style={{ height: "235px" }}
                       src={item.image}
                       alt="image"
                     ></MDBCarouselElement>

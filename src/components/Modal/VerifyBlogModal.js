@@ -51,7 +51,7 @@ const VerifyBlogModal = ({
     };
     await axios
       .put(
-        `https://flaskapi-sanjeev.herokuapp.com/post/review/${blogId}`,
+        `https://flaskapi-sanjeev.herokuapp.com/posts/review/${blogId}`,
         {
           is_accepted: true,
         },

@@ -54,7 +54,6 @@ const About = () => {
     if (Array.isArray(e)) {
       return e.file;
     }
-
     return e.fileList;
   };
 
@@ -62,7 +61,7 @@ const About = () => {
     let images = new FormData();
     images.append("file", e);
     images.append("upload_preset", "Moru-preset");
-    address = fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
+    fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
       method: "post",
       body: images,
     })
@@ -70,7 +69,7 @@ const About = () => {
       .then((data) => {
         const imageApi = data;
         address = imageApi.url;
-        toast.success("Image uploaded Successfully");
+        toast.success("Image uploaded");
       })
       .catch((err) => console.error(err));
   };
@@ -158,9 +157,9 @@ const About = () => {
             <Form.Item
               name="upload"
               label="Image"
+              getValueFromEvent={normFile}
               valuePropName="fileList"
               onChange={(e) => filechanged(e.target.files[0])}
-              getValueFromEvent={normFile}
               type="file"
             >
               <Upload

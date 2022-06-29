@@ -21,7 +21,7 @@ const Home = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
-  const pageSize = 9;
+  const pageSize = 6;
 
   const handleChange = (page) => {
     setCurrent(page);
