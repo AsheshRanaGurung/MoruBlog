@@ -55,11 +55,11 @@ const DashboardForm = () => {
   };
   let address;
 
-  const filechanged = (e) => {
+  const filechanged = async (e) => {
     let images = new FormData();
     images.append("file", e);
     images.append("upload_preset", "Moru-preset");
-    fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
+    await fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
       method: "post",
       body: images,
     })
@@ -69,7 +69,10 @@ const DashboardForm = () => {
         address = imageApi.url;
         toast.success("Image uploaded");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        toast.error("Please upload image again!");
+      });
   };
   var data;
   const loadBlogsData = async () => {

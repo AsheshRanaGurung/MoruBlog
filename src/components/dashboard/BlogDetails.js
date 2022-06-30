@@ -142,10 +142,10 @@ const BlogDetails = () => {
         )
         .then((res) => {
           dispatch(deleteThisBlog(record.id));
-          toast.success("Blog deleted successfully");
+          toast.success(res.data.message);
         })
         .catch((err) => {
-          toast.error("Something went wrong!");
+          toast.error(err.data.message);
         });
     }
   };
@@ -178,15 +178,18 @@ const BlogDetails = () => {
   };
 
   return (
-    <Table
-      columns={columns}
-      // rowKey={(record) => record.login.uuid}
-      dataSource={data}
-      scroll={{ x: 1300 }}
-      pagination={pagination}
-      // loading={data.length === 0}
-      onChange={handleTableChange}
-    />
+    <>
+      <h4>Blogs Details</h4>
+      <Table
+        columns={columns}
+        // rowKey={(record) => record.login.uuid}
+        dataSource={data}
+        scroll={{ x: 1300 }}
+        pagination={pagination}
+        // loading={data.length === 0}
+        onChange={handleTableChange}
+      />
+    </>
   );
 };
 
