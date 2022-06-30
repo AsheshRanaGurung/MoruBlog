@@ -65,7 +65,7 @@ const BlogCarousel = () => {
                       </div>
 
                       <div style={{ float: "left" }}>
-                        <ColorBadge> {item.category}</ColorBadge>
+                        <ColorBadge>{item.category}</ColorBadge>
                       </div>
                     </div>
 

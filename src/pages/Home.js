@@ -6,7 +6,7 @@ import Blogs from "../components/Blogs";
 import Search from "../components/Search";
 import Category from "../components/Category";
 import { toast } from "react-toastify";
-import { Button, Pagination } from "antd";
+import { Button, Pagination, Spin } from "antd";
 import DownloadButton from "../components/DownloadButton";
 import Weather from "../components/Weather";
 import Carousel from "../components/Carousel";
@@ -17,6 +17,7 @@ const Home = () => {
   const { blogs } = getData;
 
   const [allblogs, setAllblogs] = useState(blogs);
+  const [categoryBlogs, setCategoryBlogs] = useState(null);
   const [current, setCurrent] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [minIndex, setMinIndex] = useState(0);
@@ -37,7 +38,7 @@ const Home = () => {
 
   const hideButton = () => {
     setShowBtn(false);
-    setAllblogs(blogs);
+    setCategoryBlogs(null);
   };
 
   const options = [
@@ -63,7 +64,7 @@ const Home = () => {
 
   const onInputChange = (e) => {
     if (!e.target.value) {
-      setAllblogs(blogs);
+      setCategoryBlogs(null);
       console.log("triggreed");
     }
     setSearchValue(e.target.value);
@@ -78,7 +79,7 @@ const Home = () => {
         if (res?.data?.posts.length === 0) {
           toast.info("No search found");
         } else {
-          setAllblogs(res?.data?.posts);
+          setCategoryBlogs(res?.data?.posts);
         }
       })
       .catch((err) => {
@@ -95,7 +96,7 @@ const Home = () => {
         )}`
       )
       .then((res) => {
-        setAllblogs(res.data.posts);
+        setCategoryBlogs(res.data.posts);
         showButton();
       })
       .catch((err) => {
@@ -117,7 +118,6 @@ const Home = () => {
                     handleSearch={handleSearch}
                   />
                   <Carousel />
-
                   {showBtn && (
                     <Button
                       style={{ marginBottom: "20px" }}
@@ -128,35 +128,66 @@ const Home = () => {
                     </Button>
                   )}
                   {allblogs?.length === 0 && (
-                    // <Spin size="large" style={{ display: "block" }} />
-                    <p>No data</p>
+                    <Spin size="large" style={{ display: "block" }} />
+                    // <p>No data</p>
                   )}
 
-                  {allblogs?.slice(3).map(
-                    (item, index) =>
-                      index >= minIndex &&
-                      index < maxIndex && (
-                        <MDBCol
-                          key={index}
-                          md={6}
-                          lg={4}
-                          sm={12}
-                          style={{ paddingBottom: "32px" }}
-                        >
-                          <Blogs
-                            id={item.id}
-                            title={item.title}
-                            date={item.created_at}
-                            category={item.category}
-                            userIdWhoCreatedThisBLog={item.author.id}
-                            description={item.content}
-                            image={item.image}
-                            excerpt={excerpt}
-                          />
-                        </MDBCol>
-                      )
+                  {categoryBlogs === null ? (
+                    allblogs?.slice(3).map(
+                      (item, index) =>
+                        index >= minIndex &&
+                        index < maxIndex && (
+                          <MDBCol
+                            key={index}
+                            md={6}
+                            lg={4}
+                            sm={12}
+                            style={{ paddingBottom: "32px" }}
+                          >
+                            <Blogs
+                              id={item.id}
+                              title={item.title}
+                              date={item.created_at}
+                              category={item.category}
+                              userIdWhoCreatedThisBLog={item.author.id}
+                              description={item.content}
+                              image={item.image}
+                              excerpt={excerpt}
+                            />
+                          </MDBCol>
+                        )
+                    )
+                  ) : (
+                    <>
+                      <div style={{ display: "flex", marginBottom: "10px" }}>
+                        <strong>Search results</strong>
+                      </div>
+                      {categoryBlogs?.map(
+                        (item, index) =>
+                          index >= minIndex &&
+                          index < maxIndex && (
+                            <MDBCol
+                              key={index}
+                              md={6}
+                              lg={4}
+                              sm={12}
+                              style={{ paddingBottom: "32px" }}
+                            >
+                              <Blogs
+                                id={item.id}
+                                title={item.title}
+                                date={item.created_at}
+                                category={item.category}
+                                userIdWhoCreatedThisBLog={item.author.id}
+                                description={item.content}
+                                image={item.image}
+                                excerpt={excerpt}
+                              />
+                            </MDBCol>
+                          )
+                      )}
+                    </>
                   )}
-
                   <Pagination
                     pageSize={pageSize}
                     current={current}
