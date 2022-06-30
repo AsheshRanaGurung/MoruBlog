@@ -38,27 +38,27 @@ const BlogDetails = () => {
       title: "ID",
       sorter: (a, b) => a.id - b.id,
       dataIndex: "id",
-      width: "2%",
+      width: "1%",
       fixed: "left",
     },
     {
       title: "Title",
       dataIndex: "title",
       render: (name) => `${name}`,
-      width: "6%",
+      width: "5%",
     },
 
     {
       title: "Category",
       dataIndex: "category",
       key: "1",
-      width: "5%",
+      width: "2%",
     },
     {
       sorter: (a, b) => a.date - b.date,
       title: "Date",
       dataIndex: "created_at",
-      width: "6%",
+      width: "2%",
       key: "2",
 
       render: (record) => <>{record.slice(0, 10)}</>,
@@ -66,10 +66,33 @@ const BlogDetails = () => {
     {
       title: "Author",
       dataIndex: "author",
-      width: "10%",
+      width: "2%",
       key: "3",
 
       render: (record) => <>{record.username}</>,
+    },
+    {
+      title: "Is Admin",
+      dataIndex: "author",
+      width: "2%",
+      key: "6",
+      render: (record) => <>{record.is_admin === true ? "True" : "False"}</>,
+    },
+    {
+      title: "Comments",
+      dataIndex: "comments",
+      width: "2%",
+      key: "4",
+
+      render: (record) => <>{record.length}</>,
+    },
+    {
+      title: "Likes",
+      dataIndex: "votes",
+      width: "1%",
+      key: "5",
+
+      render: (record) => <>{record.length}</>,
     },
 
     {

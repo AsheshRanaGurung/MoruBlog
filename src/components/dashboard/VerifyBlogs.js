@@ -70,14 +70,21 @@ const VerifyBlogs = () => {
     {
       title: "Category",
       dataIndex: "category",
-      width: "5%",
+      width: "2%",
       key: "2",
+    },
+    {
+      title: "Created At",
+      dataIndex: "created_at",
+      width: "3%",
+      key: "5",
+      render: (record) => <>{record.slice(0, 10)}</>,
     },
     {
       title: "Author",
       dataIndex: "author",
       render: (record) => <>{record.username}</>,
-      width: "5%",
+      width: "3%",
       key: "3",
     },
     {

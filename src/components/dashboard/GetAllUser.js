@@ -36,36 +36,50 @@ const GetAllUser = () => {
       title: "ID",
       sorter: (a, b) => a.id - b.id,
       dataIndex: "id",
-      width: "2%",
+      width: "1%",
       fixed: "left",
     },
     {
       title: "Name",
       dataIndex: "username",
       render: (name) => `${name}`,
-      width: "6%",
+      width: "2%",
       key: "1",
     },
     {
       title: "Email",
       dataIndex: "email",
-      width: "10%",
+      width: "3%",
       key: "2",
     },
     {
       sorter: (a, b) => a.date - b.date,
-      title: "Date",
+      title: "Registered At",
       dataIndex: "created_at",
-      width: "10%",
+      width: "2%",
       render: (record) => <>{record.slice(0, 10)}</>,
       key: "3",
     },
     {
       title: "Is Admin",
       dataIndex: "is_admin",
-      width: "10%",
+      width: "2%",
       key: "4",
       render: (record) => <>{record === true ? "True" : "False"}</>,
+    },
+    {
+      title: "Is Verified",
+      dataIndex: "is_verified",
+      width: "2%",
+      key: "4",
+      render: (record) => <>{record === true ? "True" : "False"}</>,
+    },
+    {
+      title: "Post uploaded",
+      dataIndex: "posts",
+      width: "3%",
+      key: "5",
+      render: (record) => <>{record.length}</>,
     },
 
     {
@@ -82,7 +96,7 @@ const GetAllUser = () => {
           />
         </>
       ),
-      width: "3%",
+      width: "2%",
       fixed: "right",
     },
   ];
