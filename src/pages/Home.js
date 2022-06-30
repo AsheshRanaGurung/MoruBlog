@@ -162,32 +162,42 @@ const Home = () => {
                     )
                   ) : (
                     <>
-                      <div style={{ display: "flex", marginBottom: "10px" }}>
-                        <strong>Search results</strong>
-                      </div>
-                      {categoryBlogs?.map(
-                        (item, index) =>
-                          index >= minIndex &&
-                          index < maxIndex && (
-                            <MDBCol
-                              key={index}
-                              md={6}
-                              lg={4}
-                              sm={12}
-                              style={{ paddingBottom: "32px" }}
-                            >
-                              <Blogs
-                                id={item.id}
-                                title={item.title}
-                                date={item.created_at}
-                                category={item.category}
-                                userIdWhoCreatedThisBLog={item.author.id}
-                                description={item.content}
-                                image={item.image}
-                                excerpt={excerpt}
-                              />
-                            </MDBCol>
-                          )
+                      {categoryBlogs?.length === 0 ? (
+                        <div style={{ display: "flex", marginBottom: "10px" }}>
+                          <strong>No Blogs Found</strong>
+                        </div>
+                      ) : (
+                        <>
+                          <div
+                            style={{ display: "flex", marginBottom: "10px" }}
+                          >
+                            <strong>Search results</strong>
+                          </div>
+                          {categoryBlogs?.map(
+                            (item, index) =>
+                              index >= minIndex &&
+                              index < maxIndex && (
+                                <MDBCol
+                                  key={index}
+                                  md={6}
+                                  lg={4}
+                                  sm={12}
+                                  style={{ paddingBottom: "32px" }}
+                                >
+                                  <Blogs
+                                    id={item.id}
+                                    title={item.title}
+                                    date={item.created_at}
+                                    category={item.category}
+                                    userIdWhoCreatedThisBLog={item.author.id}
+                                    description={item.content}
+                                    image={item.image}
+                                    excerpt={excerpt}
+                                  />
+                                </MDBCol>
+                              )
+                          )}
+                        </>
                       )}
                     </>
                   )}
