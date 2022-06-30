@@ -66,10 +66,7 @@ export function login(username, password) {
     try {
       dispatch(GetLoggedInUser());
       var credentials = btoa(username + ":" + password);
-
       var basicAuth = "Basic " + credentials;
-      console.log(username, password);
-
       const config = {
         // headers: { Authorization: basicAuth },
         // auth: {

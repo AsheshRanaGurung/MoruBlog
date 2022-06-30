@@ -141,6 +141,10 @@ const ProfileScreen = () => {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
+                  style={{
+                    backgroundColor: "#c70039",
+                    border: "none",
+                  }}
                 >
                   {updateloading ? (
                     <Spin indicator={antIcon} style={{ color: "white" }} />

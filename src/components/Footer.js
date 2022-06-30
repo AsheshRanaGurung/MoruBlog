@@ -95,7 +95,7 @@ function Footer() {
             <br />
             Built with love and{" "}
             <i
-              class="fab fa-react"
+              className="fab fa-react"
               style={{
                 color: "rgb(71, 189, 189)",
                 animation: "rotation 5s infinite linear",

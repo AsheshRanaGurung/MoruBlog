@@ -80,7 +80,7 @@ const Blog = () => {
     } else {
       await axios
         .post(
-          `https://flaskapi-sanjeev.herokuapp.com/vote/${id}`,
+          `https://flaskapi-sanjeev.herokuapp.com/votes/${id}`,
           {},
 
           config

@@ -100,7 +100,7 @@ const Home = () => {
         showButton();
       })
       .catch((err) => {
-        toast.error("Something went wrong!");
+        toast.error("Blog not found");
       });
   };
 
@@ -120,7 +120,11 @@ const Home = () => {
                   <Carousel />
                   {showBtn && (
                     <Button
-                      style={{ marginBottom: "20px" }}
+                      style={{
+                        marginBottom: "20px",
+                        backgroundColor: "#c70039",
+                        border: "none",
+                      }}
                       onClick={hideButton}
                       type="primary"
                     >

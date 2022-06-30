@@ -90,6 +90,10 @@ const Login = () => {
 
                 <Form.Item>
                   <Button
+                    style={{
+                      backgroundColor: "#c70039",
+                      border: "none",
+                    }}
                     type="primary"
                     htmlType="submit"
                     className="login-form-button"
