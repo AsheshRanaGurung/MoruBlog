@@ -65,7 +65,6 @@ const Home = () => {
   const onInputChange = (e) => {
     if (!e.target.value) {
       setCategoryBlogs(null);
-      console.log("triggreed");
     }
     setSearchValue(e.target.value);
   };
@@ -196,7 +195,11 @@ const Home = () => {
                     pageSize={pageSize}
                     current={current}
                     onChange={handleChange}
-                    total={allblogs.slice(3).length}
+                    total={
+                      categoryBlogs !== null
+                        ? categoryBlogs.length
+                        : allblogs.slice(3).length
+                    }
                     style={{ marginBottom: "20px" }}
                   />
                 </MDBRow>

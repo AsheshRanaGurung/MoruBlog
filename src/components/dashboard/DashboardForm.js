@@ -53,8 +53,23 @@ const DashboardForm = () => {
 
     return e.fileList;
   };
+  let address;
+
   const filechanged = (e) => {
-    setImage(e);
+    let images = new FormData();
+    images.append("file", e);
+    images.append("upload_preset", "Moru-preset");
+    fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
+      method: "post",
+      body: images,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const imageApi = data;
+        address = imageApi.url;
+        toast.success("Image uploaded");
+      })
+      .catch((err) => console.error(err));
   };
   var data;
   const loadBlogsData = async () => {
@@ -68,24 +83,6 @@ const DashboardForm = () => {
   const onFinish = async (values) => {
     setLoginLoading(true);
     let formData = new FormData();
-    let images = new FormData();
-    images.append("file", image);
-    images.append("upload_preset", "Moru-preset");
-    const address = fetch(
-      "  https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/",
-      {
-        method: "post",
-        body: images,
-      }
-    )
-      .then((resp) =>
-        resp.json().then((val) => {
-          return val.url;
-        })
-      )
-      .catch((error) => {
-        console.error(error);
-      });
 
     const sendFormData = async () => {
       const a = await address;
