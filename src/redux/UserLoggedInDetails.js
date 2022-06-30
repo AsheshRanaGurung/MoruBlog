@@ -68,17 +68,18 @@ export function login(username, password) {
       var credentials = btoa(username + ":" + password);
 
       var basicAuth = "Basic " + credentials;
+      console.log(username, password);
 
       const config = {
-        headers: { Authorization: basicAuth },
-        auth: {
-          username: username,
-          password: password,
-        },
+        // headers: { Authorization: basicAuth },
+        // auth: {
+        email: username,
+        password: password,
+        // },
       };
       const response = await axios.post(
         "https://flaskapi-sanjeev.herokuapp.com/login",
-        {},
+        // {},
         config
       );
 

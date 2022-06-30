@@ -93,7 +93,7 @@ const Header = () => {
                 </Menu.Item>
               )}
               <SubMenu
-                key="SubMenu2"
+                key="SubMenu69"
                 title={
                   <span>
                     {" "}
@@ -108,12 +108,12 @@ const Header = () => {
                     style={{ color: "black" }}
                     onClick={onClose}
                   >
-                    <Menu.Item key="companyprofile">Company Profile</Menu.Item>
+                    <Menu.Item key="companyprofile2">Company Profile</Menu.Item>
                   </Link>
 
                   <Link to="/mantra">
                     <Menu.Item
-                      key="mantra"
+                      key="mantra2"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -122,7 +122,7 @@ const Header = () => {
                   </Link>
                   <Link to="/objectives">
                     <Menu.Item
-                      key="objectives"
+                      key="objectives2"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -131,7 +131,7 @@ const Header = () => {
                   </Link>
                   <Link to="/ourgovernance">
                     <Menu.Item
-                      key="ourgovernance"
+                      key="ourgovernance2"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >
@@ -140,7 +140,7 @@ const Header = () => {
                   </Link>
                   <Link to="/committee">
                     <Menu.Item
-                      key="committe"
+                      key="committe2"
                       style={{ color: "black" }}
                       onClick={onClose}
                     >

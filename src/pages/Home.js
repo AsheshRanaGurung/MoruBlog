@@ -116,6 +116,7 @@ const Home = () => {
                     onInputChange={onInputChange}
                     handleSearch={handleSearch}
                   />
+                  <Carousel />
 
                   {showBtn && (
                     <Button
@@ -130,7 +131,6 @@ const Home = () => {
                     // <Spin size="large" style={{ display: "block" }} />
                     <p>No data</p>
                   )}
-                  <Carousel />
 
                   {allblogs?.slice(3).map(
                     (item, index) =>
@@ -161,7 +161,7 @@ const Home = () => {
                     pageSize={pageSize}
                     current={current}
                     onChange={handleChange}
-                    total={allblogs.length}
+                    total={allblogs.slice(3).length}
                     style={{ marginBottom: "20px" }}
                   />
                 </MDBRow>

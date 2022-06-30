@@ -92,6 +92,15 @@ function Footer() {
           <MDBContainer className="copyright" fluid>
             &copy; {new Date().getFullYear()} Copyright: Pay Nep Pvt. Ltd. | All
             RIghts Reserved
+            <br />
+            Built with love and{" "}
+            <i
+              class="fab fa-react"
+              style={{
+                color: "rgb(71, 189, 189)",
+                animation: "rotation 5s infinite linear",
+              }}
+            ></i>
           </MDBContainer>
         </div>
       </div>

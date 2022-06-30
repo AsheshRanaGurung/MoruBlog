@@ -9,7 +9,13 @@ function CompanyProfile() {
         <Title level={2} style={{ display: "flex", color: "#c61e2e" }}>
           Company Profile
         </Title>
-        <Paragraph style={{ textAlign: "justify" }}>
+        <Paragraph
+          style={{
+            textAlign: "justify",
+            // animationName: "fadeInRight",
+            // animationDuration: "2.5s",
+          }}
+        >
           Pay Nep Private Limited, came into existence as the sixth Payment
           Service Provider of Nepal by receiving its operating License from
           Nepal Rastra Bank on Shrawan 15, 2076 B.S (August 1, 2019) with an

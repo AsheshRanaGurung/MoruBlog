@@ -33,6 +33,14 @@
 .PhoneNo{
  display:flex
 }
+/* @keyframes fadeInRight {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+} */
 /* dashboard */
 #components-layout-demo-top-side-2 .logo {
   float: left;
