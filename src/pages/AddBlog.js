@@ -63,6 +63,9 @@ const About = () => {
     images.append("upload_preset", "Moru-preset");
     fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
       method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: images,
     })
       .then((response) => response.json())
@@ -79,9 +82,16 @@ const About = () => {
     let formData = new FormData();
 
     const sendFormData = async () => {
-      const a = await address;
+      let a = await address;
+      if (a === undefined) {
+        formData.append(
+          "image",
+          "https://moru.com.np/wp-content/uploads/2022/01/Featured-image.jpg"
+        );
+      } else {
+        formData.append("image", a);
+      }
 
-      formData.append("image", a);
       formData.append("content", datas);
       formData.append("title", values.title);
       formData.append("category", values.category.replace(/\s/g, ""));

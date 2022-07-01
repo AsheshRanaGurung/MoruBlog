@@ -124,7 +124,7 @@ const Blog = () => {
     <div className="pagecontainer">
       <MDBRow>
         <MDBCol>
-          <MDBContainer style={{ marginTop: "15px", paddingLeft: "0px" }}>
+          <MDBContainer style={{ marginTop: "15px" }}>
             <ModalDesign
               isModalVisible={isModalVisible}
               handleCancel={handleCancel}
@@ -273,7 +273,13 @@ const Blog = () => {
             blogs
               ?.filter((item) => item.id !== parseInt(id))
               .slice(0, 3)
-              .map((item, index) => <LatestBlog key={index} {...item} />)}
+              .map((item, index) => (
+                <LatestBlog
+                  key={index}
+                  {...item}
+                  style={{ paddingRight: "0px" }}
+                />
+              ))}
         </MDBCol>
       </MDBRow>
     </div>
