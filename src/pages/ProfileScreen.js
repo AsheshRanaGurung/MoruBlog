@@ -32,7 +32,7 @@ const ProfileScreen = () => {
 
     await axios
       .put(
-        `https://flaskapi-sanjeev.herokuapp.com/user/${userDetail.id}`,
+        `https://flaskapi-sanjeev.herokuapp.com/users/${userDetail.id}`,
         {
           username: values.email,
         },
