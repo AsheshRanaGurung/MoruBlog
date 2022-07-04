@@ -35,7 +35,7 @@ const EditModal = ({ name, id, isModalVisible, handleCancel }) => {
 
     await axios
       .put(
-        `https://flaskapi-sanjeev.herokuapp.com/user/${id}`,
+        `https://flaskapi-sanjeev.herokuapp.com/users/${id}`,
         {
           username: values.review,
         },

@@ -109,7 +109,7 @@ const GetAllUser = () => {
       };
       await axios
         .delete(
-          `https://flaskapi-sanjeev.herokuapp.com/user/${record.id}`,
+          `https://flaskapi-sanjeev.herokuapp.com/users/${record.id}`,
 
           config
         )
