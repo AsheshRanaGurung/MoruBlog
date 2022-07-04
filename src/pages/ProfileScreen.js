@@ -39,9 +39,9 @@ const ProfileScreen = () => {
         config
       )
       .then((res) => {
-        console.log(res.data.credentials.username);
+        console.log(res.data.credintials.username);
         setUpdateloading(false);
-        dispatch(GetLoggedInUserUpdateSuccess(res.data.credentials.username));
+        dispatch(GetLoggedInUserUpdateSuccess(res.data.credintials.username));
         navigate("/");
         toast.success("User updated successfully");
       })
@@ -100,7 +100,7 @@ const ProfileScreen = () => {
                 label="Password"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please input your password!",
                   },
                 ]}
@@ -116,7 +116,7 @@ const ProfileScreen = () => {
                 hasFeedback
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please confirm your password!",
                   },
                   ({ getFieldValue }) => ({
