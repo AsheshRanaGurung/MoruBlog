@@ -137,6 +137,16 @@ height:500px;
     border:none;
 
   }
+  .reset-password2{
+    padding: 20px;
+    height: 20vh;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 12vh;
+    border:none;
+
+  }
   /* login page button css */
 .remember{
   float:left;
@@ -310,6 +320,10 @@ height:500px;
     height: 20vh;
     width: auto;
   }
+  .reset-password2{
+    height: 35vh;
+    width: auto;
+  }
 
 
 }
@@ -344,6 +358,14 @@ height:500px;
     .reset-password{
       padding:20px 20px 0 20px;
       height: 20vh;
+      width: auto;
+    margin: 0 ;
+      border:none;
+  
+    }
+    .reset-password2{
+      padding:20px 20px 0 20px;
+      height: 35vh;
       width: auto;
     margin: 0 ;
       border:none;

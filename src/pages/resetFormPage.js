@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Checkbox, Spin } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
 import { MDBCol, MDBRow } from "mdb-react-ui-kit";
@@ -10,28 +15,41 @@ import { toast } from "react-toastify";
 
 const ResetFormpage = () => {
   const [isLoading, setIsloading] = useState(false);
-
+  const [shownPasswordForm, setShowPasswordForm] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [userID, setUserID] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-  //   useEffect(() => {
-  //     if (loggedinuserDetail) {
-  //       if (loggedinuserDetail?.is_admin === true) {
-  //         navigate("/dashboard");
-  //       } else {
-  //         navigate("/");
-  //       }
-  //     }
-  //   }, [loggedinuserDetail, userInfo, navigate]);
+  let token;
+  token = searchParams.get("token");
+
+  const verifyToken = async () => {
+    console.log("abc", token);
+    axios
+      .get(`https://flaskapi-sanjeev.herokuapp.com/verify_token/${token}`)
+      .then((res) => {
+        setShowPasswordForm(true);
+        setUserID(res.data.user_id);
+      })
+      .catch((err) => {
+        console.log(err);
+        setShowPasswordForm(false);
+        toast.error(err.response.data.message);
+      });
+  };
+  useEffect(() => {
+    verifyToken();
+  }, []);
   const onFinish = async (values) => {
     setIsloading(true);
     await axios
-      .put(`https://flaskapi-sanjeev.herokuapp.com/reset_password/`, {
+      .put(`https://flaskapi-sanjeev.herokuapp.com/reset_password/${token}`, {
         password: values.password,
         confirm_password: values.confirm,
-        user_id: "12",
+        user_id: userID,
       })
       .then((res) => {
         setIsloading(false);
@@ -56,74 +74,78 @@ const ResetFormpage = () => {
             ></img>
           </MDBCol>
           <MDBCol className="LoginPage_image" md={7}>
-            <div className="reset-password">
-              <Form
-                name="normal_login"
-                className="login-form"
-                initialValues={{
-                  remember: true,
-                }}
-                onFinish={onFinish}
-              >
-                <Form.Item
-                  name="password"
-                  label="Password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your password!",
-                    },
-                  ]}
-                  hasFeedback
+            <div className="reset-password2">
+              {shownPasswordForm ? (
+                <Form
+                  name="normal_login"
+                  className="login-form"
+                  initialValues={{
+                    remember: true,
+                  }}
+                  onFinish={onFinish}
                 >
-                  <Input.Password />
-                </Form.Item>
-
-                <Form.Item
-                  name="confirm"
-                  label="Confirm Password"
-                  dependencies={["password"]}
-                  hasFeedback
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please confirm your password!",
-                    },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue("password") === value) {
-                          return Promise.resolve();
-                        }
-
-                        return Promise.reject(
-                          new Error(
-                            "The two passwords that you entered do not match!"
-                          )
-                        );
+                  <Form.Item
+                    name="password"
+                    label="Password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
                       },
-                    }),
-                  ]}
-                >
-                  <Input.Password />
-                </Form.Item>
-                <Form.Item>
-                  <Button
-                    style={{
-                      backgroundColor: "#c70039",
-                      border: "none",
-                    }}
-                    type="primary"
-                    htmlType="submit"
-                    className="login-form-button"
+                    ]}
+                    hasFeedback
                   >
-                    {isLoading ? (
-                      <Spin indicator={antIcon} style={{ color: "white" }} />
-                    ) : (
-                      "Reset password"
-                    )}
-                  </Button>
-                </Form.Item>
-              </Form>
+                    <Input.Password />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="confirm"
+                    label="Confirm Password"
+                    dependencies={["password"]}
+                    hasFeedback
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please confirm your password!",
+                      },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (!value || getFieldValue("password") === value) {
+                            return Promise.resolve();
+                          }
+
+                          return Promise.reject(
+                            new Error(
+                              "The two passwords that you entered do not match!"
+                            )
+                          );
+                        },
+                      }),
+                    ]}
+                  >
+                    <Input.Password />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      style={{
+                        backgroundColor: "#c70039",
+                        border: "none",
+                      }}
+                      type="primary"
+                      htmlType="submit"
+                      className="login-form-button"
+                    >
+                      {isLoading ? (
+                        <Spin indicator={antIcon} style={{ color: "white" }} />
+                      ) : (
+                        "Reset password"
+                      )}
+                    </Button>
+                  </Form.Item>
+                </Form>
+              ) : (
+                <p>please wait</p>
+              )}
             </div>
           </MDBCol>
         </MDBRow>
