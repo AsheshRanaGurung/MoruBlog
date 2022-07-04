@@ -83,7 +83,7 @@ const Login = () => {
                     <Checkbox>Remember me</Checkbox>
                   </Form.Item>
 
-                  <Link className="login-form-forgot" to="/">
+                  <Link className="login-form-forgot" to="/reset_password">
                     Forgot password
                   </Link>
                 </Form.Item>

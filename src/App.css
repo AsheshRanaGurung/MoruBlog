@@ -127,6 +127,16 @@ height:500px;
     /* box-shadow: 2px 1px 1px 2px rgb(184, 180, 180); */
 
   }
+  .reset-password{
+    padding: 20px;
+    height: 20vh;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 12vh;
+    border:none;
+
+  }
   /* login page button css */
 .remember{
   float:left;
@@ -293,12 +303,12 @@ height:500px;
     padding: 10px 20px;
   }
   .form-page{
-    /* margin-top: 70px; */
     width:100%;
-    /* width:350px; */
-    /* height: 40vh; */
     height: 50vh;
-    /* object-fit: contain; */
+  }
+  .reset-password{
+    height: 20vh;
+    width: auto;
   }
 
 
@@ -330,6 +340,14 @@ height:500px;
     border: solid gray 1px;
     border-radius: 4px;
 
+    }
+    .reset-password{
+      padding:20px 20px 0 20px;
+      height: 20vh;
+      width: auto;
+    margin: 0 ;
+      border:none;
+  
     }
     .PhoneNo{
       display:none

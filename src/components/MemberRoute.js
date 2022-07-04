@@ -21,6 +21,8 @@ import VerifyBlogs from "./dashboard/VerifyBlogs";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../pages/Home";
 import Register from "../pages/Register";
+import Resetpage from "../pages/Resetpage";
+import ResetFormpage from "../pages/resetFormPage";
 
 export default function MembersRoute() {
   const adminUser = useSelector(
@@ -91,6 +93,11 @@ export default function MembersRoute() {
       <Route path="/blog/:id" element={<Blog />} />
       <Route path="/addblog" element={<About />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/reset_password" element={<Resetpage />} />
+      <Route
+        path="/reset_password/password_change"
+        element={<ResetFormpage />}
+      />
       <Route path="/profilepage" element={<ProfileScreen />} />
       <Route path="/register" element={<Register />} />
       <Route path="/companyprofile" element={<CompanyProfile />} />
