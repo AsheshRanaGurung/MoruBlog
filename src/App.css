@@ -13,7 +13,7 @@
   transition: all 1s ease;
 }
 .blogCard:hover{
-  transform: scale(1.1);
+  transform: scale(1.04);
   transition: all 1s ease;
 }
 .footerBtn{
@@ -166,7 +166,7 @@ height:500px;
     float:left;
   }
 .menuBar {
-  padding: 10px 20px;
+  padding: 3px 20px;
   margin-top:38px;
   border-bottom: solid 1px #e8e8e8;
   overflow: auto;
@@ -182,6 +182,9 @@ height:500px;
   z-index: 99;
   width: 100%;
   background-color: white;
+}
+.hideSearch{
+  display: none;
 }
 .secHeadDesign{
   display: flex;
@@ -240,7 +243,7 @@ height:500px;
   float: right;
   height: 32px;
   padding: 6px;
-  margin-top: 8px;
+  margin-top: 3px;
   border-radius: 4px;
   display: none;
   background: none;
@@ -289,7 +292,7 @@ height:500px;
   background-color: var(--main-bg-color);
 }
 
-@media (max-width: 1124px) {
+@media (max-width: 1199px) {
   /* @media (max-width: 1049px) { */
   .barsMenu {
     display: inline-block;
@@ -299,7 +302,15 @@ height:500px;
   .rightMenu {
     display: none;
   }
-
+  .hideSearch{
+    display:contents;
+  }
+  .searchDiv{
+    display: none;
+  }
+  .pagecontainer{
+    padding-top: 72px;
+  }
   .logo a {
     margin-left: -20px;
   }
@@ -342,9 +353,15 @@ height:500px;
   
       }
     .pagecontainer{
-      padding-top:83px;
+      padding-top:72px;
     
       margin: 0px 20px;
+    }
+    .hideSearch{
+      display:flex;
+    }
+    .searchDiv{
+      display: none;
     }
     .form-page{
     width: auto;

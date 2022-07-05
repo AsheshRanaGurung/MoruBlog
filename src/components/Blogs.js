@@ -82,6 +82,14 @@ const Blogs = ({
   return (
     <MDBCard className="h-100 blogCard " style={{ margin: "0 0px" }}>
       <Link to={`/blog/${id}`}>
+        <div
+          style={{
+            position: "absolute",
+            right: "5px",
+          }}
+        >
+          <ColorBadge>{category}</ColorBadge>
+        </div>
         <MDBCardImage
           src={image}
           alt={title}
@@ -93,7 +101,7 @@ const Blogs = ({
       <MDBCardBody
         style={{ padding: "0.8rem 1.5rem 0.5rem", backgroundColor: "#f5f5f4" }}
       >
-        <div
+        {/* <div
           style={{
             display: "flex",
             marginBottom: "0px",
@@ -103,13 +111,18 @@ const Blogs = ({
         >
           {date?.slice(0, 10)}
           <ColorBadge>{category}</ColorBadge>
-        </div>
+        </div> */}
         <MDBCardTitle
-          style={{ fontSize: "18px", display: "flex", padding: "0" }}
+          style={{
+            fontSize: "18px",
+            display: "flex",
+            padding: "0",
+            fontWeight: "400",
+          }}
         >
           {excerpt2(title)}
         </MDBCardTitle>
-        <MDBCardText>
+        {/* <MDBCardText>
           <Link
             to={`/blog/${id}`}
             style={{
@@ -122,7 +135,7 @@ const Blogs = ({
             {" "}
             read more
           </Link>
-        </MDBCardText>
+        </MDBCardText> */}
 
         {(user?.is_admin || userIdWhoCreatedThisBLog === user?.id) && (
           <>

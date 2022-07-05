@@ -70,12 +70,12 @@ const Header = () => {
           >
             <Menu>
               <Menu.Item key="mail2">
-                <Link to="/" style={{ fontSize: "19px" }} onClick={onClose}>
+                <Link to="/" style={{ fontSize: "13px" }} onClick={onClose}>
                   <i className="fa fa-home" aria-hidden="true"></i> Home
                 </Link>
               </Menu.Item>
               <Menu.Item key="load">
-                <a href="https://moru.com.np/" style={{ fontSize: "19px" }}>
+                <a href="https://moru.com.np/" style={{ fontSize: "13px" }}>
                   <i className="fa fa-wallet" aria-hidden="true"></i> Load Fund
                 </a>
               </Menu.Item>
@@ -84,7 +84,7 @@ const Header = () => {
                 <Menu.Item key="alipay22">
                   <Link
                     to="/addblog"
-                    style={{ fontSize: "19px" }}
+                    style={{ fontSize: "13px" }}
                     onClick={onClose}
                   >
                     <i className="fa fa-plus" aria-hidden="true"></i> Create
@@ -100,7 +100,7 @@ const Header = () => {
                     <i className="fa fa-user" aria-hidden="true"></i> About Us
                   </span>
                 }
-                style={{ fontSize: "19px" }}
+                style={{ fontSize: "13px" }}
               >
                 <MenuItemGroup>
                   <Link
@@ -154,7 +154,7 @@ const Header = () => {
                 <SubMenu
                   key="userInfo"
                   title={user ? user.username : "Profile"}
-                  style={{ fontSize: "19px" }}
+                  style={{ fontSize: "13px" }}
                 >
                   <MenuItemGroup>
                     <Menu.Item key="profilepage">
@@ -171,7 +171,7 @@ const Header = () => {
                 <Menu.Item key="signin">
                   <Link
                     to="/login"
-                    style={{ fontSize: "19px" }}
+                    style={{ fontSize: "13px" }}
                     onClick={onClose}
                   >
                     {/* <UserAddOutlined style={{ fontSize: "18px" }} /> */}

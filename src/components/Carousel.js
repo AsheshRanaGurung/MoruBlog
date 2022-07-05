@@ -14,13 +14,23 @@ import { Link } from "react-router-dom";
 const BlogCarousel = () => {
   const getData = useSelector((state) => state?.Blogs);
   const { blogs } = getData;
+  const excerpt = (string) => {
+    if (string?.length > 50) {
+      string = string.substring(0, 50) + "...";
+    }
+    return string;
+  };
 
   return (
     <MDBCarousel
       showIndicators
       dark
-      showControls
-      style={{ marginBottom: "20px" }}
+      // showControls
+      style={{
+        marginBottom: "40px",
+        padding: "0px",
+        boxShadow: "0px 7px 12px 0px rgb(184 180 180)",
+      }}
     >
       <MDBCarouselInner>
         {blogs &&
@@ -50,9 +60,9 @@ const BlogCarousel = () => {
                       }}
                     >
                       <div style={{ float: "left" }}>
-                        <h2>
+                        <h5 style={{ padding: "0px", fontFamily: "Open Sans" }}>
                           <strong>{item.title}</strong>
-                        </h2>
+                        </h5>
                       </div>
                       <br />
                       <br />
@@ -67,6 +77,9 @@ const BlogCarousel = () => {
                       <div style={{ float: "left" }}>
                         <ColorBadge>{item.category}</ColorBadge>
                       </div>
+                      {/* <div style={{ float: "left" }}>
+                        <Markup content={excerpt(item.content)} />
+                      </div> */}
                     </div>
 
                     <div style={{ float: "left", paddingLeft: "10px" }}>
@@ -117,9 +130,9 @@ const BlogCarousel = () => {
                       }}
                     >
                       <div style={{ float: "left" }}>
-                        <h2>
+                        <h5 style={{ padding: "0px", fontFamily: "Open Sans" }}>
                           <strong>{item.title}</strong>
-                        </h2>
+                        </h5>
                       </div>
                       <br />
                       <br />

@@ -32,7 +32,7 @@ const RightMenu = () => {
         <SubMenu
           key="SubMenu3"
           title={user ? user.username : "Profile"}
-          style={{ fontSize: "19px" }}
+          style={{ fontSize: "15px" }}
         >
           <MenuItemGroup>
             <Menu.Item key="setting:1">
@@ -45,7 +45,7 @@ const RightMenu = () => {
         </SubMenu>
       ) : (
         <Menu.Item key="mail2">
-          <Link to="/login" style={{ fontSize: "19px" }}>
+          <Link to="/login" style={{ fontSize: "15px" }}>
             <i className="fas fa-user"></i> Log In
           </Link>
         </Menu.Item>

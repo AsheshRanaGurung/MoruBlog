@@ -13,19 +13,22 @@ const LeftMenu = () => {
   return (
     <Menu mode="horizontal" className="bgColor">
       <Menu.Item key="mail">
-        <Link to="/" style={{ fontSize: "19px" }}>
+        <Link to="/" style={{ fontSize: "15px", padding: "10px 0px" }}>
           Home
         </Link>
       </Menu.Item>
       <Menu.Item key="load">
-        <a href="https://moru.com.np/" style={{ fontSize: "19px" }}>
+        <a
+          href="https://moru.com.np/"
+          style={{ fontSize: "15px", padding: "10px 0px" }}
+        >
           Load Fund
         </a>
       </Menu.Item>
 
       {userInfo && (
         <Menu.Item key="alipay2">
-          <Link to="/addblog" style={{ fontSize: "19px" }}>
+          <Link to="/addblog" style={{ fontSize: "15px", padding: "10px 0px" }}>
             Create Blog
           </Link>
         </Menu.Item>
@@ -33,7 +36,7 @@ const LeftMenu = () => {
       <SubMenu
         key="SubMenu4"
         title={<span>About Us</span>}
-        style={{ fontSize: "19px" }}
+        style={{ fontSize: "15px" }}
       >
         <MenuItemGroup>
           <Menu.Item

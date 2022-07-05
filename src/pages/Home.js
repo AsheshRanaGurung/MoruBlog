@@ -111,11 +111,14 @@ const Home = () => {
             <div className="LoginPage" style={{ paddingTop: "15px" }}>
               <>
                 <MDBRow>
-                  <Search
-                    searchValue={searchValue}
-                    onInputChange={onInputChange}
-                    handleSearch={handleSearch}
-                  />
+                  <div className="hideSearch">
+                    <Search
+                      searchValue={searchValue}
+                      onInputChange={onInputChange}
+                      handleSearch={handleSearch}
+                    />
+                  </div>
+
                   <Carousel />
                   {showBtn && (
                     <Button
@@ -218,8 +221,15 @@ const Home = () => {
           </>
         </MDBCol>
         <MDBCol xl={3}>
-          <div style={{ marginTop: "30px" }}>
+          <div style={{ marginTop: "15px" }}>
             {/* <Weather /> */}
+            <div className="searchDiv">
+              <Search
+                searchValue={searchValue}
+                onInputChange={onInputChange}
+                handleSearch={handleSearch}
+              />
+            </div>
 
             <Category options={options} handleCategory={handleCategory} />
             <DownloadButton />
