@@ -147,7 +147,7 @@ const Home = () => {
                             key={index}
                             md={6}
                             lg={4}
-                            sm={12}
+                            sm={6}
                             style={{ paddingBottom: "32px" }}
                           >
                             <Blogs
@@ -184,7 +184,7 @@ const Home = () => {
                                   key={index}
                                   md={6}
                                   lg={4}
-                                  sm={12}
+                                  sm={6}
                                   style={{ paddingBottom: "32px" }}
                                 >
                                   <Blogs
