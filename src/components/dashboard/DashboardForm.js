@@ -185,7 +185,18 @@ const DashboardForm = () => {
           <MDBCol md={8}>
             <CKEditor
               editor={ClassicEditor}
-              data="Write your blogs here"
+              data=""
+              onReady={(editor) => {
+                // You can store the "editor" and use when it is needed.
+                // console.log("Editor is ready to use!", editor);
+                editor.editing.view.change((writer) => {
+                  writer.setStyle(
+                    "height",
+                    "400px",
+                    editor.editing.view.document.getRoot()
+                  );
+                });
+              }}
               onChange={(event, editor) => {
                 setDatas(editor.getData());
                 data = editor.getData();

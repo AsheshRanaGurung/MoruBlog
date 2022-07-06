@@ -129,6 +129,13 @@ const DashboardEditForm = () => {
               editor={ClassicEditor}
               data={blog?.description}
               onReady={(editor) => {
+                editor.editing.view.change((writer) => {
+                  writer.setStyle(
+                    "height",
+                    "400px",
+                    editor.editing.view.document.getRoot()
+                  );
+                });
                 data = editor.getData();
               }}
               onChange={(event, editor) => {
