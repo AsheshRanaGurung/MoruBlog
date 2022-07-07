@@ -39,6 +39,7 @@ function App() {
         {adminUser === true ? null : <SecondaryHeader />}
         {adminUser === true ? null : <Header />}
         <MembersRoute />
+
         {adminUser === true ? null : <Footer />}
       </div>
     </BrowserRouter>

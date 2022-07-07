@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   MDBCardBody,
@@ -22,6 +22,16 @@ import { GetThisBlogSuccess } from "../redux/GetThisBlog";
 import ModalDesign from "../components/Modal/Modal";
 import { fetchLatestBlog } from "../redux/GetLatestBlog";
 import { Markup } from "interweave";
+import HelmetMetaData from "../components/HelmetMetaData";
+import Popper from "@mui/material/Popper";
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+} from "react-share";
 
 const Blog = () => {
   const [blog, setBlog] = useState();
@@ -53,6 +63,8 @@ const Blog = () => {
 
   const { id } = useParams();
 
+  var location = useLocation();
+  var currentUrl = "http://moru-blog.herokuapp.com" + location.pathname;
   const dispatch = useDispatch();
 
   const getSingleBlog = async () => {
@@ -132,6 +144,11 @@ const Blog = () => {
               commentMessage={commentMessage}
               LikeTrigger={likeTrigger}
             />
+            <HelmetMetaData
+              title={blog?.title}
+              description={blog?.title + blog?.author?.username}
+              image={blog?.image}
+            ></HelmetMetaData>
 
             <MDBTypography
               tag="h2"
@@ -151,13 +168,63 @@ const Blog = () => {
             <ColorBadge styleInfo={styleInfo}>
               {blog && blog.category}
             </ColorBadge>
+            {/* <Popper
+              style={{
+                top: "300px  !important",
+                left: "unset !important",
+                right: "0px !important",
+                display: "grid",
+              }}
+              open={true}
+              transition
+            > */}
 
-            <img
-              className="img-fluid rounded"
-              // style={{ width: "100%", maxHeight: "450px" }}
-              alt="This is blog"
-              src={blog?.image}
-            ></img>
+            {/* </Popper> */}
+            <div>
+              <div
+                style={{
+                  top: "300px  !important",
+                  left: "unset !important",
+                  right: "0px !important",
+                  position: "fixed",
+                  display: "grid",
+                  left: "0px",
+                }}
+              >
+                <FacebookShareButton
+                  url={currentUrl}
+                  quote={blog?.title}
+                  hashtag="#Moruwallet"
+                  className="shareButton"
+                >
+                  <FacebookIcon size={36} />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  url={currentUrl}
+                  title={blog?.title}
+                  hashtag="#Moruwallet"
+                  className="shareButton"
+                >
+                  <TwitterIcon size={36} />
+                </TwitterShareButton>
+                <WhatsappShareButton
+                  url={currentUrl}
+                  title={blog?.title}
+                  separator=":: "
+                  className="shareButton"
+                >
+                  <WhatsappIcon size={36} />
+                </WhatsappShareButton>
+              </div>
+
+              <img
+                className="img-fluid rounded"
+                // style={{ width: "100%", maxHeight: "450px" }}
+                alt="This is blog"
+                src={blog?.image}
+              ></img>
+            </div>
+
             <div style={{ marginTop: "20px" }}>
               <div
                 style={{
