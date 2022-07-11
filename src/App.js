@@ -1,8 +1,9 @@
 import "./App.css";
-import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Header from "./components/Header";
 import "antd/dist/antd.css";
 import Footer from "./components/Footer";
@@ -16,33 +17,43 @@ function App() {
   const { isSuccess } = getData;
   const getunverifiedBlog = useSelector((state) => state.getUnverifiedBlog);
   const { isSuccess: newVerifiedBlog } = getunverifiedBlog;
+  const userInfo = useSelector((state) => state.getLoggedInUserDetail);
+  const { loggedinuserDetail, isLoading } = userInfo;
 
   const adminUser = useSelector(
     (state) => state.getLoggedInUserDetail?.loggedinuserDetail?.is_admin
   );
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadBlogsData());
   }, [isSuccess, newVerifiedBlog, dispatch]);
 
+  // useEffect(() => {
+  //   if (loggedinuserDetail) {
+  //     if (loggedinuserDetail?.is_admin === true) {
+  //       navigate("/dashboard");
+  //     } else {
+  //       navigate("/");
+  //     }
+  //   }
+  // }, [loggedinuserDetail, userInfo, navigate]);
   return (
-    <BrowserRouter>
-      <div className="App">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          closeOnClick
-          rtl={false}
-        />
-        {adminUser === true ? null : <SecondaryHeader />}
-        {adminUser === true ? null : <Header />}
-        <MembersRoute />
+    <div className="App">
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        closeOnClick
+        rtl={false}
+      />
+      {adminUser === true ? null : <SecondaryHeader />}
+      {adminUser === true ? null : <Header />}
+      <MembersRoute />
 
-        {adminUser === true ? null : <Footer />}
-      </div>
-    </BrowserRouter>
+      {adminUser === true ? null : <Footer />}
+    </div>
   );
 }
 

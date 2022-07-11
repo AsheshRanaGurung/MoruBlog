@@ -50,6 +50,7 @@ const Login = () => {
                 initialValues={{
                   remember: true,
                 }}
+                layout="vertical"
                 onFinish={onFinish}
               >
                 <Form.Item

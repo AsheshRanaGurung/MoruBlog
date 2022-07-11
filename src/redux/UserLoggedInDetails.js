@@ -63,33 +63,34 @@ export default GetLoggedInUserDetail.reducer;
 
 export function login(username, password) {
   return async (dispatch) => {
-    try {
-      dispatch(GetLoggedInUser());
-      var credentials = btoa(username + ":" + password);
-      var basicAuth = "Basic " + credentials;
-      const config = {
-        // headers: { Authorization: basicAuth },
-        // auth: {
-        email: username,
-        password: password,
-        // },
-      };
-      const response = await axios.post(
+    dispatch(GetLoggedInUser());
+    var credentials = btoa(username + ":" + password);
+    var basicAuth = "Basic " + credentials;
+    const config = {
+      // headers: { Authorization: basicAuth },
+      // auth: {
+      email: username,
+      password: password,
+      // },
+    };
+    await axios
+      .post(
         "https://flaskapi-sanjeev.herokuapp.com/login",
         // {},
         config
-      );
+      )
+      .then((response) => {
+        localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
+        localStorage.setItem("LoginUser", JSON.stringify(response.data.user));
 
-      localStorage.setItem("MoruToken", JSON.stringify(response.data.token));
-      localStorage.setItem("LoginUser", JSON.stringify(response.data.user));
+        toast.success("Logged In Successfully");
 
-      toast.success("Logged In Successfully");
-
-      dispatch(GetThisTokenSuccess(response.data.token));
-      dispatch(GetLoggedInUserDetailSuccess(response.data.user));
-    } catch (error) {
-      dispatch(GetLoggedInUserDetailFail(error.response.data.message));
-      toast.error(error.response.data.message);
-    }
+        dispatch(GetThisTokenSuccess(response.data.token));
+        dispatch(GetLoggedInUserDetailSuccess(response.data.user));
+      })
+      .catch((error) => {
+        dispatch(GetLoggedInUserDetailFail(error.response.data.error));
+        toast.error(error.response.data.error);
+      });
   };
 }

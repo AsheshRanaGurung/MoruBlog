@@ -33,10 +33,11 @@ const Login = () => {
       <div className="pagecontainer">
         <MDBRow>
           <MDBCol lg={6}>
-            <div className="form-page">
+            <div className="form-page-login">
               <Form
                 name="normal_login"
                 className="login-form"
+                layout="vertical"
                 initialValues={{
                   remember: true,
                 }}
