@@ -30,15 +30,13 @@ function App() {
     dispatch(loadBlogsData());
   }, [isSuccess, newVerifiedBlog, dispatch]);
 
-  // useEffect(() => {
-  //   if (loggedinuserDetail) {
-  //     if (loggedinuserDetail?.is_admin === true) {
-  //       navigate("/dashboard");
-  //     } else {
-  //       navigate("/");
-  //     }
-  //   }
-  // }, [loggedinuserDetail, userInfo, navigate]);
+  useEffect(() => {
+    if (loggedinuserDetail) {
+      if (loggedinuserDetail?.is_admin === true) {
+        navigate("/dashboard");
+      }
+    }
+  }, [loggedinuserDetail]);
   return (
     <div className="App">
       <ToastContainer
