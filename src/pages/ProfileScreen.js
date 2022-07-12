@@ -39,7 +39,6 @@ const ProfileScreen = () => {
         config
       )
       .then((res) => {
-        console.log(res.data.credintials.username);
         setUpdateloading(false);
         dispatch(GetLoggedInUserUpdateSuccess(res.data.credintials.username));
         navigate("/");

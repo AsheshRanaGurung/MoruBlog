@@ -25,7 +25,6 @@ const ReviewForm = ({ id, LikeTrigger }) => {
   };
 
   const onFinish = async (values) => {
-    console.log(values);
     setLoginLoading(true);
 
     const config = {

@@ -198,12 +198,10 @@ const Blog = () => {
             <div>
               <div
                 style={{
-                  top: "300px  !important",
-                  left: "unset !important",
-                  right: "0px !important",
                   position: "fixed",
                   display: "grid",
                   left: "0px",
+                  zIndex: "1",
                 }}
               >
                 <FacebookShareButton
