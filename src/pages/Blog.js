@@ -73,6 +73,19 @@ const Blog = () => {
 
     return newDate.toDateString().slice(3, 15);
   };
+  const timeRead = (blog) => {
+    if (blog?.length < 2000) {
+      return 1;
+    } else if (2001 < blog?.length < 4000) {
+      return 2;
+    } else if (4001 < blog?.length < 6000) {
+      return 3;
+    } else if (6001 < blog?.length < 8000) {
+      return 4;
+    } else {
+      return 5;
+    }
+  };
 
   const getSingleBlog = async () => {
     await axios
@@ -164,6 +177,7 @@ const Blog = () => {
             >
               {blog && blog.title}
             </MDBTypography>
+
             <br />
 
             <div style={{ float: "left", margin: "5px 0 7px 7px" }}>
@@ -172,21 +186,13 @@ const Blog = () => {
             <div style={{ float: "left", margin: "5px 0 7px 7px" }}>
               {blog && declareDate(blog.created_at)} |
             </div>
+            <div style={{ float: "left", margin: "5px 0 7px 7px" }}>
+              {timeRead(blog?.content)} min read. |
+            </div>
             <ColorBadge styleInfo={styleInfo}>
               {blog && blog.category}
             </ColorBadge>
-            {/* <Popper
-              style={{
-                top: "300px  !important",
-                left: "unset !important",
-                right: "0px !important",
-                display: "grid",
-              }}
-              open={true}
-              transition
-            > */}
 
-            {/* </Popper> */}
             <div>
               <div
                 style={{
