@@ -163,7 +163,7 @@ const Blog = () => {
               by {blog && blog.author.username} |
             </div>
             <div style={{ float: "left", margin: "5px 0 7px 7px" }}>
-              {blog && blog.created_at.slice(0, 10)} |
+              {blog && Date(blog.created_at).slice(3, 15)} |
             </div>
             <ColorBadge styleInfo={styleInfo}>
               {blog && blog.category}
