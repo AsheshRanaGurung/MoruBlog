@@ -67,6 +67,13 @@ const Blog = () => {
   var currentUrl = "http://moru-blog.herokuapp.com" + location.pathname;
   const dispatch = useDispatch();
 
+  const declareDate = (dateFromDB) => {
+    const date = dateFromDB;
+    const newDate = new Date(date);
+
+    return newDate.toDateString().slice(3, 15);
+  };
+
   const getSingleBlog = async () => {
     await axios
       .get(`https://flaskapi-sanjeev.herokuapp.com/posts/${id}`)
@@ -163,7 +170,7 @@ const Blog = () => {
               by {blog && blog.author.username} |
             </div>
             <div style={{ float: "left", margin: "5px 0 7px 7px" }}>
-              {blog && Date(blog.created_at).slice(3, 15)} |
+              {blog && declareDate(blog.created_at)} |
             </div>
             <ColorBadge styleInfo={styleInfo}>
               {blog && blog.category}

@@ -14,11 +14,18 @@ import { Link } from "react-router-dom";
 const BlogCarousel = () => {
   const getData = useSelector((state) => state?.Blogs);
   const { blogs } = getData;
+
   const excerpt = (string) => {
     if (string?.length > 50) {
       string = string.substring(0, 50) + "...";
     }
     return string;
+  };
+  const declareDate = (dateFromDB) => {
+    const date = dateFromDB;
+    const newDate = new Date(date);
+
+    return newDate.toDateString().slice(3, 15);
   };
 
   return (
@@ -71,7 +78,7 @@ const BlogCarousel = () => {
                       </div>
 
                       <div style={{ float: "left" }}>
-                        {item.created_at?.slice(0, 10)} |
+                        {declareDate(item.created_at)} |
                       </div>
 
                       <div style={{ float: "left" }}>
@@ -142,7 +149,7 @@ const BlogCarousel = () => {
                       </div>
 
                       <div style={{ float: "left" }}>
-                        {item.created_at?.slice(0, 10)} |
+                        {declareDate(item.created_at)} |
                       </div>
 
                       <div style={{ float: "left" }}>
