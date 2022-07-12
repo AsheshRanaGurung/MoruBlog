@@ -23,7 +23,7 @@ import ModalDesign from "../components/Modal/Modal";
 import { fetchLatestBlog } from "../redux/GetLatestBlog";
 import { Markup } from "interweave";
 import HelmetMetaData from "../components/HelmetMetaData";
-import Popper from "@mui/material/Popper";
+
 import {
   FacebookIcon,
   FacebookShareButton,
@@ -31,6 +31,8 @@ import {
   TwitterShareButton,
   WhatsappIcon,
   WhatsappShareButton,
+  LinkedinShareButton,
+  LinkedinIcon,
 } from "react-share";
 
 const Blog = () => {
@@ -210,7 +212,7 @@ const Blog = () => {
                   hashtag="#Moruwallet"
                   className="shareButton"
                 >
-                  <FacebookIcon size={36} />
+                  <FacebookIcon size={42} />
                 </FacebookShareButton>
                 <TwitterShareButton
                   url={currentUrl}
@@ -218,15 +220,23 @@ const Blog = () => {
                   hashtag="#Moruwallet"
                   className="shareButton"
                 >
-                  <TwitterIcon size={36} />
+                  <TwitterIcon size={42} />
                 </TwitterShareButton>
+                <LinkedinShareButton
+                  url={currentUrl}
+                  title={blog?.title}
+                  hashtag="#Moruwallet"
+                  className="shareButton"
+                >
+                  <LinkedinIcon size={42} />
+                </LinkedinShareButton>
                 <WhatsappShareButton
                   url={currentUrl}
                   title={blog?.title}
                   separator=":: "
                   className="shareButton"
                 >
-                  <WhatsappIcon size={36} />
+                  <WhatsappIcon size={42} />
                 </WhatsappShareButton>
               </div>
 
