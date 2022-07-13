@@ -1,13 +1,18 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const NotFoundPage = () => {
   return (
     <div className="LoginPage">
-      <img
-        style={{ width: "250px", height: "250px" }}
-        src="images/404.jpg"
-        alt="not found images"
-      ></img>
+      <div>
+        <Link to="/">
+          <img
+            style={{ width: "90%", height: "auto" }}
+            src="https://partypropz.com/wp-content/uploads/2019/08/CodePen-404-Page.gif"
+            alt="not found images"
+            margin="auto"
+          ></img>
+        </Link>
+      </div>
     </div>
   );
 };
