@@ -9,6 +9,7 @@ import BlogPostModal from "../components/Modal/BlogPostModal";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import FormData from "form-data";
+import axios from "axios";
 
 const layout = {
   labelCol: {
@@ -57,19 +58,18 @@ const About = () => {
     return e.fileList;
   };
 
-  const filechanged = (e) => {
+  const filechanged = async (e) => {
     let images = new FormData();
     images.append("file", e);
     images.append("upload_preset", "Moru-preset");
-    fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
+    await fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload", {
       method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
+
       body: images,
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         const imageApi = data;
         address = imageApi.url;
         toast.success("Image uploaded");
