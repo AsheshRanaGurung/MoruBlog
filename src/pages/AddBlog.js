@@ -69,7 +69,6 @@ const About = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const imageApi = data;
         address = imageApi.url;
         toast.success("Image uploaded");

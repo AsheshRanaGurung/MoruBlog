@@ -59,11 +59,8 @@ const DashboardForm = () => {
     let images = new FormData();
     images.append("file", e);
     images.append("upload_preset", "Moru-preset");
-    await fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload/", {
+    await fetch("https://api.cloudinary.com/v1_1/dpnxzofqd/image/upload", {
       method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: images,
     })
       .then((response) => response.json())
